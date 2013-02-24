@@ -1,5 +1,5 @@
 class Song < ActiveRecord::Base
-  attr_accessible :name, :band_id, :url
+  attr_accessible :name, :band_id, :url, :thumbnail
 
   belongs_to :band
 
