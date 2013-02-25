@@ -1,0 +1,2 @@
+class SongDislikesController < ApplicationController
+end

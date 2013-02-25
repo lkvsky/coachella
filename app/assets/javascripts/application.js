@@ -13,3 +13,47 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+var Coachella = (function() {
+
+  function Player() {
+    var self = this;
+
+    self.playlist = SongData;
+    self.video = null;
+
+    self.loadVideo = function() {
+      video = self.playlist.pop();
+      self.playlist.splice(0, 0, video);
+
+      self.video.loadVideoById(video.url);
+    };
+
+    self.cueVideo = function(event) {
+      if (event.data === 0) {
+        self.loadVideo();
+      }
+    };
+
+    self.loadIframe = (function() {
+      self.video = new YT.Player('music-player', {
+        events: {
+          'onReady': self.loadVideo,
+          'onStateChange': self.cueVideo
+        }
+      });
+    })();
+  }
+
+  return {
+    Player: Player
+  };
+
+})();
+
+function onYouTubeIframeAPIReady() {
+  var player = new Coachella.Player();
+}
+
+$(function() {
+  $.getScript("https://www.youtube.com/iframe_api");
+});

@@ -1,0 +1,11 @@
+<!-- <div class="row">
+  <div class="span12">
+    <div id="music-player">
+    </div>
+  </div>
+</div> -->
+<%= render :partial => "band", :locals => { :band => @band } %>
+
+<script>
+var SongData = <%= @songs.to_json.html_safe %>
+</script>

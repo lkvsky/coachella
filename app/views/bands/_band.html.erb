@@ -1,0 +1,14 @@
+<div class="row-fluid">
+  <div class="span4">
+    <img src="<%= band.thumbnail %>">
+    <h3><%= link_to band.name, band_path(band) %></h3>
+  </div>
+  <div class="span8">
+    <strong>YouTube Tracks</strong>
+    <ol>
+      <% band.songs.each do |song| %>
+        <li><%= song.name %>
+      <% end %>
+    </ol>
+  </div>
+</div>

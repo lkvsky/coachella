@@ -10,4 +10,8 @@ class Band < ActiveRecord::Base
   def Band.get_by_day(day)
     Band.where(:set_time => day.capitalize!)
   end
+
+  def Band.sort_alphabetically
+    Band.order("LOWER(name) ASC")
+  end
 end
