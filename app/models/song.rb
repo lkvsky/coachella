@@ -5,4 +5,6 @@ class Song < ActiveRecord::Base
 
   has_many :dislikes, :class_name => "SongDislike"
   has_many :likes, :class_name => "SongLike"
+
+  validates :url, :uniquness => { :scope => :band_id }
 end

@@ -34,13 +34,17 @@ class ScrapeYoutube
         }
       ).to_s
 
-    JSON.parse(RestClient.get(url))["feed"]["entry"].map do |song|
-      {
-        :band_id => 1,
-        :name => song["media$group"]["media$title"]["$t"],
-        :url => song["media$group"]["yt$videoid"]["$t"],
-        :thumbnail => song["media$group"]["media$thumbnail"][0]["url"]
-      }
+    begin
+      JSON.parse(RestClient.get(url))["feed"]["entry"].map do |song|
+        {
+          :band_id => 1,
+          :name => song["media$group"]["media$title"]["$t"],
+          :url => song["media$group"]["yt$videoid"]["$t"],
+          :thumbnail => song["media$group"]["media$thumbnail"][0]["url"]
+        }
+      end
+    rescue
+      []
     end
   end
 
@@ -53,23 +57,31 @@ class ScrapeYoutube
         :q => band.name,
         :v => 2,
         :alt => "json",
-        :max_results => 20
+        "max-results" => 20
       }
     ).to_s
 
-    JSON.parse(RestClient.get(url))["feed"]["entry"].map do |song|
-      {
-        :band_id => band.id,
-        :name => song["media$group"]["media$title"]["$t"],
-        :url => song["media$group"]["yt$videoid"]["$t"],
-        :thumbnail => song["media$group"]["media$thumbnail"][0]["url"]
-      }
+    begin
+      JSON.parse(RestClient.get(url))["feed"]["entry"].map do |song|
+        {
+          :band_id => band.id,
+          :name => song["media$group"]["media$title"]["$t"],
+          :url => song["media$group"]["yt$videoid"]["$t"],
+          :thumbnail => song["media$group"]["media$thumbnail"][0]["url"]
+        }
+      end
+    rescue
+      []
     end
   end
 
   def store_songs
     @bands.each do |band|
-      songs = get_songs_by_band(band)
+      if band.youtube_channel.nil? || get_songs_by_channel(band).empty?
+        songs = get_songs_by_band(band)
+      else
+        songs = get_songs_by_channel(band)
+      end
 
       band.songs = songs.map { |song| Song.new(song) }
 

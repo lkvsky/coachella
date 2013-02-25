@@ -3,4 +3,6 @@ class User < ActiveRecord::Base
 
   has_many :likes, :class_name => "SongLike"
   has_many :dislikes, :class_name => "SongDislike"
+
+  validates :username, :uniqueness => true
 end
