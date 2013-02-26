@@ -18,15 +18,15 @@
  }
 
  #music-player {
-  height: 380px;
+  height: 300px;
   width: 100%;
   background: black;
  }
 
  #cue-playlist {
   position: relative;
-  top: 22%;
-  left: 33%;
+  top: 15%;
+  left: 30%;
   border: 5px solid white;
   height: 200px;
   width: 200px;
@@ -38,12 +38,14 @@
   cursor: pointer;
  }
 
- .cue-playlist-text {
-  font-size: 10em;
-  color: white;
-  text-align: center;
-  margin-top: 40%;
-  margin-left: 5%;
+ .cue-playlist {
+  width: 0;
+  height: 0;
+  border-top: 40px solid transparent;
+  border-bottom: 40px solid transparent;
+  border-left: 80px solid white;
+  margin-top: 33%;
+  margin-left: 38%;
  }
 
  .well {

@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Coachella</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
@@ -10,17 +11,15 @@
   <div class="container">
     <h1>Coachella Warm Up</h1>
     <div class="row">
-      <div class="span8">
+      <div class="span7">
         <div id="music-player">
           <div id="cue-playlist">
-            <div class="cue-playlist-text">
-              >
+            <div class="cue-playlist">
             </div>
           </div>
         </div>
       </div>
-      <div class="span4">
-        <h3>On Deck</h3>
+      <div class="span5">
         <div id="current-playlist">
         </div>
       </div>
@@ -29,8 +28,30 @@
     </div>
     <hr>
 
-    <%= yield %>
+    <div id="yield">
+    </div>
 
   </div>
+
+  <!-- HANDLEBARS SCRIPTS -->
+
+  <script id="bands-index" type="text/x-handlebars-template">
+    {{#each bands}}
+    <div class="row-fluid">
+      <div class="span4">
+        <h3>{{this.info.name}}</h3>
+        <img src="{{this.info.thumbnail}}">
+      </div>
+      <div class="span8">
+        <strong>YouTube Tracks</strong>
+        <ol>
+           {{#each this.songs}}
+            <li>{{this.name}}
+          {{/each}}
+        </ol>
+      </div>
+    </div>
+    {{/each}}
+  </script>
 </body>
 </html>

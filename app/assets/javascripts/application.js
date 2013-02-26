@@ -18,27 +18,35 @@ var Coachella = (function() {
   function Player() {
     var self = this;
 
-    self.playlist = SongData;
+    self.library = null;
+    self.playlist = [];
     self.video = null;
+
+    self.loadPlaylist = function() {
+      $.getJSON("/playlists.json", function(data) {
+        self.playlist = data;
+        self.renderPlaylist();
+      });
+    };
 
     self.loadIframe = function() {
       self.video = new YT.Player('music-player', {
         events: {
-          'onReady': self.cueVideo,
-          'onStateChange': self.loadVideo
+          'onReady': self.startPlaylist,
+          'onStateChange': self.loadNextVideo
         }
       });
     };
 
-    self.cueVideo = function() {
+    self.startPlaylist = function() {
       video = self.playlist.pop();
       self.playlist.splice(0, 0, video);
 
-      self.video.cueVideoById(video.url);
+      self.video.loadVideoById(video.url);
       self.nowPlaying(video);
     };
 
-    self.loadVideo = function(event) {
+    self.loadNextVideo = function(event) {
       if (event.data === 0) {
         video = self.playlist.pop();
         self.playlist.splice(0, 0, video);
@@ -56,7 +64,7 @@ var Coachella = (function() {
 
       currentVid.addClass("well");
       currentVid.append(about);
-      about.html("<strong>" + video.name + "</strong>");
+      about.html("<strong>Now Playing</strong> " + video.band + ", '" + video.name + "'");
 
       $("#now-playing").html(currentVid);
     };
@@ -68,7 +76,7 @@ var Coachella = (function() {
       for (var i = maxIter; i>0; i--) {
         var li = $("<li>");
 
-        li.html(self.playlist[i].name);
+        li.html("<strong>" + self.playlist[i].band + "</strong>: " + self.playlist[i].name);
         songList.append(li);
       }
 
@@ -76,9 +84,27 @@ var Coachella = (function() {
     };
 
     self.initialize = (function() {
-      self.renderPlaylist();
+      self.loadPlaylist();
+      var router = new Router("#yield");
+      router.renderBandsIndex();
       $("#cue-playlist").click(self.loadIframe);
     })();
+  }
+
+  function Router(el) {
+    var self = this;
+
+    self.el = $(el);
+
+    self.renderBandsIndex = function() {
+      $.getJSON('/bands.json', function(data) {
+        var source = $("#bands-index").html();
+        var template = Handlebars.compile(source);
+        var html = template({bands: data});
+
+        self.el.html(html);
+      });
+    };
   }
 
   return {
