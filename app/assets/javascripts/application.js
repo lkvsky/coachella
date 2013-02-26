@@ -21,26 +21,63 @@ var Coachella = (function() {
     self.playlist = SongData;
     self.video = null;
 
-    self.loadVideo = function() {
+    self.loadIframe = function() {
+      self.video = new YT.Player('music-player', {
+        events: {
+          'onReady': self.cueVideo,
+          'onStateChange': self.loadVideo
+        }
+      });
+    };
+
+    self.cueVideo = function() {
       video = self.playlist.pop();
       self.playlist.splice(0, 0, video);
 
-      self.video.loadVideoById(video.url);
+      self.video.cueVideoById(video.url);
+      self.nowPlaying(video);
     };
 
-    self.cueVideo = function(event) {
+    self.loadVideo = function(event) {
       if (event.data === 0) {
-        self.loadVideo();
+        video = self.playlist.pop();
+        self.playlist.splice(0, 0, video);
+
+        self.video.loadVideoById(video.url);
+        self.nowPlaying(video);
       }
+
+      self.renderPlaylist();
     };
 
-    self.loadIframe = (function() {
-      self.video = new YT.Player('music-player', {
-        events: {
-          'onReady': self.loadVideo,
-          'onStateChange': self.cueVideo
-        }
-      });
+    self.nowPlaying = function(video) {
+      var currentVid = $("<div>");
+      var about = $("<div>");
+
+      currentVid.addClass("well");
+      currentVid.append(about);
+      about.html("<strong>" + video.name + "</strong>");
+
+      $("#now-playing").html(currentVid);
+    };
+
+    self.renderPlaylist = function() {
+      var songList = $("<ol>");
+      var maxIter = Math.min(self.playlist.length - 1, 10);
+
+      for (var i = maxIter; i>0; i--) {
+        var li = $("<li>");
+
+        li.html(self.playlist[i].name);
+        songList.append(li);
+      }
+
+      $("#current-playlist").html(songList);
+    };
+
+    self.initialize = (function() {
+      self.renderPlaylist();
+      $("#cue-playlist").click(self.loadIframe);
     })();
   }
 

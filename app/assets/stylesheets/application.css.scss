@@ -13,8 +13,41 @@
 
  @import 'bootstrap';
 
+ h1 {
+  text-align: center;
+ }
+
  #music-player {
-  height: 390;
-  width: 640;
+  height: 380px;
+  width: 100%;
+  background: black;
+ }
+
+ #cue-playlist {
+  position: relative;
+  top: 22%;
+  left: 33%;
+  border: 5px solid white;
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+ }
+
+ #cue-playlist:hover {
+  background-color: red;
+  cursor: pointer;
+ }
+
+ .cue-playlist-text {
+  font-size: 10em;
+  color: white;
+  text-align: center;
+  margin-top: 40%;
+  margin-left: 5%;
+ }
+
+ .well {
+  width: 100%;
+  height: 100%;
  }
 

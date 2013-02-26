@@ -7,4 +7,8 @@ class Song < ActiveRecord::Base
   has_many :likes, :class_name => "SongLike"
 
   validates :url, :uniqueness => { :scope => :band_id }
+
+  def self.random_selection
+    Song.all.shuffle[0..20]
+  end
 end
