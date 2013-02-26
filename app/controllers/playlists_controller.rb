@@ -1,4 +1,14 @@
 class PlaylistsController < ApplicationController
+  def create
+    day = params[:band][:day]
+    bands = Band.where(:set_time => day)
+
+    respond_to do |format|
+      format.html { render :nothing => true }
+      format.json { render :json => bands }
+    end
+  end
+
   def index
     songs = Song.random_selection
 

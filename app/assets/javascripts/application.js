@@ -86,7 +86,7 @@ var Coachella = (function() {
     self.initialize = (function() {
       self.loadPlaylist();
       var router = new Router("#yield");
-      router.renderBandsIndex();
+      router.renderPlaylistCreate();
       $("#cue-playlist").click(self.loadIframe);
     })();
   }
@@ -103,6 +103,42 @@ var Coachella = (function() {
         var html = template({bands: data});
 
         self.el.html(html);
+        
+        $(".band-show").click(function() {
+          var id = $(this).attr("data-band-id");
+
+          self.renderBandShow(id);
+        });
+      });
+    };
+
+    self.renderBandShow = function(id) {
+      var pathname = '/bands/' + id + '.json';
+
+      $.getJSON(pathname, function(data) {
+        var source = $("#band-show").html();
+        var template = Handlebars.compile(source);
+        var html = template({band: data});
+
+        self.el.html(html);
+
+        $(".band-index").click(function() {
+          self.renderBandsIndex();
+        });
+      });
+    };
+
+    self.renderPlaylistCreate = function() {
+      var source = $("#playlists-create").html();
+      var template = Handlebars.compile(source);
+      var html = template();
+
+      self.el.html(html);
+
+      $(".playlists-create").click(function() {
+        $.post('playlists.json', $("#playlist-form").serialize(), function(data) {
+          console.log(data);
+        });
       });
     };
   }
