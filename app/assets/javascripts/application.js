@@ -13,18 +13,20 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+var PlayList;
+
 var Coachella = (function() {
 
-  function Player() {
+  function CurrentlyPlayingView() {
     var self = this;
 
     self.library = null;
-    self.playlist = [];
+    self.playlist = PlayList;
     self.video = null;
 
     self.loadPlaylist = function() {
       $.getJSON("/playlists.json", function(data) {
-        self.playlist = data;
+        PlayList = data;
         self.renderPlaylist();
       });
     };
@@ -39,8 +41,8 @@ var Coachella = (function() {
     };
 
     self.startPlaylist = function() {
-      video = self.playlist.pop();
-      self.playlist.splice(0, 0, video);
+      video = self.playlist.shift();
+      self.playlist.push(video);
 
       self.video.loadVideoById(video.url);
       self.nowPlaying(video);
@@ -48,8 +50,8 @@ var Coachella = (function() {
 
     self.loadNextVideo = function(event) {
       if (event.data === 0) {
-        video = self.playlist.pop();
-        self.playlist.splice(0, 0, video);
+        video = self.playlist.shift();
+        self.playlist.push(video);
 
         self.video.loadVideoById(video.url);
         self.nowPlaying(video);
@@ -70,10 +72,11 @@ var Coachella = (function() {
     };
 
     self.renderPlaylist = function() {
+      self.playlist = PlayList;
       var songList = $("<ol>");
       var maxIter = Math.min(self.playlist.length - 1, 10);
 
-      for (var i = maxIter; i>0; i--) {
+      for (var i = 0; i<maxIter; i++) {
         var li = $("<li>");
 
         li.html("<strong>" + self.playlist[i].band + "</strong>: " + self.playlist[i].name);
@@ -84,17 +87,23 @@ var Coachella = (function() {
     };
 
     self.initialize = (function() {
+      var playlistCreator = new PlaylistCreatorView("#playlist-creator");
+      var discovery = new DiscoveryView("#discovery");
+      discovery.renderBandsIndex();
+
       self.loadPlaylist();
-      var router = new Router("#yield");
-      router.renderPlaylistCreate();
       $("#cue-playlist").click(self.loadIframe);
     })();
   }
 
-  function Router(el) {
+  // Constructor to initialize views for 'discovery'
+
+  function DiscoveryView(el) {
     var self = this;
 
     self.el = $(el);
+
+    // views
 
     self.renderBandsIndex = function() {
       $.getJSON('/bands.json', function(data) {
@@ -104,31 +113,47 @@ var Coachella = (function() {
 
         self.el.html(html);
         
-        $(".band-show").click(function() {
-          var id = $(this).attr("data-band-id");
-
-          self.renderBandShow(id);
-        });
+        self.bandsIndexListeners();
       });
     };
 
-    self.renderBandShow = function(id) {
+    self.renderBandsShow = function(id) {
       var pathname = '/bands/' + id + '.json';
 
       $.getJSON(pathname, function(data) {
-        var source = $("#band-show").html();
+        var source = $("#bands-show").html();
         var template = Handlebars.compile(source);
         var html = template({band: data});
 
         self.el.html(html);
 
-        $(".band-index").click(function() {
-          self.renderBandsIndex();
-        });
+        self.bandsShowListeners();
       });
     };
 
-    self.renderPlaylistCreate = function() {
+    // listeners
+
+    self.bandsIndexListeners = function() {
+      $(".bands-show").click(function() {
+        var id = $(this).attr("data-band-id");
+
+        self.renderBandsShow(id);
+      });
+    };
+
+    self.bandsShowListeners = function() {
+      $(".bands-index").click(function() {
+        self.renderBandsIndex();
+      });
+    };
+  }
+
+  function PlaylistCreatorView(el) {
+    var self = this;
+
+    self.el = $(el);
+
+    self.renderPlaylistsCreate = (function() {
       var source = $("#playlists-create").html();
       var template = Handlebars.compile(source);
       var html = template();
@@ -136,15 +161,15 @@ var Coachella = (function() {
       self.el.html(html);
 
       $(".playlists-create").click(function() {
-        $.post('playlists.json', $("#playlist-form").serialize(), function(data) {
-          console.log(data);
+        $.post('playlists.json', $("#playlists-form").serialize(), function(data) {
+          PlayList = data;
         });
       });
-    };
+    })();
   }
 
   return {
-    Player: Player
+    Player: CurrentlyPlayingView
   };
 
 })();

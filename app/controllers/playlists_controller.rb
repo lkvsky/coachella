@@ -1,11 +1,12 @@
 class PlaylistsController < ApplicationController
   def create
-    day = params[:band][:day]
-    bands = Band.where(:set_time => day)
+    if params[:band][:day]
+      song_json = create_playlist_by_day(params[:band][:day])
+    end
 
     respond_to do |format|
       format.html { render :nothing => true }
-      format.json { render :json => bands }
+      format.json { render :json => song_json }
     end
   end
 
@@ -31,5 +32,17 @@ class PlaylistsController < ApplicationController
       :thumbnail => song.thumbnail,
       :band => band.name
     }
+  end
+
+  def create_playlist_by_day(day)
+    bands = Band.where(:set_time => day)
+    song_json = []
+
+    bands.each do |band|
+      songs = band.songs.map { |song| create_song_json(song, band) }
+      song_json.concat(songs)
+    end
+
+    song_json.shuffle![0..20]
   end
 end

@@ -28,7 +28,15 @@
     </div>
     <hr>
 
-    <div id="yield">
+    <div class="row">
+      <div class="span6">
+        <div id="discovery">
+        </div>
+      </div>
+      <div class="span6">
+        <div id="playlist-creator">
+        </div>
+      </div>
     </div>
 
   </div>
@@ -36,45 +44,47 @@
   <!-- HANDLEBARS SCRIPTS -->
 
   <script id="playlists-create" type="text/x-handlebars-template">
-    <form id="playlist-form">
-      <fieldset>
-        <legend>Explore</legend>
-        <label for="band[day]">Filter by Day</label>
-        <select name="band[day]">
-          <option value="Fri">Friday</option>
-          <option value="Sat">Saturday</option>
-          <option value="Sun">Sunday</option>
-        </select>
-      </fieldset>
-      <button type="button" class="btn btn-primary playlists-create">Create Playlist</button>
-    </form>
+  <h2>Playlist Generator</h2>
+  <div class="row">
+    <div class="span6">
+      <form id="playlists-form">
+        <fieldset>
+          <label for="band[day]">Filter by Day</label>
+          <select name="band[day]">
+            <option value="Fri">Friday</option>
+            <option value="Sat">Saturday</option>
+            <option value="Sun">Sunday</option>
+          </select>
+        </fieldset>
+        <button type="button" class="btn btn-primary playlists-create">Create Playlist</button>
+      </form>
+    </div>
+  </div>
   </script>
 
   <script id="bands-index" type="text/x-handlebars-template">
     <h2>All Bands</h2>
-    <div class="row">
     {{#each bands}}
-      <div class="span4">
-        <div class="well">
+    <div class="row">
+      <div class="span6">
+        <div class="well well-small bands-show" data-band-id="{{this.id}}">
           <h4>{{this.name}}</h4>
-          <img src="{{this.thumbnail}}">
-          <br>
-          <button type="button" class="btn btn-primary band-show" data-band-id="{{this.id}}">Show Details</button>
         </div>
       </div>
-    {{/each}}
     </div>
+    {{/each}}
   </script>
 
-  <script id="band-show" type="text/x-handlebars-template">
+  <script id="bands-show" type="text/x-handlebars-template">
     <h2>{{band.info.name}}</h2>
     <div class="row">
-      <div class="span4">
-        <img src="{{band.info.thumbnail}}">
+      <div class="span6">
+        <img class="thumbnail" src="{{band.info.thumbnail}}">
         <br>
-        <button type="button" class="btn btn-primary band-index" data-band-id="{{this.id}}">All Bands</button>
       </div>
-      <div class="span8">
+    </div>
+    <div class="row">
+      <div class="span6">
         <strong>YouTube Tracks</strong>
         <ol>
            {{#each band.songs}}
@@ -82,6 +92,7 @@
           {{/each}}
         </ol>
       </div>
+      <button type="button" class="btn btn-inverse bands-index">All Bands</button>
     </div>
   </script>
 </body>
