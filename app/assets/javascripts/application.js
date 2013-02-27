@@ -13,22 +13,25 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
-var PlayList;
-
 var Coachella = (function() {
 
-  function CurrentlyPlayingView() {
+  function CurrentlyPlayingView(playlist) {
     var self = this;
 
     self.library = null;
-    self.playlist = PlayList;
+    self.playlist = null;
     self.video = null;
 
     self.loadPlaylist = function() {
-      $.getJSON("/playlists.json", function(data) {
-        PlayList = data;
+      if (playlist) {
+        self.playlist = playlist;
         self.renderPlaylist();
-      });
+      } else {
+        $.getJSON("/playlists.json", function(data) {
+          self.playlist = data;
+          self.renderPlaylist();
+        });
+      }
     };
 
     self.loadIframe = function() {
@@ -72,7 +75,6 @@ var Coachella = (function() {
     };
 
     self.renderPlaylist = function() {
-      self.playlist = PlayList;
       var songList = $("<ol>");
       var maxIter = Math.min(self.playlist.length - 1, 10);
 
@@ -87,10 +89,6 @@ var Coachella = (function() {
     };
 
     self.initialize = (function() {
-      var playlistCreator = new PlaylistCreatorView("#playlist-creator");
-      var discovery = new DiscoveryView("#discovery");
-      discovery.renderBandsIndex();
-
       self.loadPlaylist();
       $("#cue-playlist").click(self.loadIframe);
     })();
@@ -146,6 +144,12 @@ var Coachella = (function() {
         self.renderBandsIndex();
       });
     };
+
+    // initialize
+
+    self.initialize = (function() {
+      self.renderBandsIndex();
+    })();
   }
 
   function PlaylistCreatorView(el) {
@@ -162,20 +166,24 @@ var Coachella = (function() {
 
       $(".playlists-create").click(function() {
         $.post('playlists.json', $("#playlists-form").serialize(), function(data) {
-          PlayList = data;
+          new CurrentlyPlayingView(data);
         });
       });
     })();
   }
 
   return {
-    Player: CurrentlyPlayingView
+    PlayerView: CurrentlyPlayingView,
+    PlaylistCreatorView: PlaylistCreatorView,
+    DiscoveryView: DiscoveryView
   };
 
 })();
 
 function onYouTubeIframeAPIReady() {
-  var player = new Coachella.Player();
+  var player = new Coachella.PlayerView();
+  var playlistCreator = new Coachella.PlaylistCreatorView("#playlist-creator");
+  var discovery = new Coachella.DiscoveryView("#discovery");
 }
 
 $(function() {

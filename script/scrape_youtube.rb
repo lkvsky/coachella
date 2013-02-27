@@ -104,7 +104,7 @@ class ScrapeYoutube
 end
 
 scraper = ScrapeYoutube.new
-# scraper.store_youtube_channel
+scraper.store_youtube_channel
 scraper.store_songs
 
 
