@@ -153,6 +153,8 @@ var Coachella = (function() {
 
     self.el = $(el);
 
+    // views
+
     self.renderPlaylists = function() {
       $.getJSON("/playlists.json", function(data) {
         var source = $("#playlists-index").html();
@@ -175,10 +177,21 @@ var Coachella = (function() {
       self.renderPlaylistsFormListeners();
     };
 
+    self.resetPlayer = function() {
+      var htmlStr = '<div id="music-player"> \
+                      <div id="cue-playlist"> \
+                        <div class="cue-playlist"> \
+                        </div> \
+                      </div> \
+                    </div>';
+      $("#music-container").html(htmlStr);
+    };
+
+    // listeners
+
     self.renderPlaylistsFormListeners = function() {
       $(".playlists-create").click(function() {
         $.post('playlists.json', $("#playlists-form").serialize(), function(data) {
-          console.log(data);
           self.renderPlaylists();
         });
       });
@@ -194,6 +207,7 @@ var Coachella = (function() {
         var pathname = "/playlists/" + id + ".json";
 
         $.getJSON(pathname, function(data) {
+          self.resetPlayer();
           new CurrentlyPlayingView(data.songs);
         });
       });
