@@ -67,13 +67,16 @@
     </div>
   </script>
 
-  <div id="playlists-index" type="text/x-handlebars-template">
+  <script id="playlists-index" type="text/x-handlebars-template">
     <h2>Playlists</h2>
     {{#each playlists}}
     <div class="row">
       <div class="span6">
-        <div class="well well-small load-playlist" data-playlist-id="{{this.playlist.id}}">
+        <div class="well well-small">
           <strong>{{this.playlist.name}}</strong>: {{this.songs.length}} songs
+          <button type="button" class="btn btn-inverse playlists-show" data-playlist-id="{{this.playlist.id}}">Details</button>
+          <button type="button" class="btn btn-primary load-playlist" data-playlist-id="{{this.playlist.id}}">Play</button>
+          <button type="button" class="btn btn-danger playlists-delete" data-playlist-id="{{this.playlist.id}}">Delete</button>
         </div>
       </div>
     </div>
@@ -81,7 +84,26 @@
     <div class="row">
       <button type="button" class="btn btn-inverse playlists-new">Create Playlist</button>
     </div>
-  </div>
+  </script>
+
+  <script id="playlists-show" type="text/x-handlebars-template">
+    <h2>{{playlist.playlist.name}}</h2>
+    <div class="row">
+      <button type="button" class="btn btn-inverse playlists-new">Create Playlist</button>
+      <button type="button" class="btn btn-primary load-playlist" data-playlist-id="{{playlist.playlist.id}}">Play</button>
+      <button type="button" class="btn btn-danger playlists-delete" data-playlist-id="{{playlist.playlist.id}}">Delete</button>
+      <button type="button" class="btn btn-inverse playlists-index">All Playlists</button>
+    </div>
+    {{#each playlist.songs}}
+    <div class="row">
+      <div class="span6">
+        <div class="well well-small">
+          <strong>{{this.band}}</strong>: {{this.name}}
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </script>
 
   <script id="bands-index" type="text/x-handlebars-template">
     <h2>All Bands</h2>
@@ -99,6 +121,9 @@
   <script id="bands-show" type="text/x-handlebars-template">
     <h2>{{band.info.name}}</h2>
     <div class="row">
+      <button type="button" class="btn btn-inverse bands-index">All Bands</button>
+    </div>
+    <div class="row">
       <div class="span6">
         <img class="thumbnail" src="{{band.info.thumbnail}}">
         <br>
@@ -113,7 +138,6 @@
           {{/each}}
         </ol>
       </div>
-      <button type="button" class="btn btn-inverse bands-index">All Bands</button>
     </div>
   </script>
 </body>

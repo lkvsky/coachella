@@ -18,25 +18,18 @@ var Coachella = (function() {
   function CurrentlyPlayingView(playlist) {
     var self = this;
 
-    self.library = null;
-    self.playlist = null;
+    self.playlist = playlist;
     self.video = null;
 
-    self.loadPlaylist = function() {
-      if (playlist) {
-        self.playlist = playlist;
-        self.renderPlaylist();
-        console.log(self.playlist);
-      }
-    };
-
     self.loadIframe = function() {
-      self.video = new YT.Player('music-player', {
-        events: {
-          'onReady': self.startPlaylist,
-          'onStateChange': self.loadNextVideo
-        }
-      });
+      if (playlist) {
+        self.video = new YT.Player('music-player', {
+          events: {
+            'onReady': self.startPlaylist,
+            'onStateChange': self.loadNextVideo
+          }
+        });
+      }
     };
 
     self.startPlaylist = function() {
@@ -71,21 +64,25 @@ var Coachella = (function() {
     };
 
     self.renderPlaylist = function() {
-      var songList = $("<ol>");
-      var maxIter = Math.min(self.playlist.length - 1, 10);
+      if (playlist) {
+        var songList = $("<ol>");
+        var maxIter = Math.min(self.playlist.length - 1, 10);
 
-      for (var i = 0; i<maxIter; i++) {
-        var li = $("<li>");
+        for (var i = 0; i<maxIter; i++) {
+          var li = $("<li>");
 
-        li.html("<strong>" + self.playlist[i].band + "</strong>: " + self.playlist[i].name);
-        songList.append(li);
+          li.html("<strong>" + self.playlist[i].band + "</strong>: " + self.playlist[i].name);
+          songList.append(li);
+        }
+
+        $("#current-playlist").html(songList);
+      } else {
+        $("#current-playlist").html("Pick or create a playlist!");
       }
-
-      $("#current-playlist").html(songList);
     };
 
     self.initialize = (function() {
-      self.loadPlaylist();
+      self.renderPlaylist();
       $("#cue-playlist").click(self.loadIframe);
     })();
   }
@@ -155,7 +152,7 @@ var Coachella = (function() {
 
     // views
 
-    self.renderPlaylists = function() {
+    self.renderPlaylistsIndex = function() {
       $.getJSON("/playlists.json", function(data) {
         var source = $("#playlists-index").html();
         var template = Handlebars.compile(source);
@@ -163,7 +160,7 @@ var Coachella = (function() {
 
         self.el.html(html);
 
-        self.renderPlaylistsListeners();
+        self.renderPlaylistsIndexListeners();
       });
     };
 
@@ -175,6 +172,20 @@ var Coachella = (function() {
       self.el.html(html);
 
       self.renderPlaylistsFormListeners();
+    };
+
+    self.renderPlaylistsShow = function(id) {
+      var pathname = "/playlists/" + id + ".json";
+
+      $.getJSON(pathname, function(data) {
+        var source = $("#playlists-show").html();
+        var template = Handlebars.compile(source);
+        var html = template({playlist: data});
+
+        self.el.html(html);
+
+        self.renderPlaylistsShowListeners();
+      });
     };
 
     self.resetPlayer = function() {
@@ -192,16 +203,64 @@ var Coachella = (function() {
     self.renderPlaylistsFormListeners = function() {
       $(".playlists-create").click(function() {
         $.post('playlists.json', $("#playlists-form").serialize(), function(data) {
-          self.renderPlaylists();
+          self.renderPlaylistsIndex();
         });
       });
 
-      $(".playlists-index").click(function() {
-        self.renderPlaylists();
+      self.indexPlaylist();
+    };
+
+    self.renderPlaylistsIndexListeners = function() {
+      self.loadPlaylist();
+      self.newPlaylist();
+      self.showPlaylist();
+      self.deletePlaylist();
+    };
+
+    self.renderPlaylistsShowListeners = function() {
+      self.loadPlaylist();
+      self.newPlaylist();
+      self.indexPlaylist();
+      self.deletePlaylist();
+    };
+
+    // listener helpers
+
+    self.showPlaylist = function() {
+      $(".playlists-show").click(function() {
+        var id = $(this).attr("data-playlist-id");
+
+        self.renderPlaylistsShow(id);
       });
     };
 
-    self.renderPlaylistsListeners = function() {
+    self.newPlaylist = function() {
+      $(".playlists-new").click(function() {
+        self.renderPlaylistsForm();
+      });
+    };
+
+    self.deletePlaylist = function() {
+      $(".playlists-delete").click(function() {
+        var id = $(this).attr("data-playlist-id");
+        var pathname = "/playlists/" + id;
+
+        $.ajax({
+          url: pathname,
+          type: "delete"
+        });
+
+        self.renderPlaylistsIndex();
+      });
+    };
+
+    self.indexPlaylist = function() {
+      $(".playlists-index").click(function() {
+        self.renderPlaylistsIndex();
+      });
+    };
+
+    self.loadPlaylist = function() {
       $(".load-playlist").click(function() {
         var id = $(this).attr("data-playlist-id");
         var pathname = "/playlists/" + id + ".json";
@@ -211,14 +270,10 @@ var Coachella = (function() {
           new CurrentlyPlayingView(data.songs);
         });
       });
-
-      $(".playlists-new").click(function() {
-        self.renderPlaylistsForm();
-      });
     };
 
     self.initialize = (function() {
-      self.renderPlaylists();
+      self.renderPlaylistsIndex();
     })();
   }
 
