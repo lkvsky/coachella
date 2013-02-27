@@ -19,7 +19,6 @@ group :assets do
 
   gem 'uglifier', '>= 1.0.3'
   gem 'bootstrap-sass'
-  gem 'simple_form'
 end
 
 group :test, :development do
