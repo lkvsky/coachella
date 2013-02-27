@@ -52,6 +52,14 @@
   color: white;
  };
 
+ div.load-playlist:hover {
+  cursor: pointer;
+  background-color: #614051;
+  border-radius: 5px;
+  border: 1px solid #CCC;
+  color: white;
+ }
+
  .cue-playlist {
   width: 0;
   height: 0;

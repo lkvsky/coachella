@@ -49,8 +49,10 @@
     <div class="span6">
       <form id="playlists-form">
         <fieldset>
-          <label for="band[day]">Filter by Day</label>
-          <select name="band[day]">
+          <label for="playlist[name]">Playlist Name</label>
+          <input name="playlist[name]" type="text">
+          <label for="playlist[day]">Filter by Day</label>
+          <select name="playlist[day]">
             <option value="Fri">Friday</option>
             <option value="Sat">Saturday</option>
             <option value="Sun">Sunday</option>
@@ -60,7 +62,26 @@
       </form>
     </div>
   </div>
+    <div class="row">
+      <button type="button" class="btn btn-inverse playlists-index">All Playlists</button>
+    </div>
   </script>
+
+  <div id="playlists-index" type="text/x-handlebars-template">
+    <h2>Playlists</h2>
+    {{#each playlists}}
+    <div class="row">
+      <div class="span6">
+        <div class="well well-small load-playlist" data-playlist-id="{{this.playlist.id}}">
+          <strong>{{this.playlist.name}}</strong>: {{this.songs.length}} songs
+        </div>
+      </div>
+    </div>
+    {{/each}}
+    <div class="row">
+      <button type="button" class="btn btn-inverse playlists-new">Create Playlist</button>
+    </div>
+  </div>
 
   <script id="bands-index" type="text/x-handlebars-template">
     <h2>All Bands</h2>
