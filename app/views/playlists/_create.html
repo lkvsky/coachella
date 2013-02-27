@@ -1,0 +1,21 @@
+<h2>Playlist Generator</h2>
+<div class="row">
+  <div class="span6">
+    <form id="playlists-form">
+      <fieldset>
+        <label for="playlist[name]">Playlist Name</label>
+        <input name="playlist[name]" type="text">
+        <label for="playlist[day]">Filter by Day</label>
+        <select name="playlist[day]">
+          <option value="Fri">Friday</option>
+          <option value="Sat">Saturday</option>
+          <option value="Sun">Sunday</option>
+        </select>
+      </fieldset>
+      <button type="button" class="btn btn-primary playlists-create">Create Playlist</button>
+    </form>
+  </div>
+</div>
+<div class="row">
+  <button type="button" class="btn btn-inverse playlists-index">All Playlist</button>
+</div>

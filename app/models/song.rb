@@ -11,4 +11,15 @@ class Song < ActiveRecord::Base
   def self.random_selection
     Song.all.shuffle[0..20]
   end
+
+  def formatted_json
+    band = Band.find(self.band_id)
+    {
+      :id => self.id,
+      :name => self.name,
+      :url => self.url,
+      :band_thumbnail => band.thumbnail,
+      :band => band.name
+    }
+  end
 end

@@ -1,0 +1,20 @@
+<h2>{{band.info.name}}</h2>
+<div class="row">
+  <button type="button" class="btn btn-inverse bands-index">All Bands</button>
+</div>
+<div class="row">
+  <div class="span6">
+    <img class="thumbnail" src="{{band.info.thumbnail}}">
+    <br>
+  </div>
+</div>
+<div class="row">
+  <div class="span6">
+    <strong>YouTube Tracks</strong>
+    <ol>
+       {{#each band.songs}}
+        <li class="queue-song" data-band-id="{{this.band_id}} data-song-id={{this.id}}">{{this.name}}
+      {{/each}}
+    </ol>
+  </div>
+</div>

@@ -1,12 +1,12 @@
 class PlaylistsController < ApplicationController
   def create
     if params[:playlist][:day]
-      playlist = create_playlist_by_day(params)
+      playlist = Playlist.create_by_day(params[:playlist][:day], params[:playlist][:name])
     end
 
     respond_to do |format|
       format.html { render :nothing => true }
-      format.json { render :json => format_playlist_json(playlist) }
+      format.json { render :json => playlist.formatted_json }
     end
   end
 
@@ -14,19 +14,16 @@ class PlaylistsController < ApplicationController
     playlist = Playlist.find(params[:id])
 
     respond_to do |format|
-      format.html { redirect_to root_path }
-      format.json { render :json => format_playlist_json(playlist) }
+      format.json { render :json => playlist.formatted_json }
     end
   end
 
   def index
-    playlists = Playlist.all
-
-    playlist_json = playlists.map { |playlist| format_playlist_json(playlist) }
+    playlists = Playlist.all.map { |playlist| playlist.formatted_json }
 
     respond_to do |format|
       format.html
-      format.json { render :json => playlist_json }
+      format.json { render :json => playlists }
     end
   end
 
@@ -34,46 +31,8 @@ class PlaylistsController < ApplicationController
     playlist = Playlist.find(params[:id])
     playlist.destroy
 
-    render :nothing => true
+    respond_to do |format|
+      format.json { render :json => playlist.formatted_json }
+    end
   end
-
-  private
-  
-    def format_song_json(song, band)
-      {
-        :id => song.id,
-        :name => song.name,
-        :url => song.url,
-        :band_thumbnail => band.thumbnail,
-        :band => band.name
-      }
-    end
-
-    def format_playlist_json(playlist)
-      formatted_songs = playlist.songs.map  do |song|
-        format_song_json(song, Band.find(song.band_id))
-      end
-
-      { :playlist => playlist, :songs => formatted_songs }
-    end
-
-    def create_playlist_by_day(params)
-      day = params[:playlist][:day]
-      name = params[:playlist][:name]
-
-      if name.nil? || name == ""
-        t = Time.new.strftime("%m/%d/%Y")
-        name = "New Playlist #{t}"
-      end
-
-      bands = Band.where(:set_time => day)
-      songs = []
-      bands.each { |band| songs << band.songs }
-      playlist_songs = songs.flatten!.shuffle![0..20]
-
-      p = Playlist.new(:name => name)
-      p.songs = playlist_songs
-      p.save!
-      p
-    end
 end

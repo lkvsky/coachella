@@ -1,0 +1,11 @@
+<h2>All Bands</h2>
+{{#each bands}}
+<div class="row">
+  <div class="span6">
+    <div class="well well-small" data-band-id="{{this.id}}">
+      <strong>{{this.name}}</strong>
+      <button type="button" class="btn btn-inverse bands-show" data-band-id="{{this.id}}">Details</button>
+    </div>
+  </div>
+</div>
+{{/each}}

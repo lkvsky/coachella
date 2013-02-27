@@ -33,7 +33,7 @@ var Coachella = (function() {
     };
 
     self.startPlaylist = function() {
-      video = self.playlist.shift();
+      var video = self.playlist.shift();
       self.playlist.push(video);
 
       self.video.loadVideoById(video.url);
@@ -41,8 +41,9 @@ var Coachella = (function() {
     };
 
     self.loadNextVideo = function(event) {
+      // event fired from YT Player that video has ended
       if (event.data === 0) {
-        video = self.playlist.shift();
+        var video = self.playlist.shift();
         self.playlist.push(video);
 
         self.video.loadVideoById(video.url);
@@ -274,7 +275,7 @@ var Coachella = (function() {
   }
 
   return {
-    PlayerView: CurrentlyPlayingView,
+    CurrentlyPlayingView: CurrentlyPlayingView,
     PlaylistCreatorView: PlaylistCreatorView,
     DiscoveryView: DiscoveryView
   };
@@ -282,7 +283,7 @@ var Coachella = (function() {
 })();
 
 function onYouTubeIframeAPIReady() {
-  var player = new Coachella.PlayerView();
+  var player = new Coachella.CurrentlyPlayingView();
   var playlistCreator = new Coachella.PlaylistCreatorView("#playlist-creator");
   var discovery = new Coachella.DiscoveryView("#discovery");
 }

@@ -24,144 +24,43 @@
         </div>
       </div>
     </div>
-
   </div>
 
   <!-- HANDLEBARS SCRIPTS -->
 
   <!-- player templates -->
   <script id="player-show" type="text/x-handlebars-template">
-    <div class="span8">
-      <div id="music-player">
-        <div id="cue-playlist">
-          <div class="cue-playlist">
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="span4">
-      <div id="on-deck">
-      </div>
-    </div>
+    <%= render :partial => "playlists/player_show.html" %>
   </script>
 
   <script id="cued-song" type="text/x-handlebars-template">
-    <div class="well">
-    <h3>Up Next</h3>
-    <img src="{{song.band_thumbnail}}">
-    <br>
-    <strong>{{song.band}}</strong>
-    <p>{{song.name}}</p>
-    </div>
+    <%= render :partial => "playlists/cued_song.html" %>
   </script>
 
   <script id="prompt-user" type="text/x-handlebars-template">
-    <div class="well">
-      <h3>Get Warmed Up!</h3>
-      <p>Create and queue up a playlist below.</p>
-      <p>Feeling random? generate one on the spot right here.</p>
-      <button type="button" class="btn btn-primary generate-random">Play</button>
-    </div>
+    <%= render :partial => "playlists/prompt_user.html" %>
   </script>
 
   <!-- playlist templates -->
   <script id="playlists-create" type="text/x-handlebars-template">
-  <h2>Playlist Generator</h2>
-  <div class="row">
-    <div class="span6">
-      <form id="playlists-form">
-        <fieldset>
-          <label for="playlist[name]">Playlist Name</label>
-          <input name="playlist[name]" type="text">
-          <label for="playlist[day]">Filter by Day</label>
-          <select name="playlist[day]">
-            <option value="Fri">Friday</option>
-            <option value="Sat">Saturday</option>
-            <option value="Sun">Sunday</option>
-          </select>
-        </fieldset>
-        <button type="button" class="btn btn-primary playlists-create">Create Playlist</button>
-      </form>
-    </div>
-  </div>
-    <div class="row">
-      <button type="button" class="btn btn-inverse playlists-index">All Playlist</button>
-    </div>
+    <%= render :partial => "playlists/create.html" %>
   </script>
 
   <script id="playlists-index" type="text/x-handlebars-template">
-    <h2>Playlists</h2>
-    {{#each playlists}}
-    <div class="row">
-      <div class="span6">
-        <div class="well well-small">
-          <strong>{{this.playlist.name}}</strong>: {{this.songs.length}} songs
-          <button type="button" class="btn btn-inverse playlists-show" data-playlist-id="{{this.playlist.id}}">Details</button>
-          <button type="button" class="btn btn-primary load-playlist" data-playlist-id="{{this.playlist.id}}">Play</button>
-        </div>
-      </div>
-    </div>
-    {{/each}}
-    <div class="row">
-      <button type="button" class="btn btn-inverse playlists-new">Create Playlist</button>
-    </div>
+    <%= render :partial => "playlists/index.html" %>
   </script>
 
   <script id="playlists-show" type="text/x-handlebars-template">
-    <h2>{{playlist.playlist.name}}</h2>
-    <div class="row">
-      <button type="button" class="btn btn-inverse playlists-new">Create Playlist</button>
-      <button type="button" class="btn btn-primary load-playlist" data-playlist-id="{{playlist.playlist.id}}">Play</button>
-      <button type="button" class="btn btn-danger playlists-delete" data-playlist-id="{{playlist.playlist.id}}">Delete</button>
-      <button type="button" class="btn btn-inverse playlists-index">All Playlists</button>
-    </div>
-    {{#each playlist.songs}}
-    <div class="row">
-      <div class="span6">
-        <div class="well well-small">
-          <strong>{{this.band}}</strong>: {{this.name}}
-        </div>
-      </div>
-    </div>
-    {{/each}}
+    <%= render :partial => "playlists/show.html" %>
   </script>
 
   <!-- bands templates -->
   <script id="bands-index" type="text/x-handlebars-template">
-    <h2>All Bands</h2>
-    {{#each bands}}
-    <div class="row">
-      <div class="span6">
-        <div class="well well-small" data-band-id="{{this.id}}">
-          <strong>{{this.name}}</strong>
-          <button type="button" class="btn btn-inverse bands-show" data-band-id="{{this.id}}">Details</button>
-        </div>
-      </div>
-    </div>
-    {{/each}}
+    <%= render :partial => "bands/index.html" %>
   </script>
 
   <script id="bands-show" type="text/x-handlebars-template">
-    <h2>{{band.info.name}}</h2>
-    <div class="row">
-      <button type="button" class="btn btn-inverse bands-index">All Bands</button>
-    </div>
-    <div class="row">
-      <div class="span6">
-        <img class="thumbnail" src="{{band.info.thumbnail}}">
-        <br>
-      </div>
-    </div>
-    <div class="row">
-      <div class="span6">
-        <strong>YouTube Tracks</strong>
-        <ol>
-           {{#each band.songs}}
-            <li class="queue-song" data-band-id="{{this.band_id}} data-song-id={{this.id}}">{{this.name}}
-          {{/each}}
-        </ol>
-      </div>
-    </div>
+    <%= render :partial => "bands/show.html" %>
   </script>
 </body>
 </html>
