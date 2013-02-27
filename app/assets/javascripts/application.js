@@ -15,6 +15,20 @@
 //= require_tree .
 var Coachella = (function() {
 
+  var handlebarsHelper = function(el, obj) {
+    var html;
+    var source = $(el).html();
+    var template = Handlebars.compile(source);
+    
+    if (obj) {
+      html = template(obj);
+    } else {
+      html = template();
+    }
+
+    return html;
+  };
+
   function CurrentlyPlayingView(playlist) {
     var self = this;
 
@@ -25,14 +39,14 @@ var Coachella = (function() {
       if (self.playlist) {
         self.video = new YT.Player('music-player', {
           events: {
-            'onReady': self.startPlaylist,
+            'onReady': self.startSong,
             'onStateChange': self.loadNextVideo
           }
         });
       }
     };
 
-    self.startPlaylist = function() {
+    self.startSong = function() {
       var video = self.playlist.shift();
       self.playlist.push(video);
 
@@ -43,30 +57,21 @@ var Coachella = (function() {
     self.loadNextVideo = function(event) {
       // event fired from YT Player that video has ended
       if (event.data === 0) {
-        var video = self.playlist.shift();
-        self.playlist.push(video);
-
-        self.video.loadVideoById(video.url);
-        self.renderOnDeck();
+        self.startSong();
       }
     };
 
-    self.renderOnDeck = function() {
-      var source, template, html;
+    self.renderOnDeckView = function() {
+      var html;
 
       if (self.playlist) {
-        source = $("#cued-song").html();
-        template = Handlebars.compile(source);
-        html = template({song: self.playlist[0]});
+        html = handlebarsHelper("#cued-song", {song: self.playlist[0]});
 
         $("#on-deck").html(html);
       } else {
-        source = $("#prompt-user").html();
-        template = Handlebars.compile(source);
-        html = template();
-
+        html = handlebarsHelper("#prompt-user");
+        
         $("#on-deck").html(html);
-
         $(".generate-random").click(function() {
           self.generateRandomPlaylist();
         });
@@ -74,9 +79,7 @@ var Coachella = (function() {
     };
 
     self.renderPlayerShow = function() {
-      var source = $("#player-show").html();
-      var template = Handlebars.compile(source);
-      var html = template();
+      var html = handlebarsHelper("#player-show");
 
       self.el.html(html);
     };
@@ -85,13 +88,13 @@ var Coachella = (function() {
       $.getJSON("/songs", function(data) {
         self.playlist = data;
 
-        self.renderOnDeck();
+        self.renderOnDeckView();
       });
     };
 
     self.initialize = (function() {
       self.renderPlayerShow();
-      self.renderOnDeck();
+      self.renderOnDeckView();
       $("#cue-playlist").click(self.loadIframe);
     })();
   }
@@ -107,13 +110,11 @@ var Coachella = (function() {
 
     self.renderBandsIndex = function() {
       $.getJSON('/bands.json', function(data) {
-        var source = $("#bands-index").html();
-        var template = Handlebars.compile(source);
-        var html = template({bands: data});
+        var html = handlebarsHelper("#bands-index", {bands: data});
 
         self.el.html(html);
         
-        self.bandsIndexListeners();
+        self.installBandsIndexListeners();
       });
     };
 
@@ -121,19 +122,17 @@ var Coachella = (function() {
       var pathname = '/bands/' + id + '.json';
 
       $.getJSON(pathname, function(data) {
-        var source = $("#bands-show").html();
-        var template = Handlebars.compile(source);
-        var html = template({band: data});
+        var html = handlebarsHelper("#bands-show", {band: data});
 
         self.el.html(html);
 
-        self.bandsShowListeners();
+        self.installBandsShowListeners();
       });
     };
 
     // listeners
 
-    self.bandsIndexListeners = function() {
+    self.installBandsIndexListeners = function() {
       $(".bands-show").click(function() {
         var id = $(this).attr("data-band-id");
 
@@ -141,7 +140,7 @@ var Coachella = (function() {
       });
     };
 
-    self.bandsShowListeners = function() {
+    self.installBandsShowListeners = function() {
       $(".bands-index").click(function() {
         self.renderBandsIndex();
       });
@@ -163,43 +162,37 @@ var Coachella = (function() {
 
     self.renderPlaylistsIndex = function() {
       $.getJSON("/playlists.json", function(data) {
-        var source = $("#playlists-index").html();
-        var template = Handlebars.compile(source);
-        var html = template({playlists: data});
+        var html = handlebarsHelper("#playlists-index", {playlists: data});
 
         self.el.html(html);
 
-        self.renderPlaylistsIndexListeners();
+        self.installPlaylistsIndexListeners();
       });
     };
 
     self.renderPlaylistsForm = function() {
-      var source = $("#playlists-create").html();
-      var template = Handlebars.compile(source);
-      var html = template();
+      var html = handlebarsHelper("#playlists-create");
 
       self.el.html(html);
 
-      self.renderPlaylistsFormListeners();
+      self.installPlaylistsFormListeners();
     };
 
     self.renderPlaylistsShow = function(id) {
       var pathname = "/playlists/" + id + ".json";
 
       $.getJSON(pathname, function(data) {
-        var source = $("#playlists-show").html();
-        var template = Handlebars.compile(source);
-        var html = template({playlist: data});
+        var html = handlebarsHelper("#playlists-show", {playlist: data});
 
         self.el.html(html);
 
-        self.renderPlaylistsShowListeners();
+        self.installPlaylistsShowListeners();
       });
     };
 
     // listeners
 
-    self.renderPlaylistsFormListeners = function() {
+    self.installPlaylistsFormListeners = function() {
       $(".playlists-create").click(function() {
         $.post('playlists.json', $("#playlists-form").serialize(), function(data) {
           self.renderPlaylistsIndex();
@@ -209,15 +202,14 @@ var Coachella = (function() {
       self.indexPlaylist();
     };
 
-    self.renderPlaylistsIndexListeners = function() {
+    self.installPlaylistsIndexListeners = function() {
       self.loadPlaylist();
       self.newPlaylist();
       self.showPlaylist();
     };
 
-    self.renderPlaylistsShowListeners = function() {
+    self.installPlaylistsShowListeners = function() {
       self.loadPlaylist();
-      self.newPlaylist();
       self.indexPlaylist();
       self.deletePlaylist();
     };
