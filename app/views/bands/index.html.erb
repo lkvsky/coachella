@@ -1,7 +1,0 @@
-<% @bands.each do |band| %>
-  <%= render :partial => "band", :locals => { :band => band } %>
-<% end %>
-
-<script>
-var SongData = <%= @songs.to_json.html_safe %>
-</script>
