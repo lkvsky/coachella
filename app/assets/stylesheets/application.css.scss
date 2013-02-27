@@ -44,13 +44,14 @@
   cursor: pointer;
  }
 
- div.bands-show:hover {
-  cursor: pointer;
-  background-color: #614051;
-  border-radius: 5px;
-  border: 1px solid #CCC;
-  color: white;
- };
+ #on-deck {
+  height: 310px;
+  text-align: center;
+ }
+
+ #on-deck img {
+  width: 150px;
+ }
 
  .cue-playlist {
   width: 0;

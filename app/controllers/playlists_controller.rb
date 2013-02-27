@@ -6,7 +6,7 @@ class PlaylistsController < ApplicationController
 
     respond_to do |format|
       format.html { render :nothing => true }
-      format.json { render :json => format_return_json(playlist) }
+      format.json { render :json => format_playlist_json(playlist) }
     end
   end
 
@@ -15,14 +15,14 @@ class PlaylistsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to root_path }
-      format.json { render :json => format_return_json(playlist) }
+      format.json { render :json => format_playlist_json(playlist) }
     end
   end
 
   def index
     playlists = Playlist.all
 
-    playlist_json = playlists.map { |playlist| format_return_json(playlist) }
+    playlist_json = playlists.map { |playlist| format_playlist_json(playlist) }
 
     respond_to do |format|
       format.html
@@ -39,20 +39,19 @@ class PlaylistsController < ApplicationController
 
   private
   
-    def create_song_json(song, band)
+    def format_song_json(song, band)
       {
-        :band_id => song.band_id,
         :id => song.id,
         :name => song.name,
         :url => song.url,
-        :thumbnail => song.thumbnail,
+        :band_thumbnail => band.thumbnail,
         :band => band.name
       }
     end
 
-    def format_return_json(playlist)
+    def format_playlist_json(playlist)
       formatted_songs = playlist.songs.map  do |song|
-        create_song_json(song, Band.find(song.band_id))
+        format_song_json(song, Band.find(song.band_id))
       end
 
       { :playlist => playlist, :songs => formatted_songs }

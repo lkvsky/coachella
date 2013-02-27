@@ -18,11 +18,11 @@ var Coachella = (function() {
   function CurrentlyPlayingView(playlist) {
     var self = this;
 
+    self.el = $("#music-container");
     self.playlist = playlist;
-    self.video = null;
 
     self.loadIframe = function() {
-      if (playlist) {
+      if (self.playlist) {
         self.video = new YT.Player('music-player', {
           events: {
             'onReady': self.startPlaylist,
@@ -37,7 +37,7 @@ var Coachella = (function() {
       self.playlist.push(video);
 
       self.video.loadVideoById(video.url);
-      self.nowPlaying(video);
+      self.renderOnDeck();
     };
 
     self.loadNextVideo = function(event) {
@@ -46,43 +46,51 @@ var Coachella = (function() {
         self.playlist.push(video);
 
         self.video.loadVideoById(video.url);
-        self.nowPlaying(video);
+        self.renderOnDeck();
       }
-
-      self.renderPlaylist();
     };
 
-    self.nowPlaying = function(video) {
-      var currentVid = $("<div>");
-      var about = $("<div>");
+    self.renderOnDeck = function() {
+      var source, template, html;
 
-      currentVid.addClass("well");
-      currentVid.append(about);
-      about.html("<strong>Now Playing</strong> " + video.band + ", '" + video.name + "'");
+      if (self.playlist) {
+        source = $("#cued-song").html();
+        template = Handlebars.compile(source);
+        html = template({song: self.playlist[0]});
 
-      $("#now-playing").html(currentVid);
-    };
-
-    self.renderPlaylist = function() {
-      if (playlist) {
-        var songList = $("<ol>");
-        var maxIter = Math.min(self.playlist.length - 1, 10);
-
-        for (var i = 0; i<maxIter; i++) {
-          var li = $("<li>");
-
-          li.html("<strong>" + self.playlist[i].band + "</strong>: " + self.playlist[i].name);
-          songList.append(li);
-        }
-
-        $("#current-playlist").html(songList);
+        $("#on-deck").html(html);
       } else {
-        $("#current-playlist").html("Pick or create a playlist!");
+        source = $("#prompt-user").html();
+        template = Handlebars.compile(source);
+        html = template();
+
+        $("#on-deck").html(html);
+
+        $(".generate-random").click(function() {
+          self.generateRandomPlaylist();
+        });
       }
+    };
+
+    self.renderPlayerShow = function() {
+      var source = $("#player-show").html();
+      var template = Handlebars.compile(source);
+      var html = template();
+
+      self.el.html(html);
+    };
+
+    self.generateRandomPlaylist = function() {
+      $.getJSON("/songs", function(data) {
+        self.playlist = data;
+
+        self.renderOnDeck();
+      });
     };
 
     self.initialize = (function() {
-      self.renderPlaylist();
+      self.renderPlayerShow();
+      self.renderOnDeck();
       $("#cue-playlist").click(self.loadIframe);
     })();
   }
@@ -188,16 +196,6 @@ var Coachella = (function() {
       });
     };
 
-    self.resetPlayer = function() {
-      var htmlStr = '<div id="music-player"> \
-                      <div id="cue-playlist"> \
-                        <div class="cue-playlist"> \
-                        </div> \
-                      </div> \
-                    </div>';
-      $("#music-container").html(htmlStr);
-    };
-
     // listeners
 
     self.renderPlaylistsFormListeners = function() {
@@ -214,7 +212,6 @@ var Coachella = (function() {
       self.loadPlaylist();
       self.newPlaylist();
       self.showPlaylist();
-      self.deletePlaylist();
     };
 
     self.renderPlaylistsShowListeners = function() {
@@ -266,7 +263,6 @@ var Coachella = (function() {
         var pathname = "/playlists/" + id + ".json";
 
         $.getJSON(pathname, function(data) {
-          self.resetPlayer();
           new CurrentlyPlayingView(data.songs);
         });
       });

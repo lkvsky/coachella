@@ -10,21 +10,7 @@
 <body>
   <div class="container">
     <h1>Coachella Warm Up</h1>
-    <div class="row">
-      <div id="music-container" class="span7">
-        <div id="music-player">
-          <div id="cue-playlist">
-            <div class="cue-playlist">
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="span5">
-        <div id="current-playlist">
-        </div>
-      </div>
-    </div>
-    <div id="now-playing" class="row">
+    <div id="music-container" class="row">
     </div>
     <hr>
 
@@ -43,6 +29,42 @@
 
   <!-- HANDLEBARS SCRIPTS -->
 
+  <!-- player templates -->
+  <script id="player-show" type="text/x-handlebars-template">
+    <div class="span8">
+      <div id="music-player">
+        <div id="cue-playlist">
+          <div class="cue-playlist">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="span4">
+      <div id="on-deck">
+      </div>
+    </div>
+  </script>
+
+  <script id="cued-song" type="text/x-handlebars-template">
+    <div class="well">
+    <h3>Up Next</h3>
+    <img src="{{song.band_thumbnail}}">
+    <br>
+    <strong>{{song.band}}</strong>
+    <p>{{song.name}}</p>
+    </div>
+  </script>
+
+  <script id="prompt-user" type="text/x-handlebars-template">
+    <div class="well">
+      <h3>Get Warmed Up!</h3>
+      <p>Create and queue up a playlist below.</p>
+      <p>Feeling random? generate one on the spot right here.</p>
+      <button type="button" class="btn btn-primary generate-random">Play</button>
+    </div>
+  </script>
+
+  <!-- playlist templates -->
   <script id="playlists-create" type="text/x-handlebars-template">
   <h2>Playlist Generator</h2>
   <div class="row">
@@ -76,7 +98,6 @@
           <strong>{{this.playlist.name}}</strong>: {{this.songs.length}} songs
           <button type="button" class="btn btn-inverse playlists-show" data-playlist-id="{{this.playlist.id}}">Details</button>
           <button type="button" class="btn btn-primary load-playlist" data-playlist-id="{{this.playlist.id}}">Play</button>
-          <button type="button" class="btn btn-danger playlists-delete" data-playlist-id="{{this.playlist.id}}">Delete</button>
         </div>
       </div>
     </div>
@@ -105,13 +126,15 @@
     {{/each}}
   </script>
 
+  <!-- bands templates -->
   <script id="bands-index" type="text/x-handlebars-template">
     <h2>All Bands</h2>
     {{#each bands}}
     <div class="row">
       <div class="span6">
-        <div class="well well-small bands-show" data-band-id="{{this.id}}">
-          <h4>{{this.name}}</h4>
+        <div class="well well-small" data-band-id="{{this.id}}">
+          <strong>{{this.name}}</strong>
+          <button type="button" class="btn btn-inverse bands-show" data-band-id="{{this.id}}">Details</button>
         </div>
       </div>
     </div>
