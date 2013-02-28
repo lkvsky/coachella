@@ -16,6 +16,7 @@ development:
   adapter: postgresql
   encoding: unicode
   database: coachella_development
+  host: localhost
   pool: 5
   username:
   password:

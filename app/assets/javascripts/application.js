@@ -40,18 +40,13 @@ var Coachella = (function() {
         self.video = new YT.Player('music-player', {
           events: {
             'onReady': self.startPlaylist,
-            'onStateChange': self.renderCuedSongView
+            'onStateChange': self.renderCurrentSong
           }
         });
       }
     };
 
     self.startPlaylist = function() {
-      // var video = self.playlist.shift();
-      // self.playlist.push(video);
-
-      // self.video.loadVideoById(video.url);
-      // self.renderOnDeck();
       var playerList = [];
 
       for (var i=0; i<self.playlist.length; i++) {
@@ -60,13 +55,6 @@ var Coachella = (function() {
 
       self.video.loadPlaylist({playlist: playerList});
     };
-
-    // self.loadNextVideo = function(event) {
-    //   // event fired from YT Player that video has ended
-    //   if (event.data === 0) {
-    //     self.startPlaylist();
-    //   }
-    // };
 
     self.renderPromptUserView = function() {
       html = handlebarsHelper("#prompt-user");
@@ -77,7 +65,7 @@ var Coachella = (function() {
       });
     };
 
-    self.renderCuedSongView = function() {
+    self.renderCurrentSong = function() {
       var html, song;
 
       if (self.video) {
@@ -90,8 +78,6 @@ var Coachella = (function() {
         }
 
         html = handlebarsHelper("#cued-song", {song: song});
-      } else {
-        html = handlebarsHelper("#cued-song", {song: self.playlist[0]});
       }
 
       $("#on-deck").html(html);
@@ -107,14 +93,17 @@ var Coachella = (function() {
       $.getJSON("/songs", function(data) {
         self.playlist = data;
 
-        self.renderCuedSongView();
+        self.loadIframe();
       });
     };
 
     self.initialize = (function() {
       self.renderPlayerShow();
-      self.renderPromptUserView();
-      $("#cue-playlist").click(self.loadIframe);
+      if (self.playlist) {
+        self.loadIframe();
+      } else {
+        self.renderPromptUserView();
+      }
     })();
   }
 

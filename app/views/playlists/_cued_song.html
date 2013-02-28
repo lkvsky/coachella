@@ -1,7 +1,11 @@
 <div class="well">
-  <h3>Up Next</h3>
+  <h3>Currently Playing</h3>
+  {{#if song}}
   <img src="{{song.band_thumbnail}}">
   <br>
   <strong>{{song.band}}</strong>
   <p>{{song.name}}</p>
+  {{else}}
+  <p>Loading song...</p>
+  {{/if}}
 </div>
