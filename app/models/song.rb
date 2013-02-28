@@ -20,8 +20,8 @@ class Song < ActiveRecord::Base
       :url => self.url,
       :band_thumbnail => band.thumbnail,
       :band => band.name,
-      :like => self.liked?(user),
-      :dislike => self.disliked?(user)
+      :like => "#{self.liked?(user)}",
+      :dislike => "#{self.disliked?(user)}"
     }
   end
 

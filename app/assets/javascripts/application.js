@@ -66,7 +66,7 @@ var Coachella = (function() {
       }
 
       $("#on-deck").html(html);
-      self.updateFeelings(song.like, song.dislike);
+      self.renderFeelingsHtml();
       self.installCuedSongListeners();
     };
 
@@ -86,8 +86,6 @@ var Coachella = (function() {
             'onStateChange': self.renderCurrentSong
           }
         });
-
-        self.video.setLoop(true);
       }
     };
 
@@ -113,12 +111,12 @@ var Coachella = (function() {
     self.installCuedSongListeners = function() {
       $(".like").click(function() {
         var songId = $(this).attr("data-song-id");
-        self.postLike(songId);
+        self.postLike(songId, this);
       });
 
       $(".dislike").click(function() {
         var songId = $(this).attr("data-song-id");
-        self.postDislike(songId);
+        self.postDislike(songId, this);
       });
 
     };
@@ -127,27 +125,41 @@ var Coachella = (function() {
 
     self.postLike = function(songId) {
       $.post("/song_likes", {"like": songId}, function(data) {
-        self.updateFeelings(data.like, data.dislike);
+        self.updateSongAttributes(songId, data.like, data.dislike);
+        self.renderFeelingsHtml();
       });
     };
 
     self.postDislike = function(songId) {
       $.post("/song_dislikes", {"dislike": songId}, function(data) {
-        self.updateFeelings(data.like, data.dislike);
+        self.updateSongAttributes(songId, data.like, data.dislike);
+        self.renderFeelingsHtml();
       });
     };
 
-    self.updateFeelings = function(likeStatus, dislikeStatus) {
-      if (likeStatus) {
-        $(".feelings").find(".like").html("UNLIKE");
-      } else {
-        $(".feelings").find(".like").html("LIKE");
+    self.updateSongAttributes = function(songId, likeStatus, dislikeStatus) {
+      for (var i=0; i<self.playlist.length; i++) {
+        if (self.playlist[i].id == songId) {
+          self.playlist[i].like = likeStatus;
+          self.playlist[i].dislike = dislikeStatus;
+        }
       }
 
-      if (dislikeStatus) {
-        $(".feelings").find(".dislike").html("UNHATE");
+      $(".feelings").find(".like").attr("data-like-status", likeStatus);
+      $(".feelings").find(".dislike").attr("data-dislike-status", dislikeStatus);
+    };
+
+    self.renderFeelingsHtml = function() {
+      if ($(".like").attr("data-like-status") == "true") {
+        $(".like").html("UNLIKE");
       } else {
-        $(".feelings").find(".dislike").html("LOATHE");
+        $(".like").html("LIKE");
+      }
+
+      if ($(".dislike").attr("data-like-status") == "true") {
+        $(".dislike").html("UNHATE");
+      } else {
+        $(".dislike").html("LOATHE");
       }
     };
 
