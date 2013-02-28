@@ -1,7 +1,11 @@
 class PlaylistsController < ApplicationController
+  before_filter :authenticate_user!
+
   def create
     if params[:playlist][:day]
-      playlist = Playlist.create_by_day(params[:playlist][:day], params[:playlist][:name])
+      playlist = Playlist.create_by_day(params[:playlist][:day],
+                                        params[:playlist][:name],
+                                        current_user)
     end
 
     respond_to do |format|
@@ -19,7 +23,7 @@ class PlaylistsController < ApplicationController
   end
 
   def index
-    playlists = Playlist.all.map { |playlist| playlist.formatted_json }
+    playlists = current_user.playlists.map { |playlist| playlist.formatted_json }
 
     respond_to do |format|
       format.html

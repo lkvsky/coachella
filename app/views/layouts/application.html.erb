@@ -9,58 +9,19 @@
 </head>
 <body>
   <div class="container">
+
+    <% if notice %>
+      <div class="notice"><%= notice %></div>
+    <% end %>
+
+    <% if alert %>
+      <div class="alert"><%= alert %></div>
+    <% end %>
+
     <h1>Coachella Warm Up</h1>
-    <div id="music-container" class="row">
-    </div>
-    <hr>
 
-    <div class="row">
-      <div class="span6">
-        <div id="discovery">
-        </div>
-      </div>
-      <div class="span6">
-        <div id="playlist-creator">
-        </div>
-      </div>
-    </div>
+    <%= yield %>
+
   </div>
-
-  <!-- HANDLEBARS SCRIPTS -->
-
-  <!-- player templates -->
-  <script id="player-show" type="text/x-handlebars-template">
-    <%= render :partial => "playlists/player_show.html" %>
-  </script>
-
-  <script id="cued-song" type="text/x-handlebars-template">
-    <%= render :partial => "playlists/cued_song.html" %>
-  </script>
-
-  <script id="prompt-user" type="text/x-handlebars-template">
-    <%= render :partial => "playlists/prompt_user.html" %>
-  </script>
-
-  <!-- playlist templates -->
-  <script id="playlists-create" type="text/x-handlebars-template">
-    <%= render :partial => "playlists/create.html" %>
-  </script>
-
-  <script id="playlists-index" type="text/x-handlebars-template">
-    <%= render :partial => "playlists/index.html" %>
-  </script>
-
-  <script id="playlists-show" type="text/x-handlebars-template">
-    <%= render :partial => "playlists/show.html" %>
-  </script>
-
-  <!-- bands templates -->
-  <script id="bands-index" type="text/x-handlebars-template">
-    <%= render :partial => "bands/index.html" %>
-  </script>
-
-  <script id="bands-show" type="text/x-handlebars-template">
-    <%= render :partial => "bands/show.html" %>
-  </script>
 </body>
 </html>

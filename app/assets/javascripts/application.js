@@ -105,13 +105,36 @@ var Coachella = (function() {
 
     self.installCuedSongListeners = function() {
       $(".like").click(function() {
+        console.log("something");
         var songId = $(this).attr("data-song-id");
         self.postLike(songId);
+
+        $(this).removeClass("post");
+        $(this).addClass("destroy");
       });
 
-      $(".dislike").click(function() {
+      $(".dislike .post").click(function() {
         var songId = $(this).attr("data-song-id");
         self.postDislike(songId);
+
+        $(this).removeClass("post");
+        $(this).addClass("destroy");
+      });
+
+      $(".like .destroy").click(function() {
+        var songId = $(this).attr("data-song-id");
+        self.destroyLike(songId);
+
+        $(this).destroyDislike("destroy");
+        $(this).addClass("post");
+      });
+
+      $(".dislike .destroy").click(function() {
+        var songId = $(this).attr("data-song-id");
+        self.postDislike(songId);
+
+        $(this).removeClass("destroy");
+        $(this).addClass("post");
       });
     };
 
@@ -130,11 +153,27 @@ var Coachella = (function() {
     };
 
     self.destroyLike = function(songId) {
-      // to do after I implement auth
+      var pathname = "song_likes/" + songId;
+
+      $.ajax({
+        url: pathname,
+        type: "delete",
+        success: function(data) {
+          console.log(data);
+        }
+      });
     };
 
     self.destroyDislike = function(songId) {
-      // to do after I implement auth
+      var pathname = "song_dislikes/" + songId;
+
+      $.ajax({
+        url: pathname,
+        type: "delete",
+        success: function(data) {
+          console.log(data);
+        }
+      });
     };
 
     self.initialize = (function() {

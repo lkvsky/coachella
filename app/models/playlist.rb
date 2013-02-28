@@ -17,15 +17,20 @@ class Playlist < ActiveRecord::Base
     { :playlist => self, :songs => formatted_songs }
   end
 
-  def self.create_by_day(day, name)
+  def self.create_by_day(day, name, user)
     bands = Band.where(:set_time => day).includes(:songs)
 
     songs = []
     bands.each { |band| songs.concat(band.songs) }
-    playlist_songs = songs.shuffle![0..20]
 
-    p = Playlist.new(:name => name)
-    p.songs = playlist_songs
+    disliked_songs = user.disliked_songs
+
+    disliked_songs.each do |dislike|
+      songs.select! { |song| song != dislike }
+    end
+
+    p = Playlist.new(:name => name, :user_id => user.id)
+    p.songs = songs.shuffle![0..20]
     p.save!
     p
   end
@@ -37,5 +42,16 @@ class Playlist < ActiveRecord::Base
         t = Time.new.strftime("%m/%d/%Y")
         self.name = "New Playlist #{t}"
       end
+    end
+
+    # to do: figure out wtf this can't be run, ever
+    def filter_songs(songs, user)
+      disliked_songs = user.disliked_songs
+
+      disliked_songs.each do |dislike|
+        songs.select! { |song| song != dislike }
+      end
+
+      songs
     end
 end

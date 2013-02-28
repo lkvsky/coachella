@@ -1,4 +1,6 @@
 Coachella::Application.routes.draw do
+  devise_for :users
+
   resources :playlists
   resources :songs, :only => [:index]
   resources :bands, :only => [:index, :show]
