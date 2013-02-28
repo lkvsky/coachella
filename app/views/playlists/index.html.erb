@@ -1,20 +1,38 @@
     <div id="music-container" class="row">
     </div>
-    
-    <hr>
 
     <div class="row">
-      <div class="span6">
-        <div id="discovery">
+      <div class="span12">
+
+        <div id="navigation">
         </div>
+
       </div>
-      <div class="span6">
-        <div id="playlist-creator">
+      <div class="span8">
+
+        <div class="discovery">
+
+          <div id="band">
+          </div>
+
+          <div id="song">
+          </div>
+
+
+          <div id="playlist">
+          </div>
+
         </div>
+
       </div>
     </div>
 
   <!-- HANDLEBARS SCRIPTS -->
+
+  <!-- nav bar -->
+  <script id="navigation-show" type="text/x-handlebars-template">
+    <%= render :partial => "playlists/navigation.html" %>
+  </script>
 
   <!-- player templates -->
   <script id="player-show" type="text/x-handlebars-template">
@@ -49,4 +67,13 @@
 
   <script id="bands-show" type="text/x-handlebars-template">
     <%= render :partial => "bands/show.html" %>
+  </script>
+
+  <!-- songs templates -->
+  <script id="liked-show" type="text/x-handlebars-template">
+    <%= render :partial => "songs/liked_songs.html" %>
+  </script>
+
+  <script id="disliked-show" type="text/x-handlebars-template">
+    <%= render :partial => "songs/disliked_songs.html" %>
   </script>

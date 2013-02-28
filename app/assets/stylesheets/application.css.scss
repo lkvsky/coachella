@@ -17,10 +17,38 @@
   text-align: center;
  }
 
- #playlist-creator {
+ span {
+  display: inline-block;
+ }
+
+ span.nav {
+  margin-right: 10px;
+  font-size: 1.5em;
+  padding: 10px;
+  background-color: white;
+ }
+
+ span.nav:hover {
+  cursor: pointer;
+  background-color: red;
+ }
+
+ .brand {
+  margin-right: 20px;
+  font-style: bold;
+  font-size: 2em;
+ }
+
+ #content-nav {
+  margin-top: 20px;
   width: 100%;
-  margin-left: 40px;
-  text-align: center;
+  border: 1px solid #7F7F7F;
+  padding: 10px;
+  background-color: #CCC;
+ }
+
+ .active {
+  background-color: red;
  }
 
  #music-player {

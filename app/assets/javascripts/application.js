@@ -15,6 +15,8 @@
 //= require_tree .
 var Coachella = (function() {
 
+  // cross-view helpers
+
   var handlebarsHelper = function(el, obj) {
     var html;
     var source = $(el).html();
@@ -28,6 +30,8 @@ var Coachella = (function() {
 
     return html;
   };
+
+  // Player view
 
   function CurrentlyPlayingView(playlist) {
     var self = this;
@@ -49,7 +53,7 @@ var Coachella = (function() {
     self.renderCurrentSong = function() {
       var html, song;
 
-      if (self.video) {
+      if (self.video && !YT.PlayerState.ENDED) {
         var url = self.video.getVideoUrl().split("v=")[1];
 
         for (var i=0; i<self.playlist.length; i++) {
@@ -159,7 +163,7 @@ var Coachella = (function() {
 
   // Constructor to initialize views for 'discovery'
 
-  function DiscoveryView(el) {
+  function BandView(el) {
     var self = this;
 
     self.el = $(el);
@@ -211,7 +215,7 @@ var Coachella = (function() {
     })();
   }
 
-  function PlaylistCreatorView(el) {
+  function PlaylistView(el) {
     var self = this;
 
     self.el = $(el);
@@ -324,18 +328,120 @@ var Coachella = (function() {
     })();
   }
 
+  // view for songs
+
+  function SongView(el) {
+    var self = this;
+
+    self.el = $(el);
+
+    self.renderLikedSongs = function() {
+      $.getJSON("/song_likes.json", function(data) {
+        var html = handlebarsHelper("#liked-show", {songs: data});
+
+        self.el.html(html);
+        self.installLikeListeners();
+      });
+    };
+
+    self.renderDislikedSongs = function() {
+      $.getJSON("/song_dislikes.json", function(data) {
+        var html = handlebarsHelper("#disliked-show", {songs: data});
+
+        self.el.html(html);
+        self.installDislikeListeners();
+      });
+    };
+
+    self.installLikeListeners = function() {
+      $(".dislike-show").click(function() {
+        self.renderDislikedSongs();
+      });
+
+      $(".destroy-like").click(function() {
+        var pathname = "song_likes/" + $(this).attr("data-song-id");
+        
+        $.ajax({
+          url: pathname,
+          type: "delete"
+        });
+      });
+    };
+
+    self.installDislikeListeners = function() {
+      $(".like-show").click(function() {
+        self.renderLikedSongs();
+      });
+
+      $(".destroy-dislike").click(function() {
+        var pathname = "song_dislikes/" + $(this).attr("data-song-id");
+        
+        $.ajax({
+          url: pathname,
+          type: "delete"
+        });
+      });
+    };
+
+    self.initialize = (function() {
+      self.renderLikedSongs();
+    })();
+  }
+
+  // view for navigation
+
+  function Navigation() {
+    var self = this;
+
+    self.el = $("#navigation");
+
+    self.renderContentNav = function() {
+      var html = handlebarsHelper("#navigation-show");
+      self.el.html(html);
+
+      $("#playlist").hide();
+      $("#band-section").addClass("active");
+
+      self.installNavListeners();
+    };
+
+    self.installNavListeners = function() {
+      self.toggleSection("#band-section", "#band");
+      self.toggleSection("#song-section", "#song");
+      self.toggleSection("#playlist-section", "#playlist");
+    };
+
+    self.toggleSection = function(tab, blockContent) {
+      $(tab).click(function() {
+        $("#content-nav span").removeClass("active");
+        $(tab).addClass("active");
+
+        $(".discovery > div").hide();
+        $(blockContent).show();
+      });
+    };
+
+    self.initialize = (function() {
+      self.renderContentNav();
+    })();
+  }
+
   return {
     CurrentlyPlayingView: CurrentlyPlayingView,
-    PlaylistCreatorView: PlaylistCreatorView,
-    DiscoveryView: DiscoveryView
+    PlaylistView: PlaylistView,
+    BandView: BandView,
+    SongView: SongView,
+    Navigation: Navigation
   };
 
 })();
 
 function onYouTubeIframeAPIReady() {
   var player = new Coachella.CurrentlyPlayingView();
-  var playlistCreator = new Coachella.PlaylistCreatorView("#playlist-creator");
-  var discovery = new Coachella.DiscoveryView("#discovery");
+  var playlistCreator = new Coachella.PlaylistView("#playlist");
+  var band = new Coachella.BandView("#band");
+  var song = new Coachella.SongView("#song");
+  var navigation = new Coachella.Navigation();
 }
 
 $(function() {

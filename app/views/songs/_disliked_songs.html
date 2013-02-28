@@ -1,0 +1,16 @@
+<h2>Hated Songs</h2>
+<button class="like-show btn btn-inverse" type="button">Show Liked Songs</button>
+{{#if songs}}
+  {{#each songs}}
+
+      <div class="well well-small" data-song-id="{{this.id}}">
+        <strong>{{this.name}}</strong> by {{this.band}}
+        <button type="button" class="destroy-dislike btn btn-danger" data-song-id="{{this.id}}">Unhate</button>
+      </div>
+
+  {{/each}}
+{{else}}
+<div class="well well-small">
+  I guess you don't hate anything at Coachella. Cool!
+</div>
+{{/if}}

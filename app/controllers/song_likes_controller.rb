@@ -19,8 +19,20 @@ class SongLikesController < ApplicationController
     end
   end
 
+  def index
+    songs = current_user.favorite_songs.map { |song| song.formatted_json(current_user) }
+
+    respond_to do |format|
+      format.json { render :json => songs }
+    end
+  end
+
   def destroy
-    song = Song.find(params[:like])
+    if params[:like]
+      song = Song.find(params[:like])
+    elsif params[:id]
+      song = Song.find(params[:id])
+    end
     
     like = User.find(current_user.id).song_likes.where(:song_id => song.id).first
     like.destroy
