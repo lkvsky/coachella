@@ -35,26 +35,7 @@ var Coachella = (function() {
     self.el = $("#music-container");
     self.playlist = playlist;
 
-    self.loadIframe = function() {
-      if (self.playlist) {
-        self.video = new YT.Player('music-player', {
-          events: {
-            'onReady': self.startPlaylist,
-            'onStateChange': self.renderCurrentSong
-          }
-        });
-      }
-    };
-
-    self.startPlaylist = function() {
-      var playerList = [];
-
-      for (var i=0; i<self.playlist.length; i++) {
-        playerList.push(self.playlist[i].url);
-      }
-
-      self.video.loadPlaylist({playlist: playerList});
-    };
+    // views
 
     self.renderPromptUserView = function() {
       html = handlebarsHelper("#prompt-user");
@@ -81,6 +62,7 @@ var Coachella = (function() {
       }
 
       $("#on-deck").html(html);
+      self.installCuedSongListeners();
     };
 
     self.renderPlayerShow = function() {
@@ -89,12 +71,70 @@ var Coachella = (function() {
       self.el.html(html);
     };
 
+    // functionality
+
+    self.loadIframe = function() {
+      if (self.playlist) {
+        self.video = new YT.Player('music-player', {
+          events: {
+            'onReady': self.startPlaylist,
+            'onStateChange': self.renderCurrentSong
+          }
+        });
+      }
+    };
+
+    self.startPlaylist = function() {
+      var playerList = [];
+
+      for (var i=0; i<self.playlist.length; i++) {
+        playerList.push(self.playlist[i].url);
+      }
+
+      self.video.loadPlaylist({playlist: playerList});
+    };
+
     self.generateRandomPlaylist = function() {
       $.getJSON("/songs", function(data) {
         self.playlist = data;
 
         self.loadIframe();
       });
+    };
+
+
+    self.installCuedSongListeners = function() {
+      $(".like").click(function() {
+        var songId = $(this).attr("data-song-id");
+        self.postLike(songId);
+      });
+
+      $(".dislike").click(function() {
+        var songId = $(this).attr("data-song-id");
+        self.postDislike(songId);
+      });
+    };
+
+    // listener helpers
+
+    self.postLike = function(songId) {
+      $.post("/song_likes", {"like": songId}, function(data) {
+        console.log(data);
+      });
+    };
+
+    self.postDislike = function(songId) {
+      $.post("/song_dislikes", {"dislike": songId}, function(data) {
+        console.log(data);
+      });
+    };
+
+    self.destroyLike = function(songId) {
+      // to do after I implement auth
+    };
+
+    self.destroyDislike = function(songId) {
+      // to do after I implement auth
     };
 
     self.initialize = (function() {
