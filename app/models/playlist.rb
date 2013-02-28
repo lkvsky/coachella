@@ -23,11 +23,7 @@ class Playlist < ActiveRecord::Base
     songs = []
     bands.each { |band| songs.concat(band.songs) }
 
-    disliked_songs = user.disliked_songs
-
-    disliked_songs.each do |dislike|
-      songs.select! { |song| song != dislike }
-    end
+    songs.select! { |song| !song.disliked?(user) }
 
     p = Playlist.new(:name => name, :user_id => user.id)
     p.songs = songs.shuffle![0..20]

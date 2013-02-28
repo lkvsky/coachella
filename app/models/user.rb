@@ -13,6 +13,6 @@ class User < ActiveRecord::Base
   has_many :song_likes
   has_many :song_dislikes
 
-  has_many :favorite_songs, :through => :song_dislikes, :source => :song
-  has_many :disliked_songs, :through => :song_likes, :source => :song
+  has_many :favorite_songs, :through => :song_likes, :source => :song
+  has_many :disliked_songs, :through => :song_dislikes, :source => :song
 end

@@ -105,75 +105,43 @@ var Coachella = (function() {
 
     self.installCuedSongListeners = function() {
       $(".like").click(function() {
-        console.log("something");
         var songId = $(this).attr("data-song-id");
         self.postLike(songId);
-
-        $(this).removeClass("post");
-        $(this).addClass("destroy");
       });
 
-      $(".dislike .post").click(function() {
+      $(".dislike").click(function() {
         var songId = $(this).attr("data-song-id");
         self.postDislike(songId);
-
-        $(this).removeClass("post");
-        $(this).addClass("destroy");
       });
 
-      $(".like .destroy").click(function() {
-        var songId = $(this).attr("data-song-id");
-        self.destroyLike(songId);
-
-        $(this).destroyDislike("destroy");
-        $(this).addClass("post");
-      });
-
-      $(".dislike .destroy").click(function() {
-        var songId = $(this).attr("data-song-id");
-        self.postDislike(songId);
-
-        $(this).removeClass("destroy");
-        $(this).addClass("post");
-      });
     };
 
     // listener helpers
 
     self.postLike = function(songId) {
       $.post("/song_likes", {"like": songId}, function(data) {
-        console.log(data);
+        self.updateFeelings(data.like, data.dislike);
       });
     };
 
     self.postDislike = function(songId) {
       $.post("/song_dislikes", {"dislike": songId}, function(data) {
-        console.log(data);
+        self.updateFeelings(data.like, data.dislike);
       });
     };
 
-    self.destroyLike = function(songId) {
-      var pathname = "song_likes/" + songId;
+    self.updateFeelings = function(likeStatus, dislikeStatus) {
+      if (likeStatus) {
+        $(".feelings").find(".like").html("UNLIKE");
+      } else {
+        $(".feelings").find(".like").html("LIKE");
+      }
 
-      $.ajax({
-        url: pathname,
-        type: "delete",
-        success: function(data) {
-          console.log(data);
-        }
-      });
-    };
-
-    self.destroyDislike = function(songId) {
-      var pathname = "song_dislikes/" + songId;
-
-      $.ajax({
-        url: pathname,
-        type: "delete",
-        success: function(data) {
-          console.log(data);
-        }
-      });
+      if (dislikeStatus) {
+        $(".feelings").find(".dislike").html("UNHATE");
+      } else {
+        $(".feelings").find(".dislike").html("LOATHE");
+      }
     };
 
     self.initialize = (function() {

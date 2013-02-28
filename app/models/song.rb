@@ -22,4 +22,12 @@ class Song < ActiveRecord::Base
       :band => band.name
     }
   end
+
+  def liked?(user)
+    user.favorite_songs.include?(self)
+  end
+
+  def disliked?(user)
+    user.disliked_songs.include?(self)
+  end
 end
