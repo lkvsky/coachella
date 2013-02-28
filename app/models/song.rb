@@ -12,14 +12,16 @@ class Song < ActiveRecord::Base
     Song.all.shuffle[0..20]
   end
 
-  def formatted_json
+  def formatted_json(user)
     band = Band.find(self.band_id)
     {
       :id => self.id,
       :name => self.name,
       :url => self.url,
       :band_thumbnail => band.thumbnail,
-      :band => band.name
+      :band => band.name,
+      :like => self.liked?(user),
+      :dislike => self.disliked?(user)
     }
   end
 

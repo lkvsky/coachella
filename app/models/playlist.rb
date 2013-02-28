@@ -9,9 +9,9 @@ class Playlist < ActiveRecord::Base
   before_create :check_name
   before_save :check_name
 
-  def formatted_json
+  def formatted_json(user)
     formatted_songs = self.songs.map  do |song|
-      song.formatted_json
+      song.formatted_json(user)
     end
 
     { :playlist => self, :songs => formatted_songs }
@@ -38,16 +38,5 @@ class Playlist < ActiveRecord::Base
         t = Time.new.strftime("%m/%d/%Y")
         self.name = "New Playlist #{t}"
       end
-    end
-
-    # to do: figure out wtf this can't be run, ever
-    def filter_songs(songs, user)
-      disliked_songs = user.disliked_songs
-
-      disliked_songs.each do |dislike|
-        songs.select! { |song| song != dislike }
-      end
-
-      songs
     end
 end

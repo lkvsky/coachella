@@ -62,6 +62,7 @@ var Coachella = (function() {
       }
 
       $("#on-deck").html(html);
+      self.updateFeelings(song.like, song.dislike);
       self.installCuedSongListeners();
     };
 
@@ -81,6 +82,8 @@ var Coachella = (function() {
             'onStateChange': self.renderCurrentSong
           }
         });
+
+        self.video.setLoop(true);
       }
     };
 

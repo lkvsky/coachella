@@ -10,7 +10,7 @@ class PlaylistsController < ApplicationController
 
     respond_to do |format|
       format.html { render :nothing => true }
-      format.json { render :json => playlist.formatted_json }
+      format.json { render :json => playlist.formatted_json(current_user) }
     end
   end
 
@@ -18,12 +18,12 @@ class PlaylistsController < ApplicationController
     playlist = Playlist.find(params[:id])
 
     respond_to do |format|
-      format.json { render :json => playlist.formatted_json }
+      format.json { render :json => playlist.formatted_json(current_user) }
     end
   end
 
   def index
-    playlists = current_user.playlists.map { |playlist| playlist.formatted_json }
+    playlists = current_user.playlists.map { |playlist| playlist.formatted_json(current_user) }
 
     respond_to do |format|
       format.html
@@ -36,7 +36,7 @@ class PlaylistsController < ApplicationController
     playlist.destroy
 
     respond_to do |format|
-      format.json { render :json => playlist.formatted_json }
+      format.json { render :json => playlist.formatted_json(current_user) }
     end
   end
 end
