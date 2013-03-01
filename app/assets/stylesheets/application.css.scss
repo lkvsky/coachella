@@ -13,42 +13,13 @@
 
  @import 'bootstrap';
 
- h1, h2, h3 {
+ h1, h2 {
   text-align: center;
- }
-
- span {
-  display: inline-block;
- }
-
- span.nav {
-  margin-right: 10px;
-  font-size: 1.5em;
-  padding: 10px;
-  background-color: white;
- }
-
- span.nav:hover {
-  cursor: pointer;
-  background-color: red;
- }
-
- .brand {
-  margin-right: 20px;
-  font-style: bold;
-  font-size: 2em;
  }
 
  #content-nav {
   margin-top: 20px;
-  width: 100%;
-  border: 1px solid #7F7F7F;
   padding: 10px;
-  background-color: #CCC;
- }
-
- span.nav.active {
-  background-color: red;
  }
 
  .log-out {
@@ -94,6 +65,10 @@
  .well {
   width: 100%;
   height: 100%;
+ }
+
+ .song {
+  margin: 10px;
  }
 
  #playlist-creator {

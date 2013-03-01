@@ -1,7 +1,12 @@
-<div id="content-nav">
-  <span class="brand">Coachella Warm Up</span>
-  <span class="nav" id="band-section">Bands</span>
-  <span class="nav" id="song-section">Songs</span>
-  <span class="nav" id="playlist-section">Playlists</span>
-  <%= link_to "Log Out", destroy_user_session_path, :method => :delete, :class => "log-out" %>
+<div id="content-nav" class="navbar">
+  <div class="navbar-inner">
+    <a href="#" class="brand">Coachella Warm Up</a>
+    <ul class="nav">
+      <li class="active"><a href="#bands" id="band-section">Bands</a></li>
+      <li><a href="#songs" id="song-section">Songs</a></li>
+      <li><a href="#playlists" id="playlist-section">Playlists</a></li>
+    </ul>
+      <%= link_to "Log Out", destroy_user_session_path, :method => :delete, :class => "log-out" %>
+    </ul>
+  </div>
 </div>

@@ -1,14 +1,16 @@
-<h2>Favorite Songs</h2>
-<button class="dislike-show btn btn-inverse" type="button">Show Hated Songs</button>
+<h3>Favorite Songs</h3>
+
 {{#if songs}}
+  <div class="well well-small">
   {{#each songs}}
       
-      <div class="well well-small" data-song-id="{{this.id}}">
+      <div class="song">
         <strong>{{this.name}}</strong> by {{this.band}}
         <button type="button" class="destroy-like btn btn-danger" data-song-id="{{this.id}}">Unlike</button>
       </div>
 
   {{/each}}
+  </div>
 {{else}}
 <div class="well well-small">
   No favorites yet? That's cool, I guess.
