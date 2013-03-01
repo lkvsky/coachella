@@ -48,9 +48,6 @@ var Coachella = (function() {
       $("#cue-playlist").click(function() {
         self.generateRandomPlaylist();
       });
-      $(".generate-random").click(function() {
-        self.generateRandomPlaylist();
-      });
     };
 
     self.renderCurrentSong = function() {
@@ -221,6 +218,7 @@ var Coachella = (function() {
 
     self.installBandsShowListeners = function() {
       $(".bands-index").click(function() {
+
         self.renderBandsIndex();
       });
     };
@@ -238,13 +236,18 @@ var Coachella = (function() {
     var self = this;
 
     self.el = $(el);
+    self.bands = [];
 
     self.renderPlaylistsForm = function() {
-      var html = handlebarsHelper("#playlists-create");
+      var html = handlebarsHelper("#playlists-create", {bands: self.bands});
 
       self.el.html(html);
 
       self.installPlaylistsFormListeners();
+      $("#bands-select").select2({
+        placeholder: "Select some bands",
+        width: 'resolve'
+      });
     };
 
     self.installPlaylistsFormListeners = function() {
@@ -267,7 +270,10 @@ var Coachella = (function() {
     };
 
     self.initialize = (function() {
-      self.renderPlaylistsForm();
+      $.getJSON("/bands.json", function(data) {
+        self.bands = data;
+        self.renderPlaylistsForm();
+      });
     })();
   }
 

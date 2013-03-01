@@ -1,11 +1,15 @@
 class PlaylistsController < ApplicationController
-  before_filter :authenticate_user!
+ before_filter :authenticate_user!
 
   def create
-    if params[:playlist][:day]
+    if params[:playlist][:day] && params[:playlist][:day] != "0"
       playlist = Playlist.create_by_day(params[:playlist][:day],
                                         params[:playlist][:name],
                                         current_user)
+    elsif params[:playlist][:bands]
+      playlist = Playlist.create_by_bands(params[:playlist][:bands],
+                                          params[:playlist][:name],
+                                          current_user)
     end
 
     respond_to do |format|

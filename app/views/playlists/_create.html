@@ -1,13 +1,26 @@
 <h3>Playlist Generator</h3>
 <form id="playlists-form">
   <fieldset>
-    <label for="playlist[name]">Playlist Name</label>
-    <input name="playlist[name]" type="text">
-    <label for="playlist[day]">Filter by Day</label>
+
+    <label for="playlist[name]">Choose a Name</label>
+    <input name="playlist[name]" placeholder="Any name" type="text">
+    <label for="playlist[day]">Mix by day</label>
     <select name="playlist[day]">
+      <option value="0">Select a day</option>
       <option value="Fri">Friday</option>
       <option value="Sat">Saturday</option>
       <option value="Sun">Sunday</option>
+    </select>
+
+    <br>
+    <strong>OR</strong>
+    <br>
+
+    <label for="playlist[bands][]">Mix some Bands</label>
+    <select id="bands-select" name="playlist[bands][]" multiple>
+      {{#each bands}}
+        <option value="{{this.id}}">{{this.name}}</option>
+      {{/each}}
     </select>
   </fieldset>
   <button type="button" class="btn btn-primary playlists-create">Create Playlist</button>
