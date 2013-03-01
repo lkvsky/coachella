@@ -1,15 +1,11 @@
-<h2>{{playlist.playlist.name}}</h2>
+<h3>{{playlist.playlist.name}}</h3>
 
   <button type="button" class="btn btn-primary load-playlist" data-playlist-id="{{playlist.playlist.id}}">Play</button>
   <button type="button" class="btn btn-danger playlists-delete" data-playlist-id="{{playlist.playlist.id}}">Delete</button>
   <button type="button" class="btn btn-inverse playlists-index">All Playlists</button>
 
 {{#each playlist.songs}}
-
-
-    <div class="well well-small">
-      <strong>{{this.band}}</strong>: {{this.name}}
-    </div>
-
-
+  <div class="well well-small">
+    <strong>{{this.band}}</strong>: {{this.name}}
+  </div>
 {{/each}}

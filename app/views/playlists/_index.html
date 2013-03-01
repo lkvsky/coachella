@@ -1,5 +1,6 @@
 <h3>Playlists</h3>
-{{#each playlists}}
+{{#if playlists}}
+  {{#each playlists}}
 
     <div class="well well-small">
       <strong>{{this.playlist.name}}</strong>: {{this.songs.length}} songs
@@ -7,4 +8,9 @@
       <button type="button" class="btn btn-primary load-playlist" data-playlist-id="{{this.playlist.id}}">Play</button>
     </div>
 
-{{/each}}
+  {{/each}}
+{{else}}
+  <div class="well well-small">
+    Create some playlists! Or, whatever. Do what you want.
+  </div>
+{{/if}}
