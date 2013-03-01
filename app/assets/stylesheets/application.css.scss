@@ -47,8 +47,13 @@
   background-color: #CCC;
  }
 
- .active {
+ span.nav.active {
   background-color: red;
+ }
+
+ .log-out {
+  position: relative;
+  left: 300px;
  }
 
  #music-player {
@@ -89,5 +94,10 @@
  .well {
   width: 100%;
   height: 100%;
+ }
+
+ #playlist-creator {
+  margin-left: 10px;
+  text-align: center;
  }
 

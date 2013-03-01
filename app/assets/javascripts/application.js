@@ -127,6 +127,7 @@ var Coachella = (function() {
       $.post("/song_likes", {"like": songId}, function(data) {
         self.updateSongAttributes(songId, data.like, data.dislike);
         self.renderFeelingsHtml();
+        new Coachella.SongView("#song");
       });
     };
 
@@ -134,6 +135,7 @@ var Coachella = (function() {
       $.post("/song_dislikes", {"dislike": songId}, function(data) {
         self.updateSongAttributes(songId, data.like, data.dislike);
         self.renderFeelingsHtml();
+        new Coachella.SongView("#song");
       });
     };
 
@@ -247,7 +249,7 @@ var Coachella = (function() {
     self.renderPlaylistsForm = function() {
       var html = handlebarsHelper("#playlists-create");
 
-      self.el.html(html);
+      $("#playlist-creator").html(html);
 
       self.installPlaylistsFormListeners();
     };
@@ -272,13 +274,10 @@ var Coachella = (function() {
           self.renderPlaylistsIndex();
         });
       });
-
-      self.indexPlaylist();
     };
 
     self.installPlaylistsIndexListeners = function() {
       self.loadPlaylist();
-      self.newPlaylist();
       self.showPlaylist();
     };
 
@@ -295,12 +294,6 @@ var Coachella = (function() {
         var id = $(this).attr("data-playlist-id");
 
         self.renderPlaylistsShow(id);
-      });
-    };
-
-    self.newPlaylist = function() {
-      $(".playlists-new").click(function() {
-        self.renderPlaylistsForm();
       });
     };
 
@@ -336,6 +329,7 @@ var Coachella = (function() {
     };
 
     self.initialize = (function() {
+      self.renderPlaylistsForm();
       self.renderPlaylistsIndex();
     })();
   }
@@ -370,14 +364,7 @@ var Coachella = (function() {
         self.renderDislikedSongs();
       });
 
-      $(".destroy-like").click(function() {
-        var pathname = "song_likes/" + $(this).attr("data-song-id");
-        
-        $.ajax({
-          url: pathname,
-          type: "delete"
-        });
-      });
+      self.removeLikeOrDislike(".destroy-like", "song_likes/");
     };
 
     self.installDislikeListeners = function() {
@@ -385,13 +372,20 @@ var Coachella = (function() {
         self.renderLikedSongs();
       });
 
-      $(".destroy-dislike").click(function() {
-        var pathname = "song_dislikes/" + $(this).attr("data-song-id");
-        
+      self.removeLikeOrDislike(".destroy-dislike", "song_dislikes/");
+    };
+
+    self.removeLikeOrDislike = function(el, path) {
+      $(el).click(function() {
+        var pathname = path + $(this).attr("data-song-id");
+
         $.ajax({
           url: pathname,
           type: "delete"
         });
+
+        $(this).parent().remove();
+
       });
     };
 
@@ -412,6 +406,7 @@ var Coachella = (function() {
       self.el.html(html);
 
       $("#playlist").hide();
+      $("#song").hide();
       $("#band-section").addClass("active");
 
       self.installNavListeners();
