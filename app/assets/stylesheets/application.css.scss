@@ -192,6 +192,20 @@
     display: none;
   }
 
+  #music-container {
+    height: 200px;
+  }
+
+  .cue-playlist {
+    width: 0;
+    height: 0;
+    border-top: 25px solid transparent;
+    border-bottom: 25px solid transparent;
+    border-left: 50px solid white;
+    margin-top: 25%;
+    margin-left: 32%;
+  }
+
   #music-container div.span4 {
     display: none;
   }
@@ -200,10 +214,24 @@
     width: 100%;
   }
 
+  #cue-playlist {
+    height: 100px;
+    width: 100px;
+    left: 40%;
+  }
+
   /* content discovery section */
 
   .body div.span8 {
     width: 98%;
+  }
+
+  .body {
+    top: 200px;
+  }
+
+  .log-out {
+    top: 0;
   }
 
   #playlist-container {
