@@ -285,6 +285,7 @@ var Coachella = (function() {
       self.loadPlaylist();
       self.indexPlaylist();
       self.deletePlaylist();
+      self.deletePlaylistSong();
     };
 
     // listener helpers
@@ -326,6 +327,21 @@ var Coachella = (function() {
           new CurrentlyPlayingView(data.songs);
         });
       });
+    };
+
+    self.deletePlaylistSong = function() {
+     $(".playlist-song-delete").click(function() {
+        var songId = $(this).attr("data-song-id");
+        var playlistId = $(this).closest(".playlist-songs").attr("data-playlist-id");
+
+        $.ajax({
+          url: "/playlists/" + playlistId,
+          type: "put",
+          data: {id: playlistId, song: songId},
+        });
+
+        $(this).closest("div").remove();
+     });
     };
 
     self.initialize = (function() {

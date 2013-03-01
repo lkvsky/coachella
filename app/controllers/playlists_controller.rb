@@ -14,6 +14,25 @@ class PlaylistsController < ApplicationController
     end
   end
 
+  def update
+    if params[:song]
+      playlist = Playlist.find(params[:id])
+
+      playlist.playlist_songs.where(:song_id => params[:song]).first.destroy
+      playlist.save
+
+      respond_to do |format|
+        format.html { render :nothing => true }
+        format.json { render :json => "update successful" }
+      end
+    else
+      respond_to do |format|
+        format.html { render :nothing => true }
+        format.json { render :status => 400 }
+      end
+    end
+  end
+
   def show
     playlist = Playlist.find(params[:id])
 
