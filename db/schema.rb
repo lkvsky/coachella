@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130228005832) do
+ActiveRecord::Schema.define(:version => 20130301055204) do
 
   create_table "bands", :force => true do |t|
     t.string   "name"
@@ -22,6 +22,8 @@ ActiveRecord::Schema.define(:version => 20130228005832) do
     t.string   "youtube_channel"
     t.string   "thumbnail"
   end
+
+  add_index "bands", ["set_time"], :name => "index_bands_on_set_time"
 
   create_table "playlist_songs", :force => true do |t|
     t.integer  "user_id"

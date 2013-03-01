@@ -45,6 +45,9 @@ var Coachella = (function() {
       html = handlebarsHelper("#prompt-user");
       
       $("#on-deck").html(html);
+      $("#cue-playlist").click(function() {
+        self.generateRandomPlaylist();
+      });
       $(".generate-random").click(function() {
         self.generateRandomPlaylist();
       });
@@ -153,15 +156,15 @@ var Coachella = (function() {
 
     self.renderFeelingsHtml = function() {
       if ($(".like").attr("data-like-status") == "true") {
-        $(".like").html("UNLIKE");
+        $(".like").html("Unlike");
       } else {
-        $(".like").html("LIKE");
+        $(".like").html("Like");
       }
 
-      if ($(".dislike").attr("data-like-status") == "true") {
-        $(".dislike").html("UNHATE");
+      if ($(".dislike").attr("data-dislike-status") == "true") {
+        $(".dislike").html("Unhate");
       } else {
-        $(".dislike").html("LOATHE");
+        $(".dislike").html("Hate");
       }
     };
 
@@ -249,7 +252,18 @@ var Coachella = (function() {
         $.post('playlists.json', $("#playlists-form").serialize(), function(data) {
           new Coachella.PlaylistView("#playlist");
         });
+
+        $("#playlist").append(self.renderTemporaryPlaylist());
       });
+    };
+
+    self.renderTemporaryPlaylist = function() {
+      var div = $("<div>");
+      div.addClass("well well-small");
+      div.css("opactiy", "0.5");
+      div.html("Hold on while we mix...");
+
+      return div;
     };
 
     self.initialize = (function() {

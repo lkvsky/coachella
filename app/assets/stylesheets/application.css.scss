@@ -20,6 +20,11 @@
   text-align: center;
  }
 
+ .container {
+  width: 95%;
+  margin: auto;
+ }
+
 .well {
   width: 100%;
   height: 100%;
@@ -32,6 +37,13 @@
   padding: 15px;
  }
 
+ .body {
+  position: absolute;
+  top: 350px;
+  width: 95%;
+  margin: auto;
+ }
+
 /* nav styles */
 
  #content-nav {
@@ -40,15 +52,26 @@
  }
 
  .log-out {
+  float: right;
   position: relative;
-  left: 380px;
   top: 10px;
  }
 
  /* music player styles */
 
- #music-player {
+ #music-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  background-color: black;
   height: 350px;
+ }
+
+ #music-player {
+  margin-left: 20px;
+  height: 100%;
   width: 100%;
   background: black;
  }
@@ -66,6 +89,7 @@
  #on-deck {
   height: 310px;
   text-align: center;
+  border-radius: 0;
  }
 
  #on-deck img {
@@ -80,6 +104,11 @@
   border-left: 80px solid white;
   margin-top: 33%;
   margin-left: 38%;
+ }
+
+ #cue-playlist:hover {
+  background-color: red;
+  cursor: pointer;
  }
 
 /* playlist specific style */
@@ -101,8 +130,8 @@
   display: inline-block;
   float: right;
   position: relative;
-  bottom: 40px;
-  left: 10px;
+  bottom: 25px;
+  left: 5px;
  }
 
  .playlist-song-delete {
@@ -111,6 +140,10 @@
   position: relative;
   bottom: 5px;
   left: 5px;
+ }
+
+ .playlist-songs {
+  padding-top: 30px;
  }
 
 /* band view styles */
