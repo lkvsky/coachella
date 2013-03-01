@@ -229,6 +229,36 @@ var Coachella = (function() {
     })();
   }
 
+  // view for playlist generator
+
+  function PlaylistCreator(el) {
+    var self = this;
+
+    self.el = $(el);
+
+    self.renderPlaylistsForm = function() {
+      var html = handlebarsHelper("#playlists-create");
+
+      self.el.html(html);
+
+      self.installPlaylistsFormListeners();
+    };
+
+    self.installPlaylistsFormListeners = function() {
+      $(".playlists-create").click(function() {
+        $.post('playlists.json', $("#playlists-form").serialize(), function(data) {
+          new Coachella.PlaylistView("#playlist");
+        });
+      });
+    };
+
+    self.initialize = (function() {
+      self.renderPlaylistsForm();
+    })();
+  }
+
+  // views for playlist discovery
+
   function PlaylistView(el) {
     var self = this;
 
@@ -246,14 +276,6 @@ var Coachella = (function() {
       });
     };
 
-    self.renderPlaylistsForm = function() {
-      var html = handlebarsHelper("#playlists-create");
-
-      $("#playlist-creator").html(html);
-
-      self.installPlaylistsFormListeners();
-    };
-
     self.renderPlaylistsShow = function(id) {
       var pathname = "/playlists/" + id + ".json";
 
@@ -267,14 +289,6 @@ var Coachella = (function() {
     };
 
     // listeners
-
-    self.installPlaylistsFormListeners = function() {
-      $(".playlists-create").click(function() {
-        $.post('playlists.json', $("#playlists-form").serialize(), function(data) {
-          self.renderPlaylistsIndex();
-        });
-      });
-    };
 
     self.installPlaylistsIndexListeners = function() {
       self.loadPlaylist();
@@ -337,7 +351,7 @@ var Coachella = (function() {
         $.ajax({
           url: "/playlists/" + playlistId,
           type: "put",
-          data: {id: playlistId, song: songId},
+          data: {id: playlistId, song: songId}
         });
 
         $(this).closest("div").remove();
@@ -345,7 +359,7 @@ var Coachella = (function() {
     };
 
     self.initialize = (function() {
-      self.renderPlaylistsForm();
+      // self.renderPlaylistsForm();
       self.renderPlaylistsIndex();
     })();
   }
@@ -435,6 +449,7 @@ var Coachella = (function() {
 
   return {
     CurrentlyPlayingView: CurrentlyPlayingView,
+    PlaylistCreator: PlaylistCreator,
     PlaylistView: PlaylistView,
     BandView: BandView,
     SongView: SongView,
@@ -445,6 +460,7 @@ var Coachella = (function() {
 
 function onYouTubeIframeAPIReady() {
   var player = new Coachella.CurrentlyPlayingView();
+  var playlistCreator = new Coachella.PlaylistCreator("#playlist-creator");
   var playlist = new Coachella.PlaylistView("#playlist");
   var band = new Coachella.BandView("#band");
   var song = new Coachella.SongView("#song");
