@@ -11,13 +11,17 @@
  *= require_self
  *= require select2
  */
-
+ @import 'bootstrap-styles';
  @import 'bootstrap';
 
  /* general styles */
 
  h1, h2 {
   text-align: center;
+ }
+
+ .discovery {
+  text-align: right;
  }
 
  .container {
@@ -34,7 +38,7 @@
 
  .body {
   position: absolute;
-  top: 350px;
+  top: 400px;
   width: 95%;
   margin: auto;
  }
@@ -48,8 +52,11 @@
 /* nav styles */
 
  #content-nav {
-  margin-top: 20px;
-  padding: 10px;
+  position: fixed;
+  top: 350px;
+  left: 0;
+  width: 100%;
+  z-index: 2;
  }
 
  .log-out {
@@ -95,6 +102,13 @@
 
  #on-deck img {
   width: 150px;
+  border: 1px solid #CCC;
+ }
+
+ .song-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
  }
 
  .cue-playlist {
@@ -119,27 +133,24 @@
  }
 
  .playlist-index-actions {
-  display: inline-block;
-  float: right;
+  float: left;
   position: relative;
+  margin-right: 10px;
   bottom: 5px;
-  left: 5px;
+  right: 5px;
  }
 
 .playlist-show-actions {
   display: inline-block;
-  float: right;
+  float: left;
   position: relative;
   bottom: 25px;
-  left: 5px;
+  right: 5px;
  }
 
  .playlist-song-delete {
-  float: right;
-  clear: both;
-  position: relative;
-  bottom: 5px;
-  left: 5px;
+  float: left;
+  margin-right: 10px;
  }
 
  .playlist-songs {
@@ -153,38 +164,41 @@
 /* band view styles */
 
 .bands-show {
-  float: right;
+  float: left;
+  margin-right: 10px;
   position: relative;
   bottom: 5px;
-  left: 5px;
+  right: 5px;
 }
 
 .bands-index {
-  float: right;
+  float: left;
+  margin-right: 10px;
   position: relative;
   bottom: 5px;
-  left: 5px;
+  right: 5px;
 }
+
+#band img {
+  display: block;
+  margin: auto;
+}
+
+
 
 /* song view styles */
 
 .destroy-dislike {
-  float: right;
-  clear: both;
-  position: relative;
-  bottom: 5px;
-  left: 5px;
+  float: left;
+  margin-right: 10px;
 }
 
 .destroy-like {
-  float: right;
-  clear: both;
-  position: relative;
-  bottom: 5px;
-  left: 5px;
+  float: left;
+  margin-right: 10px;
 }
 
-@media (max-width: 780px) {
+@media (max-width: 640px) {
 
   /* music player section */
 
@@ -195,6 +209,7 @@
   #music-container {
     position: absolute;
     height: 200px;
+    width: 100%;
   }
 
   .cue-playlist {
@@ -211,10 +226,6 @@
     display: none;
   }
 
-  #music-container div.span8 {
-    width: 100%;
-  }
-
   #cue-playlist {
     height: 100px;
     width: 100px;
@@ -223,12 +234,18 @@
 
   /* content discovery section */
 
+  #content-nav {
+    position: absolute;
+    top: 200px;
+  }
+
   .body div.span8 {
     width: 98%;
   }
 
   .body {
-    top: 200px;
+    position: absolute;
+    top: 300px;
   }
 
   .log-out {
@@ -240,6 +257,8 @@
     width: 98%;
     text-align: center;
   }
+
+  /* button styloes */
 
 }
 
