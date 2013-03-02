@@ -38,7 +38,7 @@ $textColor:             $grayDark;
 
 // Links
 // -------------------------
-$linkColor:             #08c;
+$linkColor:             #3786ae;
 $linkColorHover:        darken($linkColor, 15%);
 
 
@@ -94,14 +94,14 @@ $btnPrimaryBackgroundHighlight:     adjust-hue($btnPrimaryBackground, 20%);
 $btnInfoBackground:                 #5bc0de;
 $btnInfoBackgroundHighlight:        #2f96b4;
 
-$btnSuccessBackground:              #62c462;
-$btnSuccessBackgroundHighlight:     #51a351;
+$btnSuccessBackground:              #37ae9b;
+$btnSuccessBackgroundHighlight:     #319b8a;
 
 $btnWarningBackground:              lighten($orange, 15%);
 $btnWarningBackgroundHighlight:     $orange;
 
-$btnDangerBackground:               #ee5f5b;
-$btnDangerBackgroundHighlight:      #bd362f;
+$btnDangerBackground:               #ae374a;
+$btnDangerBackgroundHighlight:      #9b3142;
 
 $btnInverseBackground:              #444;
 $btnInverseBackgroundHighlight:     $grayDarker;
