@@ -255,20 +255,22 @@ var Coachella = (function() {
       $(".playlists-create").click(function() {
         $.post('playlists.json', $("#playlists-form").serialize(), function(data) {
           new Coachella.PlaylistView("#playlist");
+        }).error(function() {
+          $("#temp").html("Oops! Try that again...");
         });
-
-        $("#playlist").append(self.renderTemporaryPlaylist());
-        Navigation.toggleSection("#playlist-section", "#playlist");
+          self.renderTemp("Hold on while we mix...", "0.5");
+          Navigation.toggleSection("#playlist-section", "#playlist");
       });
     };
 
-    self.renderTemporaryPlaylist = function() {
+    self.renderTemp = function(message, opacity) {
       var div = $("<div>");
+      div.attr("id", "temp");
       div.addClass("well well-small");
-      div.css("opactiy", "0.5");
-      div.html("Hold on while we mix...");
+      div.css("opacity", opacity);
+      div.html(message);
 
-      return div;
+      $("#playlist").append(div);
     };
 
     self.initialize = (function() {

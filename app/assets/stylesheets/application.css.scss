@@ -216,6 +216,16 @@
   right: 5px;
 }
 
+@media (max-device-width: 768px) {
+  #music-container div.span4 {
+    display: none;
+  }
+
+  #music-container {
+    width: 100%;
+  }
+}
+
 @media (max-width: 640px) {
 
   /* music player section */
@@ -275,8 +285,6 @@
     width: 98%;
     text-align: center;
   }
-
-  /* button styloes */
 
 }
 
