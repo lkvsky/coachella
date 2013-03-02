@@ -244,6 +244,7 @@ var Coachella = (function() {
       self.el.html(html);
 
       self.installPlaylistsFormListeners();
+
       $("#bands-select").select2({
         placeholder: "Select some bands",
         width: 'resolve'
@@ -257,6 +258,7 @@ var Coachella = (function() {
         });
 
         $("#playlist").append(self.renderTemporaryPlaylist());
+        Navigation.toggleSection("#playlist-section", "#playlist");
       });
     };
 
@@ -379,7 +381,6 @@ var Coachella = (function() {
     };
 
     self.initialize = (function() {
-      // self.renderPlaylistsForm();
       self.renderPlaylistsIndex();
     })();
   }
@@ -447,18 +448,14 @@ var Coachella = (function() {
     };
 
     self.installNavListeners = function() {
-      self.toggleSection("#band-section", "#band");
-      self.toggleSection("#song-section", "#song");
-      self.toggleSection("#playlist-section", "#playlist");
-    };
-
-    self.toggleSection = function(tab, blockContent) {
-      $(tab).click(function() {
-        $("#content-nav li").removeClass("active");
-        $(tab).closest("li").addClass("active");
-
-        $(".discovery > div").hide();
-        $(blockContent).show();
+      $("#band-section").click(function() {
+        Navigation.toggleSection("#band-section", "#band");
+      });
+      $("#song-section").click(function() {
+        Navigation.toggleSection("#song-section", "#song");
+      });
+      $("#playlist-section").click(function() {
+        Navigation.toggleSection("#playlist-section", "#playlist");
       });
     };
 
@@ -466,6 +463,14 @@ var Coachella = (function() {
       self.renderContentNav();
     })();
   }
+
+  Navigation.toggleSection = function(tab, blockContent) {
+    $("#content-nav li").removeClass("active");
+    $(tab).closest("li").addClass("active");
+
+    $(".discovery > div").hide();
+    $(blockContent).show();
+  };
 
   return {
     CurrentlyPlayingView: CurrentlyPlayingView,
