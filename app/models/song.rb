@@ -26,10 +26,12 @@ class Song < ActiveRecord::Base
   end
 
   def liked?(user)
+    return false if user.favorite_songs.empty?
     user.favorite_songs.include?(self)
   end
 
   def disliked?(user)
+    return false if user.disliked_songs.empty?
     user.disliked_songs.include?(self)
   end
 end

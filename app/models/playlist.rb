@@ -18,12 +18,14 @@ class Playlist < ActiveRecord::Base
   end
 
   def self.create_by_day(day, name, user)
-    songs = Song.joins(:band).where("bands.set_time = ?", day).select! do |song|
+    songs = Song.joins(:band).where("bands.set_time = ?", day).select do |song|
       !song.disliked?(user)
-    end.shuffle![0..20]
+    end
+
+    p songs
 
     p = Playlist.new(:name => name, :user_id => user.id)
-    p.songs = songs
+    p.songs = songs.shuffle![0..20]
     p.save!
     p
   end
