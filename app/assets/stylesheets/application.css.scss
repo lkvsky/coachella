@@ -217,13 +217,18 @@
 }
 
 @media (max-device-width: 768px) {
-  #music-container div.span4 {
-    display: none;
-  }
 
   #music-container {
-    width: 100%;
     margin: auto;
+  }
+
+  #music-container div.span4 {
+    display: none;
+    width: 0;
+  }
+
+  #music-container div.span8 {
+    width: 100%;
   }
 }
 
@@ -231,13 +236,17 @@
 
   /* music player section */
 
-  #on-deck {
-    display: none;
-  }
-
   #music-container {
     position: absolute;
     height: 200px;
+  }
+
+  #music-container div.span4 {
+    display: none;
+    width: 0;
+  }
+
+  #music-container div.span8 {
     width: 100%;
   }
 
@@ -249,10 +258,6 @@
     border-left: 50px solid white;
     margin-top: 25%;
     margin-left: 32%;
-  }
-
-  #music-container div.span4 {
-    display: none;
   }
 
   #cue-playlist {
