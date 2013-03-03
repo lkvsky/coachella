@@ -220,6 +220,7 @@
 
   #music-container {
     margin: auto;
+    width: 100%;
   }
 
   #music-container div.span4 {
@@ -239,6 +240,7 @@
   #music-container {
     position: absolute;
     height: 200px;
+    width: 100%;
   }
 
   #music-container div.span4 {
@@ -247,7 +249,7 @@
   }
 
   #music-container div.span8 {
-    width: 100%;
+    width: 98%;
   }
 
   .cue-playlist {
@@ -263,8 +265,8 @@
   #cue-playlist {
     height: 100px;
     width: 100px;
-    left: 32%;
-    top: 23%;
+    left: 33%;
+    top: 24%;
   }
 
   /* content discovery section */
