@@ -443,9 +443,6 @@ var Coachella = (function() {
       var html = handlebarsHelper("#navigation-show");
       self.el.html(html);
 
-      $("#playlist").hide();
-      $("#song").hide();
-
       self.installNavListeners();
     };
 
@@ -462,6 +459,8 @@ var Coachella = (function() {
     };
 
     self.initialize = (function() {
+      $("#band").hide();
+      $("#song").hide();
       self.renderContentNav();
     })();
   }
