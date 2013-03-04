@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require coachella
+//= require_tree .
 
 function onYouTubeIframeAPIReady() {
   var player = new Coachella.CurrentlyPlayingView();
