@@ -15,4 +15,10 @@ class User < ActiveRecord::Base
 
   has_many :favorite_songs, :through => :song_likes, :source => :song
   has_many :disliked_songs, :through => :song_dislikes, :source => :song
+
+  def transfer_associations(new_user)
+    self.playlists.each { |playlist| playlist.update_attributes(:user_id => new_user.id) }
+    self.song_likes.each { |song_like| song_like.update_attributes(:user_id => new_user.id) }
+    self.song_dislikes.each { |song_dislike| song_dislike.update_attributes(:user_id => new_user.id) }
+  end
 end

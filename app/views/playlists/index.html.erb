@@ -33,25 +33,32 @@
     </div>
   </div>
 </div>
-
   <!-- HANDLEBARS SCRIPTS -->
 
   <!-- navbar -->
   <script id="navigation-show" type="text/x-handlebars-template">
-    <%= render :partial => "playlists/navigation.html" %>
+    <%= render :partial => "shared/navigation.html" %>
+  </script>
+
+  <script id="session-new" type="text/x-handlebars-template">
+    <%= render :partial => "shared/new_session.html" %>
+  </script>
+
+  <script id="user-new" type="text/x-handlebars-template">
+    <%= render :partial => "shared/new_user.html" %>
   </script>
 
   <!-- player templates -->
   <script id="player-show" type="text/x-handlebars-template">
-    <%= render :partial => "playlists/player_show.html" %>
+    <%= render :partial => "player/player_show.html" %>
   </script>
 
   <script id="cued-song" type="text/x-handlebars-template">
-    <%= render :partial => "playlists/cued_song.html" %>
+    <%= render :partial => "player/cued_song.html" %>
   </script>
 
   <script id="prompt-user" type="text/x-handlebars-template">
-    <%= render :partial => "playlists/prompt_user.html" %>
+    <%= render :partial => "player/prompt_user.html" %>
   </script>
 
   <!-- playlist templates -->

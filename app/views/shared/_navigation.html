@@ -1,0 +1,29 @@
+<div id="content-nav" class="navbar">
+  <div class="navbar-inner">
+    <a href="#" class="brand">My Coachella</a>
+    <ul class="nav">
+      <li class="active"><a href="#playlists" id="playlist-section">Playlists</a></li>
+      <li><a href="#bands" id="band-section">Bands</a></li>
+      <li><a href="#songs" id="song-section">My Songs</a></li>
+    </ul>
+      <% if session[:guest_user_id] %>
+        <a href="#registration" data-toggle="modal" class="log-out">Sign In</a>
+      <% else %>
+        <%= link_to "Sign Out", destroy_user_session_path, :method => :delete, :class => "log-out" %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<!-- Registration Modal -->
+
+<div id="registration" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="registrationLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="registrationLabel">My Coachella</h3>
+  </div>
+  <div class="modal-body">
+    <div id="form-content">  
+    </div>
+  </div>
+</div>

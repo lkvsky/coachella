@@ -9,6 +9,29 @@ Coachella.Navigation = function() {
     self.el.html(html);
 
     self.installNavListeners();
+    self.renderNewSession();
+  };
+
+  self.renderNewSession = function() {
+    var html = Coachella.handlebarsHelper("#session-new");
+    $("#form-content").html(html);
+
+    $(".user-new").click(function() {
+      self.renderNewUser();
+    });
+
+    self.formHandling();
+  };
+
+  self.renderNewUser = function() {
+    var html = Coachella.handlebarsHelper("#user-new");
+    $("#form-content").html(html);
+
+    $(".session-new").click(function() {
+      self.renderNewSession();
+    });
+
+    self.formHandling();
   };
 
   self.installNavListeners = function() {
@@ -20,6 +43,16 @@ Coachella.Navigation = function() {
     });
     $("#playlist-section").click(function() {
       Coachella.toggleSection("#playlist-section", "#playlist");
+    });
+  };
+
+  self.formHandling = function() {
+    $(".registration-form").on("ajax:error", function() {
+      $(".error").html("Oops! Try that again.");
+    });
+    $(".registration-form").on("ajax:success", function() {
+      $("#registration").modal("hide");
+      window.location.reload();
     });
   };
 

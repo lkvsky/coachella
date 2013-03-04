@@ -1,5 +1,5 @@
 Coachella::Application.routes.draw do
-  devise_for :users
+  devise_for :users, :controllers => { :registrations =>  'registrations' }
 
   resources :playlists
   resources :songs, :only => [:index]

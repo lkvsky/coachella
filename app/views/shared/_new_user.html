@@ -1,0 +1,15 @@
+<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :remote => true, :html => { :class => "registration-form" }) do |f| %>
+  <div class="error"></div>
+
+  <div><%= f.label :email %>
+  <%= f.email_field :email, :autofocus => true %></div>
+
+  <div><%= f.label :password %>
+  <%= f.password_field :password %></div>
+
+  <div><%= f.label :password_confirmation %>
+  <%= f.password_field :password_confirmation %></div>
+
+  <div><%= f.submit "Sign up", :class => "btn btn-primary" %></div>
+<% end %>
+<a href="#session/new" class="session-new">Already a member? Sign in, here.</a>
