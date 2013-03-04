@@ -24,7 +24,7 @@ Coachella.BandView = function(el) {
 
       self.el.html(html);
 
-      self.installBandsShowListeners();
+      self.installBandsShowListeners(data.songs);
     });
   };
 
@@ -36,12 +36,25 @@ Coachella.BandView = function(el) {
 
       self.renderBandsShow(id);
     });
+
+    $(".load-playlist").click(function() {
+      var id = $(this).attr("data-band-id");
+      var pathname = '/bands/' + id + '.json';
+
+      $.getJSON(pathname, function(data) {
+        new Coachella.CurrentlyPlayingView(data.songs);
+      });
+    });
   };
 
-  self.installBandsShowListeners = function() {
+  self.installBandsShowListeners = function(songs) {
     $(".bands-index").click(function() {
 
       self.renderBandsIndex();
+    });
+
+    $(".load-playlist").click(function() {
+      new Coachella.CurrentlyPlayingView(songs);
     });
   };
 

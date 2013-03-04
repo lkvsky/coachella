@@ -78,7 +78,6 @@
  }
 
  #music-player {
-  margin-right: 20px;
   height: 100%;
   width: 100%;
   background: black;
@@ -170,22 +169,6 @@
 
 /* band view styles */
 
-.bands-show {
-  float: left;
-  margin-right: 10px;
-  position: relative;
-  bottom: 5px;
-  right: 5px;
-}
-
-.bands-index {
-  float: left;
-  margin-right: 10px;
-  position: relative;
-  bottom: 5px;
-  right: 5px;
-}
-
 #band img {
   display: block;
   margin: auto;
@@ -196,6 +179,14 @@
   float: left;
   position: relative;
   bottom: 30px;
+}
+
+.band-actions {
+  float: left;
+  position: relative;
+  margin-right: 10px;
+  bottom: 5px;
+  right: 5px;
 }
 
 /* song view styles */
