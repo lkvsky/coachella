@@ -5,7 +5,7 @@ class RegistrationsController < Devise::RegistrationsController
     if resource.save
       if resource.active_for_authentication?
         guest_user.transfer_associations(resource)
-        
+
         set_flash_message :notice, :signed_up if is_navigational_format?
         sign_up(resource_name, resource)
         return render :json => {:success => true}
@@ -18,7 +18,7 @@ class RegistrationsController < Devise::RegistrationsController
       clean_up_passwords resource
 
       respond_to do |format|
-        format.json { render :error => resource.errors.full_messages, :status => 400 }
+        format.json { render :json => resource.errors.full_messages.join(","), :status => 401 }
       end
     end
   end

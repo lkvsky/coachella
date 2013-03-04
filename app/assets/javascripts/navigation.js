@@ -47,8 +47,9 @@ Coachella.Navigation = function() {
   };
 
   self.formHandling = function() {
-    $(".registration-form").on("ajax:error", function() {
-      $(".error").html("Oops! Try that again.");
+    $(".registration-form").on("ajax:error", function(event, xhr, status) {
+      $(".error").show().html(xhr.responseText);
+      console.log(xhr.responseText);
     });
     $(".registration-form").on("ajax:success", function() {
       $("#registration").modal("hide");
