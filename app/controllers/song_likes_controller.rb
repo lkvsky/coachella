@@ -1,12 +1,13 @@
 class SongLikesController < ApplicationController
   def create
+    user = current_or_guest_user
     song = Song.find(params[:like])
 
-    like = SongLike.new(:song_id => song.id, :user_id => current_user.id)
+    like = SongLike.new(:song_id => song.id, :user_id => user.id)
 
     if like.save
-      if song.disliked?(current_user)
-        current_user.song_dislikes.where(:song_id => song.id).first.destroy
+      if song.disliked?(user)
+        user.song_dislikes.where(:song_id => song.id).first.destroy
       end
 
       song_status = { :like => "true", :dislike => "false" }
@@ -20,7 +21,8 @@ class SongLikesController < ApplicationController
   end
 
   def index
-    songs = current_user.favorite_songs.map { |song| song.formatted_json(current_user) }
+    user = current_or_guest_user
+    songs = user.favorite_songs.map { |song| song.formatted_json(user) }
 
     respond_to do |format|
       format.json { render :json => songs }
@@ -28,13 +30,15 @@ class SongLikesController < ApplicationController
   end
 
   def destroy
+    user = current_or_guest_user
+
     if params[:like]
       song = Song.find(params[:like])
     elsif params[:id]
       song = Song.find(params[:id])
     end
     
-    like = User.find(current_user.id).song_likes.where(:song_id => song.id).first
+    like = User.find(user.id).song_likes.where(:song_id => song.id).first
     like.destroy
 
     song_status = { :like => "false", :dislike => "#{song.disliked?(current_user)}" }

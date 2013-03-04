@@ -94,7 +94,7 @@ Coachella.PlaylistView = function(el) {
         data: {id: playlistId, song: songId}
       });
 
-      $(this).closest("div").remove();
+      new Coachella.PlaylistView("#playlist");
    });
   };
 

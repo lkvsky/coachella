@@ -9,8 +9,9 @@ class BandsController < ApplicationController
   end
 
   def show
+    user = current_or_guest_user
     band = Band.find(params[:id])
-    songs = band.songs.map { |song| song.formatted_json(current_user) }
+    songs = band.songs.map { |song| song.formatted_json(user) }
 
     band_json = { "info" => band, "songs" => songs }
 

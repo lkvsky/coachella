@@ -1,6 +1,7 @@
 class SongsController < ApplicationController
   def index
-    songs = Song.random_selection.map { |song| song.formatted_json(current_user) }
+    user = current_or_guest_user
+    songs = Song.random_selection.map { |song| song.formatted_json(user) }
 
     respond_to do |format|
       format.json { render :json => songs }
