@@ -191,6 +191,10 @@
 
 /* song view styles */
 
+.song-container {
+  margin-top: 35px;
+}
+
 .destroy-dislike {
   float: left;
   margin-right: 10px;
@@ -202,6 +206,13 @@
 .destroy-like {
   float: left;
   margin-right: 10px;
+  position: relative;
+  bottom: 5px;
+  right: 5px;
+}
+
+.load-songs {
+  float: left;
   position: relative;
   bottom: 5px;
   right: 5px;

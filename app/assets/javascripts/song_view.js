@@ -10,6 +10,7 @@ Coachella.SongView = function(el) {
 
       $("#likes").html(html);
       self.removeLikeOrDislike(".destroy-like", "song_likes/");
+      self.playSongs(data);
     });
   };
 
@@ -19,6 +20,7 @@ Coachella.SongView = function(el) {
 
       $("#dislikes").html(html);
       self.removeLikeOrDislike(".destroy-dislike", "song_dislikes/");
+      self.playSongs(data);
     });
   };
 
@@ -31,8 +33,17 @@ Coachella.SongView = function(el) {
         type: "delete"
       });
 
-      $(this).parent().remove();
+      if (el == ".destroy-like") {
+        self.renderLikedSongs();
+      } else {
+        self.renderDislikedSongs();
+      }
+    });
+  };
 
+  self.playSongs = function(songs) {
+    $(".load-songs").click(function() {
+      new Coachella.CurrentlyPlayingView(songs);
     });
   };
 
@@ -40,4 +51,4 @@ Coachella.SongView = function(el) {
     self.renderLikedSongs();
     self.renderDislikedSongs();
   })();
-}
+};

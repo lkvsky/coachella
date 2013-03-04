@@ -15,12 +15,12 @@
 //= require_tree .
 
 function onYouTubeIframeAPIReady() {
-  var player = new Coachella.CurrentlyPlayingView();
-  var playlistCreator = new Coachella.PlaylistCreator("#playlist-creator");
-  var playlist = new Coachella.PlaylistView("#playlist");
-  var band = new Coachella.BandView("#band");
-  var song = new Coachella.SongView("#song");
-  var navigation = new Coachella.Navigation();
+  new Coachella.CurrentlyPlayingView();
+  new Coachella.PlaylistCreator("#playlist-creator");
+  new Coachella.PlaylistView("#playlist");
+  new Coachella.BandView("#band");
+  new Coachella.SongView("#song");
+  new Coachella.Navigation();
 }
 
 $(function() {
