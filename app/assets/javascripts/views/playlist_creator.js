@@ -23,7 +23,10 @@ Coachella.PlaylistCreator = function(el) {
       $.post('playlists.json', $("#playlists-form").serialize(), function(data) {
         new Coachella.PlaylistView("#playlist");
       }).error(function() {
-        $("#temp").html("Oops! Try that again...");
+        console.log("AAAAAHAHH");
+        $(".error").show();
+        $(".error-message").html("Pick something to mix");
+        $("#temp").hide();
       });
         self.renderTemp("Hold on while we mix...", "0.5");
         Coachella.toggleSection("#playlist-section", "#playlist");
@@ -46,4 +49,4 @@ Coachella.PlaylistCreator = function(el) {
       self.renderPlaylistsForm();
     });
   })();
-}
+};

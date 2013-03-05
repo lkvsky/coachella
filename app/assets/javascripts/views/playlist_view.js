@@ -42,6 +42,12 @@ Coachella.PlaylistView = function(el, playlists) {
 
   // listener helpers
 
+  self.fetchAndRenderPlaylists = function() {
+    $.getJSON("/playlists.json", function(data) {
+      self.renderPlaylistsIndex(data);
+    });
+  };
+
   self.showPlaylist = function() {
     $(".playlists-show").click(function() {
       var id = $(this).attr("data-playlist-id");
@@ -60,13 +66,13 @@ Coachella.PlaylistView = function(el, playlists) {
         type: "delete"
       });
 
-      self.renderPlaylistsIndex();
+      new Coachella.PlaylistView("#playlist");
     });
   };
 
   self.indexPlaylist = function() {
     $(".playlists-index").click(function() {
-      self.renderPlaylistsIndex();
+      new Coachella.PlaylistView("#playlist");
     });
   };
 
@@ -100,9 +106,7 @@ Coachella.PlaylistView = function(el, playlists) {
     if (playlists) {
       self.renderPlaylistsIndex(playlists);
     } else {
-      $.getJSON("/playlists.json", function(data) {
-        self.renderPlaylistsIndex(data);
-      });
+      self.fetchAndRenderPlaylists();
     }
   })();
 };
