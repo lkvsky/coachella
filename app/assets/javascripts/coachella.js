@@ -1,5 +1,7 @@
 var Coachella = function() {};
 
+// utility functions
+
 Coachella.handlebarsHelper = function(el, obj) {
   var html;
   var source = $(el).html();
@@ -20,4 +22,20 @@ Coachella.toggleSection = function(tab, blockContent) {
 
   $(".discovery > div").hide();
   $(blockContent).show();
+};
+
+Coachella.getCurrentUser = function(callback) {
+  $.getJSON("/users.json", function(data) {
+    var user;
+
+    if (data.current_user) {
+      user = new Coachella.UserModel(data.current_user);
+    } else {
+      user = null;
+    }
+
+    if (callback) {
+      callback(user);
+    }
+  });
 };
