@@ -20,7 +20,7 @@ class RegistrationsController < Devise::RegistrationsController
       clean_up_passwords resource
 
       respond_to do |format|
-        format.json { render :json => resource.errors.full_messages.join(","), :status => 401 }
+        format.json { render :json => resource.errors.full_messages.join(", "), :status => 401 }
       end
     end
   end

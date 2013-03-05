@@ -11,6 +11,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       set_flash_message(:notice, :success, :kind => "Facebook") if is_navigational_format?
     else
       redirect_to root_path
+      flash[:log_in_error] = "Oops! Someone already has an account with that e-mail."
     end
   end
 
