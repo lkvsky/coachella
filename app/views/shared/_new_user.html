@@ -2,8 +2,11 @@
   
   <div class="well well-small alert alert-error error"></div>
 
+  <div><%= f.label :username %>
+  <%= f.email_field :username, :autofocus => true %></div>
+
   <div><%= f.label :email %>
-  <%= f.email_field :email, :autofocus => true %></div>
+  <%= f.email_field :email %></div>
 
   <div><%= f.label :password %>
   <%= f.password_field :password %></div>
