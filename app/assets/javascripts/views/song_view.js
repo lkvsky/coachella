@@ -1,27 +1,23 @@
 //= require coachella
-Coachella.SongView = function(el) {
+Coachella.SongView = function(el, songs) {
   var self = this;
 
   self.el = $(el);
 
-  self.renderLikedSongs = function() {
-    $.getJSON("/song_likes.json", function(data) {
-      var html = Coachella.handlebarsHelper("#liked-show", {songs: data});
+  self.renderLikedSongs = function(favoriteSongs) {
+    var html = Coachella.handlebarsHelper("#liked-show", {songs: favoriteSongs});
 
-      $("#likes").html(html);
-      self.removeLikeOrDislike(".destroy-like", "song_likes/");
-      self.playSongs(data);
-    });
+    $("#likes").html(html);
+    self.removeLikeOrDislike(".destroy-like", "song_likes/");
+    self.playSongs(favoriteSongs);
   };
 
-  self.renderDislikedSongs = function() {
-    $.getJSON("/song_dislikes.json", function(data) {
-      var html = Coachella.handlebarsHelper("#disliked-show", {songs: data});
+  self.renderDislikedSongs = function(dislikedSongs) {
+    var html = Coachella.handlebarsHelper("#disliked-show", {songs: dislikedSongs});
 
-      $("#dislikes").html(html);
-      self.removeLikeOrDislike(".destroy-dislike", "song_dislikes/");
-      self.playSongs(data);
-    });
+    $("#dislikes").html(html);
+    self.removeLikeOrDislike(".destroy-dislike", "song_dislikes/");
+    self.playSongs(dislikedSongs);
   };
 
   self.removeLikeOrDislike = function(el, path) {
@@ -41,6 +37,14 @@ Coachella.SongView = function(el) {
     });
   };
 
+  // utilities
+
+  self.fetchSongs = function(path, callback) {
+    $.getJSON(path, function(data) {
+      callback(data);
+    });
+  };
+
   self.playSongs = function(songs) {
     $(".load-songs").click(function() {
       new Coachella.CurrentlyPlayingView(songs);
@@ -48,7 +52,12 @@ Coachella.SongView = function(el) {
   };
 
   self.initialize = (function() {
-    self.renderLikedSongs();
-    self.renderDislikedSongs();
+    if (songs) {
+      self.renderLikedSongs(songs.favoriteSongs);
+      self.renderDislikedSongs(songs.dislikedSongs);
+    } else {
+      self.fetchSongs("/song_likes.json", self.renderLikedSongs);
+      self.fetchSongs("/song_dislikes.json", self.renderDislikedSongs);
+    }
   })();
 };

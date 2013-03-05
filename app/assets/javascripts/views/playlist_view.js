@@ -1,19 +1,17 @@
 //= require coachella
-Coachella.PlaylistView = function(el) {
+Coachella.PlaylistView = function(el, playlists) {
   var self = this;
 
   self.el = $(el);
 
   // views
 
-  self.renderPlaylistsIndex = function() {
-    $.getJSON("/playlists.json", function(data) {
-      var html = Coachella.handlebarsHelper("#playlists-index", {playlists: data});
+  self.renderPlaylistsIndex = function(playlists) {
+    var html = Coachella.handlebarsHelper("#playlists-index", {playlists: playlists});
 
-      self.el.html(html);
+    self.el.html(html);
 
-      self.installPlaylistsIndexListeners();
-    });
+    self.installPlaylistsIndexListeners();
   };
 
   self.renderPlaylistsShow = function(id) {
@@ -99,6 +97,12 @@ Coachella.PlaylistView = function(el) {
   };
 
   self.initialize = (function() {
-    self.renderPlaylistsIndex();
+    if (playlists) {
+      self.renderPlaylistsIndex(playlists);
+    } else {
+      $.getJSON("/playlists.json", function(data) {
+        self.renderPlaylistsIndex(data);
+      });
+    }
   })();
 };

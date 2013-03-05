@@ -1,5 +1,5 @@
 //= require coachella
-Coachella.CurrentlyPlayingView = function(playlist) {
+Coachella.CurrentlyPlayingView = function(playlist, user) {
   var self = this;
 
   self.el = $("#music-container");
@@ -53,7 +53,7 @@ Coachella.CurrentlyPlayingView = function(playlist) {
 
   // utilitiy
 
-  self.userPromptOrWelcome = function(user) {
+  self.userPromptOrWelcome = function() {
     if (user) {
       self.renderUserWelcome(user);
     } else {
@@ -153,7 +153,7 @@ Coachella.CurrentlyPlayingView = function(playlist) {
     if (self.playlist) {
       self.loadIframe();
     } else {
-      Coachella.getCurrentUser(self.userPromptOrWelcome);
+      self.userPromptOrWelcome();
     }
   })();
 };

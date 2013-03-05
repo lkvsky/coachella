@@ -25,17 +25,15 @@ Coachella.toggleSection = function(tab, blockContent) {
 };
 
 Coachella.getCurrentUser = function(callback) {
-  $.getJSON("/users.json", function(data) {
-    var user;
-
+  $.getJSON("/users/current.json", function(data) {
     if (data.current_user) {
-      user = new Coachella.UserModel(data.current_user);
+      Coachella.currentUser = new Coachella.UserModel(data.current_user);
     } else {
-      user = null;
+      Coachella.currentUser = null;
     }
 
     if (callback) {
-      callback(user);
+      callback();
     }
   });
 };
