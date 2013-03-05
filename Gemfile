@@ -32,6 +32,8 @@ gem 'rest-client'
 gem 'addressable'
 gem 'devise'
 gem 'bootstrap-sass'
+gem 'omniauth'
+gem 'omniauth-facebook'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

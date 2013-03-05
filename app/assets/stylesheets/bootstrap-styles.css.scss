@@ -29,6 +29,14 @@ $orange:                #f89406;
 $pink:                  #c3325f;
 $purple:                #7a43b6;
 
+// My Colors
+// -------------------------
+$myRed: #ae374a;
+$myHighlightedRed: #9b3142;
+$myBlue: #3786ae;
+$myGreen: #37ae9b;
+$myHighlightedGreen: #319b8a;
+
 
 // Scaffolding
 // -------------------------
@@ -38,7 +46,7 @@ $textColor:             $grayDark;
 
 // Links
 // -------------------------
-$linkColor:             #3786ae;
+$linkColor:             $myBlue;
 $linkColorHover:        darken($linkColor, 15%);
 
 
@@ -94,14 +102,14 @@ $btnPrimaryBackgroundHighlight:     adjust-hue($btnPrimaryBackground, 20%);
 $btnInfoBackground:                 #5bc0de;
 $btnInfoBackgroundHighlight:        #2f96b4;
 
-$btnSuccessBackground:              #37ae9b;
-$btnSuccessBackgroundHighlight:     #319b8a;
+$btnSuccessBackground:              $myGreen;
+$btnSuccessBackgroundHighlight:     $myHighlightedGreen;
 
 $btnWarningBackground:              lighten($orange, 15%);
 $btnWarningBackgroundHighlight:     $orange;
 
-$btnDangerBackground:               #ae374a;
-$btnDangerBackgroundHighlight:      #9b3142;
+$btnDangerBackground:               $myRed;
+$btnDangerBackgroundHighlight:      $myHighlightedRed;
 
 $btnInverseBackground:              #444;
 $btnInverseBackgroundHighlight:     $grayDarker;

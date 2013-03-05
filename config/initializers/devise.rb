@@ -56,7 +56,6 @@ Devise.setup do |config|
 
   # If http headers should be returned for AJAX requests. True by default.
   config.http_authenticatable_on_xhr = true
-  config.navigational_formats = ["*/*", :html, :json]
 
   # The realm used in Http Basic Authentication. "Application" by default.
   # config.http_authentication_realm = "Application"
@@ -206,7 +205,7 @@ Devise.setup do |config|
   # should add them to the navigational formats lists.
   #
   # The "*/*" below is required to match Internet Explorer requests.
-  # config.navigational_formats = ["*/*", :html]
+  config.navigational_formats = ["*/*", :html, :json]
 
   # The default HTTP method used to sign out a resource. Default is :delete.
   config.sign_out_via = :delete
@@ -215,6 +214,12 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', :scope => 'user,public_repo'
+  require "omniauth-facebook"
+  if Rails.env == "development" || Rails.env == "test"
+    config.omniauth :facebook, "518247944893199", "8fa1ec4769820c52f6c1bdd303caeb33", :scope => 'email,publish_actions'
+  else
+    config.omniauth :facebook, "561012140583673", "04669d92a9470fea8e9b0309231507b6", :scope => 'email,publish_actions'
+  end
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

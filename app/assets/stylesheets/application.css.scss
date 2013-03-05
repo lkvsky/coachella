@@ -95,6 +95,7 @@
   height: 200px;
   width: 200px;
   border-radius: 50%;
+  background-color: $myRed;
  }
 
  #on-deck {
@@ -126,7 +127,7 @@
 
  #cue-playlist:hover {
   cursor: pointer;
-  background-color: #ae374a;
+  background-color: $myGreen;
  }
 
  .feelings {
