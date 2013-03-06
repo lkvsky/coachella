@@ -6,14 +6,10 @@ Coachella.BandView = function(el) {
 
   // views
 
-  self.renderBandsIndex = function() {
-    $.getJSON('/bands.json', function(data) {
-      var html = Coachella.handlebarsHelper("#bands-index", {bands: data});
-
+  self.renderBandsIndex = function(bands) {
+      var html = Coachella.handlebarsHelper("#bands-index", {bands: bands});
       self.el.html(html);
-      
       self.installBandsIndexListeners();
-    });
   };
 
   self.renderBandsShow = function(id) {
@@ -21,11 +17,22 @@ Coachella.BandView = function(el) {
 
     $.getJSON(pathname, function(data) {
       var html = Coachella.handlebarsHelper("#bands-show", {band: data});
-
       self.el.html(html);
-
       self.installBandsShowListeners(data.songs);
     });
+  };
+
+  // utilitiy
+
+  self.fetchAndRenderBands = function() {
+    if (Coachella.getCachedObject("bands")) {
+      self.renderBandsIndex(Coachella.getCachedObject("bands"));
+    } else {
+      $.getJSON("/bands.json", function(data) {
+        Coachella.cacheObject("bands", data);
+        self.renderBandsIndex(data);
+      });
+    }
   };
 
   // listeners
@@ -33,7 +40,6 @@ Coachella.BandView = function(el) {
   self.installBandsIndexListeners = function() {
     $(".bands-show").click(function() {
       var id = $(this).attr("data-band-id");
-
       self.renderBandsShow(id);
     });
 
@@ -49,8 +55,7 @@ Coachella.BandView = function(el) {
 
   self.installBandsShowListeners = function(songs) {
     $(".bands-index").click(function() {
-
-      self.renderBandsIndex();
+      self.fetchAndRenderBands();
     });
 
     $(".load-playlist").click(function() {
@@ -61,6 +66,6 @@ Coachella.BandView = function(el) {
   // initialize
 
   self.initialize = (function() {
-    self.renderBandsIndex();
+    self.fetchAndRenderBands();
   })();
 };

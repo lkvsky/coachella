@@ -37,3 +37,15 @@ Coachella.getCurrentUser = function(callback) {
     }
   });
 };
+
+Coachella.cacheObject = function(key, value) {
+  localStorage.setItem(key, JSON.stringify(value));
+};
+
+Coachella.getCachedObject = function(key) {
+  if (typeof(localStorage.getItem(key)) == undefined) {
+    return JSON.parse(localStorage.getItem(key));
+  } else {
+    return null;
+  }
+};

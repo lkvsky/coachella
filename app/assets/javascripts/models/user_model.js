@@ -1,3 +1,4 @@
+//= require coachella
 Coachella.UserModel = function(user) {
   var self = this;
 

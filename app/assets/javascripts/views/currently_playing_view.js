@@ -90,6 +90,7 @@ Coachella.CurrentlyPlayingView = function(playlist, user) {
     });
   };
 
+  // listeners
 
   self.installCuedSongListeners = function() {
     $(".like").click(function() {
@@ -103,8 +104,6 @@ Coachella.CurrentlyPlayingView = function(playlist, user) {
     });
 
   };
-
-  // listener helpers
 
   self.postLike = function(songId) {
     $.post("/song_likes", {"like": songId}, function(data) {

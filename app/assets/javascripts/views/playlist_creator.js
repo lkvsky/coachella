@@ -23,10 +23,9 @@ Coachella.PlaylistCreator = function(el) {
       $.post('playlists.json', $("#playlists-form").serialize(), function(data) {
         new Coachella.PlaylistView("#playlist");
       }).error(function() {
-        console.log("AAAAAHAHH");
         $(".error").show();
         $(".error-message").html("Pick something to mix");
-        $("#temp").hide();
+        $(".temp").remove();
       });
         self.renderTemp("Hold on while we mix...", "0.5");
         Coachella.toggleSection("#playlist-section", "#playlist");
@@ -35,8 +34,7 @@ Coachella.PlaylistCreator = function(el) {
 
   self.renderTemp = function(message, opacity) {
     var div = $("<div>");
-    div.attr("id", "temp");
-    div.addClass("well well-small");
+    div.addClass("well well-small temp");
     div.css("opacity", opacity);
     div.html(message);
 
@@ -44,9 +42,14 @@ Coachella.PlaylistCreator = function(el) {
   };
 
   self.initialize = (function() {
-    $.getJSON("/bands.json", function(data) {
-      self.bands = data;
+    if (Coachella.getCachedObject("bands")) {
+      self.bands = Coachella.getCachedObject("bands");
       self.renderPlaylistsForm();
-    });
+    } else {
+      $.getJSON("/bands.json", function(data) {
+        self.bands = data;
+        self.renderPlaylistsForm();
+      });
+    }
   })();
 };
