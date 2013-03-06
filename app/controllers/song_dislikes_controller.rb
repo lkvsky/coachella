@@ -6,7 +6,7 @@ class SongDislikesController < ApplicationController
     dislike = SongDislike.new(:song_id => song.id, :user_id => user.id)
 
     if dislike.save
-      if song.liked?(current_user)
+      if song.liked?(user)
         user.song_likes.where(:song_id => song.id).first.destroy
       end
 
@@ -41,7 +41,7 @@ class SongDislikesController < ApplicationController
     dislike = User.find(user.id).song_dislikes.where(:song_id => song.id).first
     dislike.destroy
 
-    song_status = { :like => "#{song.liked?(current_user)}", :dislike => "false" }
+    song_status = { :like => "#{song.liked?(user)}", :dislike => "false" }
 
     respond_to do |format|
       format.json { render :json => song_status, :status => 200 }
