@@ -34,7 +34,6 @@ Coachella.CurrentlyPlayingView = function(playlist, user) {
       for (var i=0; i<playlist.length; i++) {
         if (url == playlist[i].url) {
           song = playlist[i];
-          Coachella.renderFeelingsHtml(song.like, song.dislike);
         }
       }
 
@@ -42,6 +41,9 @@ Coachella.CurrentlyPlayingView = function(playlist, user) {
     }
 
     $("#on-deck").html(html);
+    if (song) {
+      Coachella.renderFeelingsHtml($("#on-deck div.feelings"), song.like, song.dislike);
+    }
     self.installCuedSongListeners();
   };
 
@@ -109,7 +111,7 @@ Coachella.CurrentlyPlayingView = function(playlist, user) {
   self.postLike = function(songId) {
     $.post("/song_likes", {"like": songId}, function(data) {
       self.updateSongAttributes(songId, data.like, data.dislike);
-      Coachella.renderFeelingsHtml(data.like, data.dislike);
+      Coachella.renderFeelingsHtml($("#on-deck div.feelings"), data.like, data.dislike);
       new Coachella.SongView("#song");
     });
   };
@@ -117,7 +119,7 @@ Coachella.CurrentlyPlayingView = function(playlist, user) {
   self.postDislike = function(songId) {
     $.post("/song_dislikes", {"dislike": songId}, function(data) {
       self.updateSongAttributes(songId, data.like, data.dislike);
-      Coachella.renderFeelingsHtml(data.like, data.dislike);
+      Coachella.renderFeelingsHtml($("#on-deck div.feelings"), data.like, data.dislike);
       new Coachella.SongView("#song");
     });
   };

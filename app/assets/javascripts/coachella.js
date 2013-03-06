@@ -38,24 +38,24 @@ Coachella.getCurrentUser = function(callback) {
   });
 };
 
-Coachella.renderFeelingsHtml = function(likeStatus, dislikeStatus) {
+Coachella.renderFeelingsHtml = function(el, likeStatus, dislikeStatus) {
   if (likeStatus) {
-    $(".feelings").find(".like").attr("data-like-status", likeStatus);
+    el.find(".like").attr("data-like-status", likeStatus);
 
-    if ($(".like").attr("data-like-status") == "true") {
-      $(".like").html("Unlike");
+    if (el.find(".like").attr("data-like-status") == "true") {
+      el.find(".like").html("Unlike");
     } else {
-      $(".like").html("Like");
+      el.find(".like").html("Like");
     }
   }
 
   if (dislikeStatus) {
-    $(".feelings").find(".dislike").attr("data-dislike-status", dislikeStatus);
+    el.find(".dislike").attr("data-dislike-status", dislikeStatus);
 
-    if ($(".dislike").attr("data-dislike-status") == "true") {
-      $(".dislike").html("Unhate");
+    if (el.find(".dislike").attr("data-dislike-status") == "true") {
+      el.find(".dislike").html("Unhate");
     } else {
-      $(".dislike").html("Hate");
+      el.find(".dislike").html("Hate");
     }
   }
 };

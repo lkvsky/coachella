@@ -77,22 +77,6 @@ Coachella.BandView = function(el) {
     });
   };
 
-  self.postLike = function(songId) {
-    $.post("/song_likes", {"like": songId}, function(data) {
-      self.updateSongAttributes(songId, data.like, data.dislike);
-      Coachella.renderFeelingsHtml(data.like, data.dislike);
-      new Coachella.SongView("#song");
-    });
-  };
-
-  self.postDislike = function(songId) {
-    $.post("/song_dislikes", {"dislike": songId}, function(data) {
-      self.updateSongAttributes(songId, data.like, data.dislike);
-      Coachella.renderFeelingsHtml(data.like, data.dislike);
-      new Coachella.SongView("#song");
-    });
-  };
-
   // initialize
 
   self.initialize = (function() {
