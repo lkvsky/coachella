@@ -52,10 +52,10 @@ Coachella.SongView = function(el, songs) {
       if (playlist[i].id === parseInt(id, 10)) {
         if (status.like) {
           playlist[i].like = status.like;
-          Coachella.renderFeelingsHtml($("#on-deck div.feelings"), status.like, null);
+          Coachella.renderFeelingsHtml($("#on-deck div.feelings"), id, status.like, null);
         } else if (status.dislike) {
           playlist[i].dislike = status.dislike;
-          Coachella.renderFeelingsHtml($("#on-deck div.feelings"), null, status.dislike);
+          Coachella.renderFeelingsHtml($("#on-deck div.feelings"), id, null, status.dislike);
         }
 
         Coachella.cacheObject("playlist", playlist);

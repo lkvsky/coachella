@@ -38,24 +38,26 @@ Coachella.getCurrentUser = function(callback) {
   });
 };
 
-Coachella.renderFeelingsHtml = function(el, likeStatus, dislikeStatus) {
-  if (likeStatus) {
-    el.find(".like").attr("data-like-status", likeStatus);
+Coachella.renderFeelingsHtml = function(el, id, likeStatus, dislikeStatus) {
+  if (el.find(".like").attr("data-song-id") == id) {
+    if (likeStatus) {
+      el.find(".like").attr("data-like-status", likeStatus);
 
-    if (el.find(".like").attr("data-like-status") == "true") {
-      el.find(".like").html("Unlike");
-    } else {
-      el.find(".like").html("Like");
+      if (el.find(".like").attr("data-like-status") == "true") {
+        el.find(".like").html("Unlike");
+      } else {
+        el.find(".like").html("Like");
+      }
     }
-  }
 
-  if (dislikeStatus) {
-    el.find(".dislike").attr("data-dislike-status", dislikeStatus);
+    if (dislikeStatus) {
+      el.find(".dislike").attr("data-dislike-status", dislikeStatus);
 
-    if (el.find(".dislike").attr("data-dislike-status") == "true") {
-      el.find(".dislike").html("Unhate");
-    } else {
-      el.find(".dislike").html("Hate");
+      if (el.find(".dislike").attr("data-dislike-status") == "true") {
+        el.find(".dislike").html("Unhate");
+      } else {
+        el.find(".dislike").html("Hate");
+      }
     }
   }
 };

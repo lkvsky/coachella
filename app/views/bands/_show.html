@@ -11,9 +11,13 @@
    {{#each band.songs}}
     <div class="song" data-band-id="{{this.band_id}} data-song-id={{this.id}}">
       
-    <div class="feelings">
-      <div class="like btn btn-success" data-song-id="{{song.id}}" data-like-status="{{song.like}}">Like</div>
-      <div class="dislike btn btn-danger" data-song-id="{{song.id}}" data-dislike-status="{{song.dislike}}">Hate</div>
+    <div id="song-{{this.id}}" class="feelings">
+      <div class="like btn btn-success" data-song-id="{{this.id}}" data-like-status="{{this.like}}">
+        Like
+      </div>
+      <div class="dislike btn btn-danger" data-song-id="{{this.id}}" data-dislike-status="{{this.dislike}}">
+        Hate
+      </div>
     </div>
 
     {{this.name}}
