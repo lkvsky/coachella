@@ -8,9 +8,7 @@ Coachella.PlaylistView = function(el, playlists) {
 
   self.renderPlaylistsIndex = function(playlists) {
     var html = Coachella.handlebarsHelper("#playlists-index", {playlists: playlists});
-
     self.el.html(html);
-
     self.installPlaylistsIndexListeners();
   };
 

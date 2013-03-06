@@ -22,7 +22,8 @@ Coachella.SongView = function(el, songs) {
 
   self.removeLikeOrDislike = function(el, path) {
     $(el).click(function() {
-      var pathname = path + $(this).attr("data-song-id");
+      var id = $(this).attr("data-song-id");
+      var pathname = path + id;
 
       $.ajax({
         url: pathname,
