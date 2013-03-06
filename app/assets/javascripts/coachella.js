@@ -38,6 +38,28 @@ Coachella.getCurrentUser = function(callback) {
   });
 };
 
+Coachella.renderFeelingsHtml = function(likeStatus, dislikeStatus) {
+  if (likeStatus) {
+    $(".feelings").find(".like").attr("data-like-status", likeStatus);
+
+    if ($(".like").attr("data-like-status") == "true") {
+      $(".like").html("Unlike");
+    } else {
+      $(".like").html("Like");
+    }
+  }
+
+  if (dislikeStatus) {
+    $(".feelings").find(".dislike").attr("data-dislike-status", dislikeStatus);
+
+    if ($(".dislike").attr("data-dislike-status") == "true") {
+      $(".dislike").html("Unhate");
+    } else {
+      $(".dislike").html("Hate");
+    }
+  }
+};
+
 Coachella.cacheObject = function(key, value) {
   localStorage.setItem(key, JSON.stringify(value));
 };

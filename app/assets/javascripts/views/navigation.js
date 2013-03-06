@@ -57,7 +57,7 @@ Coachella.Navigation = function() {
   };
 
   self.initialize = (function() {
-    $("#band").hide();
+    $("#playlist").hide();
     $("#song").hide();
     self.renderNavBar();
   })();

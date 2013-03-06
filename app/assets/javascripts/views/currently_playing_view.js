@@ -3,7 +3,6 @@ Coachella.CurrentlyPlayingView = function(playlist, user) {
   var self = this;
 
   self.el = $("#music-container");
-  //self.playlist = Coachella.getCachedObject("playlist");
 
   // views
 
@@ -42,7 +41,7 @@ Coachella.CurrentlyPlayingView = function(playlist, user) {
     }
 
     $("#on-deck").html(html);
-    self.renderFeelingsHtml();
+    Coachella.renderFeelingsHtml(song.like, song.dislike);
     self.installCuedSongListeners();
   };
 
@@ -110,7 +109,7 @@ Coachella.CurrentlyPlayingView = function(playlist, user) {
   self.postLike = function(songId) {
     $.post("/song_likes", {"like": songId}, function(data) {
       self.updateSongAttributes(songId, data.like, data.dislike);
-      self.renderFeelingsHtml();
+      Coachella.renderFeelingsHtml(data.like, data.dislike);
       new Coachella.SongView("#song");
     });
   };
@@ -118,7 +117,7 @@ Coachella.CurrentlyPlayingView = function(playlist, user) {
   self.postDislike = function(songId) {
     $.post("/song_dislikes", {"dislike": songId}, function(data) {
       self.updateSongAttributes(songId, data.like, data.dislike);
-      self.renderFeelingsHtml();
+      Coachella.renderFeelingsHtml(data.like, data.dislike);
       new Coachella.SongView("#song");
     });
   };
@@ -133,23 +132,6 @@ Coachella.CurrentlyPlayingView = function(playlist, user) {
 
         Coachella.cacheObject("playlist", playlist);
       }
-    }
-
-    $(".feelings").find(".like").attr("data-like-status", likeStatus);
-    $(".feelings").find(".dislike").attr("data-dislike-status", dislikeStatus);
-  };
-
-  self.renderFeelingsHtml = function() {
-    if ($(".like").attr("data-like-status") == "true") {
-      $(".like").html("Unlike");
-    } else {
-      $(".like").html("Like");
-    }
-
-    if ($(".dislike").attr("data-dislike-status") == "true") {
-      $(".dislike").html("Unhate");
-    } else {
-      $(".dislike").html("Hate");
     }
   };
 

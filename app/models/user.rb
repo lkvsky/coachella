@@ -59,10 +59,7 @@ class User < ActiveRecord::Base
   def formatted_json
     {
       :username => self.username,
-      :email => self.email,
-      :playlists => self.playlists.map { |playlist| playlist.formatted_json(self) },
-      :favorite_songs => self.favorite_songs.map { |song| song.formatted_json(self) },
-      :disliked_songs => self.disliked_songs.map { |song| song.formatted_json(self) }
+      :email => self.email
     }
   end
 

@@ -17,10 +17,18 @@ Coachella.PlaylistView = function(el, playlists) {
 
     $.getJSON(pathname, function(data) {
       var html = Coachella.handlebarsHelper("#playlists-show", {playlist: data});
-
       self.el.html(html);
-
       self.installPlaylistsShowListeners();
+    });
+  };
+
+  self.renderPlaylistsEdit = function(id) {
+    var pathname = "/playlists/" + id + ".json";
+
+    $.getJSON(pathname, function(data) {
+      var html = Coachella.handlebarsHelper("#playlists-edit", {playlist: data});
+      self.el.html(html);
+      self.installPlaylistsEditListeners();
     });
   };
 
@@ -34,8 +42,13 @@ Coachella.PlaylistView = function(el, playlists) {
   self.installPlaylistsShowListeners = function() {
     self.loadPlaylist();
     self.indexPlaylist();
+    self.editPlaylist();
+  };
+
+  self.installPlaylistsEditListeners = function() {
     self.deletePlaylist();
     self.deletePlaylistSong();
+    self.savePlaylist();
   };
 
   // listener helpers
@@ -85,18 +98,41 @@ Coachella.PlaylistView = function(el, playlists) {
     });
   };
 
+  self.savePlaylist = function() {
+    $(".playlists-save").click(function() {
+      var id = $(this).attr("data-playlist-id");
+      var pathname = "/playlists/" + id;
+      var putData = $("#playlists-update").serialize();
+
+      $.ajax({
+        url: pathname,
+        type: "put",
+        data: putData,
+        success: function() {
+          self.renderPlaylistsShow(id);
+        }
+      });
+    });
+  };
+
+  self.editPlaylist = function() {
+    $(".playlists-edit").click(function() {
+      var id = $(this).attr("data-playlist-id");
+      
+      self.renderPlaylistsEdit(id);
+    });
+  };
+
   self.deletePlaylistSong = function() {
    $(".playlist-song-delete").click(function() {
       var songId = $(this).attr("data-song-id");
-      var playlistId = $(this).closest(".playlist-songs").attr("data-playlist-id");
-
-      $.ajax({
-        url: "/playlists/" + playlistId,
-        type: "put",
-        data: {id: playlistId, song: songId}
-      });
-
-      new Coachella.PlaylistView("#playlist");
+      var input = $("<input>");
+      
+      input.attr("name", "playlist[songs][" + songId + "]");
+      input.attr("type", "hidden");
+      
+      $(".deleted-songs").append(input);
+      $(this).closest("div.song").remove();
    });
   };
 

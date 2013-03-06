@@ -1,0 +1,29 @@
+<h3>{{playlist.playlist.name}}</h3>
+
+<div class="well well-small playlist-songs" data-playlist-id="{{playlist.playlist.id}}">
+  <span class="playlist-show-actions">
+    <button type="button" class="btn btn-primary playlists-save" data-playlist-id="{{playlist.playlist.id}}">Save</button>
+    <button type="button" class="btn btn-danger playlists-delete" data-playlist-id="{{playlist.playlist.id}}">Delete</button>
+  </span>
+  <form id="playlists-update">
+    <label for="playlist[name]">Edit Name:</label>
+    <input name="playlist[name]" value="{{playlist.playlist.name}}"></input>
+    <div class="deleted-songs">
+    </div>
+
+    {{#if playlist.songs}}
+      {{#each playlist.songs}}
+        <div class="song">
+          <button type="button" class="btn btn-danger playlist-song-delete" data-song-id="{{this.id}}">-</button>
+          <strong>{{this.band}}</strong>: {{this.name}}
+        </div>
+      {{/each}}
+    {{else}}
+
+    <div class="song">
+      Looks like you deleted everything... Maybe you should just delete the playlist.
+    </div>
+
+    {{/if}}
+  </form>
+</div>

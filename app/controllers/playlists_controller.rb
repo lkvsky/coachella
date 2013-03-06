@@ -19,20 +19,20 @@ class PlaylistsController < ApplicationController
   end
 
   def update
-    if params[:song]
-      playlist = Playlist.find(params[:id])
-      playlist.playlist_songs.where(:song_id => params[:song]).first.destroy
-      playlist.save
+    playlist = Playlist.find(params[:id])
+    playlist.name = params[:playlist][:name]
+    
+    if params[:playlist][:songs]
+      params[:playlist][:songs].each do |song|
+        playlist.playlist_songs.where(:song_id => song).first.destroy
+      end
+    end
 
-      respond_to do |format|
-        format.html { render :nothing => true }
-        format.json { render :json => "update successful" }
-      end
-    else
-      respond_to do |format|
-        format.html { render :nothing => true }
-        format.json { render :status => 400 }
-      end
+    playlist.save
+
+    respond_to do |format|
+      format.html { render :nothing => true }
+      format.json { render :json => playlist }
     end
   end
 

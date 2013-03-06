@@ -17,19 +17,17 @@
 
 function onYouTubeIframeAPIReady() {
   Coachella.getCurrentUser(function() {
-    var songs, playlists, user;
+    var user;
 
     if (Coachella.currentUser) {
-      songs = Coachella.currentUser.songs;
-      playlists = Coachella.currentUser.playlists;
       user = Coachella.currentUser;
     }
 
     new Coachella.CurrentlyPlayingView(null, user);
     new Coachella.PlaylistCreator("#playlist-creator");
-    new Coachella.PlaylistView("#playlist", playlists);
+    new Coachella.PlaylistView("#playlist");
     new Coachella.BandView("#band");
-    new Coachella.SongView("#song", songs);
+    new Coachella.SongView("#song");
     new Coachella.Navigation();
   });
 }
