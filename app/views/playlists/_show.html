@@ -2,12 +2,11 @@
 
 <div class="well well-small playlist-songs" data-playlist-id="{{playlist.playlist.id}}">
   <span class="playlist-show-actions">
-    <button type="button" class="btn btn-inverse playlists-index">All Playlists</button>
-    <button type="button" class="btn btn-primary load-playlist" data-playlist-id="{{playlist.playlist.id}}">Play</button>
-    <button type="button" class="btn btn-danger playlists-edit" data-playlist-id="{{playlist.playlist.id}}">Edit</button>
+    <a href="#playlists" role="button" class="btn btn-inverse playlists-index">All Playlists</a>
+    <a href="#music-player" role="button" class="btn btn-primary load-playlist" data-playlist-id="{{playlist.playlist.id}}">Play</a>
+    <a href="#playlists/edit/{{playlist.playlist.id}}" role="button" class="btn btn-danger playlists-edit" data-playlist-id="{{playlist.playlist.id}}">Edit</a>
   </span>
 {{#if playlist.songs}}
-
   {{#each playlist.songs}}
     <div class="song">
       <strong>{{this.band}}</strong>: {{this.name}}

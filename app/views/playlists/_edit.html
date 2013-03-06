@@ -2,8 +2,8 @@
 
 <div class="well well-small playlist-songs" data-playlist-id="{{playlist.playlist.id}}">
   <span class="playlist-show-actions">
-    <button type="button" class="btn btn-primary playlists-save" data-playlist-id="{{playlist.playlist.id}}">Save</button>
-    <button type="button" class="btn btn-danger playlists-delete" data-playlist-id="{{playlist.playlist.id}}">Delete</button>
+    <a href="#playlist" role="button" class="btn btn-primary playlists-save" data-playlist-id="{{playlist.playlist.id}}">Save</a>
+    <a href="#playlist" role="button" class="btn btn-danger playlists-delete" data-playlist-id="{{playlist.playlist.id}}">Delete</a>
   </span>
   <form id="playlists-update">
     <label for="playlist[name]">Edit Name:</label>

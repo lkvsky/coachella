@@ -38,28 +38,58 @@ Coachella.BandView = function(el) {
   // listeners
 
   self.installBandsIndexListeners = function() {
+    self.bandsShow();
+    self.bandsPlay();
+  };
+
+  self.installBandsShowListeners = function(songs) {
+    self.bandsIndex();
+    self.bandsPlay();
+  };
+
+  // listener helpers
+
+  self.bandsIndex = function() {
+    $(".bands-index").click(function() {
+      self.fetchAndRenderBands();
+    });
+  };
+
+  self.bandsShow = function() {
     $(".bands-show").click(function() {
       var id = $(this).attr("data-band-id");
       self.renderBandsShow(id);
     });
+  };
 
+  self.bandsPlay = function(songs) {
     $(".load-band-playlist").click(function() {
-      var id = $(this).attr("data-band-id");
-      var pathname = '/bands/' + id + '.json';
+      if (songs) {
+        new Coachella.CurrentlyPlayingView(songs);
+      } else {
+        var id = $(this).attr("data-band-id");
+        var pathname = '/bands/' + id + '.json';
 
-      $.getJSON(pathname, function(data) {
-        new Coachella.CurrentlyPlayingView(data.songs);
-      });
+        $.getJSON(pathname, function(data) {
+          new Coachella.CurrentlyPlayingView(data.songs);
+        });
+      }
     });
   };
 
-  self.installBandsShowListeners = function(songs) {
-    $(".bands-index").click(function() {
-      self.fetchAndRenderBands();
+  self.postLike = function(songId) {
+    $.post("/song_likes", {"like": songId}, function(data) {
+      self.updateSongAttributes(songId, data.like, data.dislike);
+      Coachella.renderFeelingsHtml(data.like, data.dislike);
+      new Coachella.SongView("#song");
     });
+  };
 
-    $(".load-band-playlist").click(function() {
-      new Coachella.CurrentlyPlayingView(songs);
+  self.postDislike = function(songId) {
+    $.post("/song_dislikes", {"dislike": songId}, function(data) {
+      self.updateSongAttributes(songId, data.like, data.dislike);
+      Coachella.renderFeelingsHtml(data.like, data.dislike);
+      new Coachella.SongView("#song");
     });
   };
 

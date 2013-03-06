@@ -4,8 +4,8 @@
 
     <div class="well well-small">
       <span class="playlist-index-actions">
-        <button type="button" class="btn btn-primary load-playlist" data-playlist-id="{{this.playlist.id}}">Play</button>
-        <button type="button" class="btn btn-inverse playlists-show" data-playlist-id="{{this.playlist.id}}">Details</button>
+        <a href="#music-player" role="button" class="btn btn-primary load-playlist" data-playlist-id="{{this.playlist.id}}">Play</a>
+        <a href="#playlists/{{this.playlist.id}}" role="button" class="btn btn-inverse playlists-show" data-playlist-id="{{this.playlist.id}}">Details</a>
       </span>
       <strong>{{this.playlist.name}}</strong>: {{this.songs.length}} songs
     </div>

@@ -1,15 +1,22 @@
 <h3>{{band.info.name}}</h3>
 <div class="well well-small">
   <span class="band-actions">
-    <button type="button" class="btn btn-primary load-band-playlist">Play</button>
-    <button type="button" class="btn btn-inverse bands-index">All Bands</button>
+    <a href="#music-player"role="button" class="btn btn-primary load-band-playlist">Play</a>
+    <a href="#bands" role="button" class="btn btn-inverse bands-index">All Bands</a>
   </span>
   <img class="img-rounded" src="{{band.info.thumbnail}}">
   <br>
 
   <strong>YouTube Tracks</strong>
    {{#each band.songs}}
-    <div class="song" data-band-id="{{this.band_id}} data-song-id={{this.id}}">{{this.name}}
+    <div class="song" data-band-id="{{this.band_id}} data-song-id={{this.id}}">
+      
+    <div class="feelings">
+      <div class="like btn btn-success" data-song-id="{{song.id}}" data-like-status="{{song.like}}">Like</div>
+      <div class="dislike btn btn-danger" data-song-id="{{song.id}}" data-dislike-status="{{song.dislike}}">Hate</div>
+    </div>
+
+    {{this.name}}
     </div>
   {{/each}}
 </div>

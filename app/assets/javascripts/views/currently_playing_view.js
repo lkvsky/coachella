@@ -34,6 +34,7 @@ Coachella.CurrentlyPlayingView = function(playlist, user) {
       for (var i=0; i<playlist.length; i++) {
         if (url == playlist[i].url) {
           song = playlist[i];
+          Coachella.renderFeelingsHtml(song.like, song.dislike);
         }
       }
 
@@ -41,7 +42,6 @@ Coachella.CurrentlyPlayingView = function(playlist, user) {
     }
 
     $("#on-deck").html(html);
-    Coachella.renderFeelingsHtml(song.like, song.dislike);
     self.installCuedSongListeners();
   };
 
