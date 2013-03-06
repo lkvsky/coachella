@@ -43,7 +43,7 @@ Coachella.cacheObject = function(key, value) {
 };
 
 Coachella.getCachedObject = function(key) {
-  if (typeof(localStorage.getItem(key)) == undefined) {
+  if (typeof(localStorage.getItem(key)) !== undefined) {
     return JSON.parse(localStorage.getItem(key));
   } else {
     return null;

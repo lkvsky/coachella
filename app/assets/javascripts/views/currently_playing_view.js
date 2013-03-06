@@ -3,7 +3,7 @@ Coachella.CurrentlyPlayingView = function(playlist, user) {
   var self = this;
 
   self.el = $("#music-container");
-  self.playlist = playlist;
+  //self.playlist = Coachella.getCachedObject("playlist");
 
   // views
 
@@ -27,13 +27,14 @@ Coachella.CurrentlyPlayingView = function(playlist, user) {
 
   self.renderCurrentSong = function() {
     var html, song;
+    var playlist = Coachella.getCachedObject("playlist");
 
     if (self.video && !YT.PlayerState.ENDED) {
       var url = self.video.getVideoUrl().split("v=")[1];
 
-      for (var i=0; i<self.playlist.length; i++) {
-        if (url == self.playlist[i].url) {
-          song = self.playlist[i];
+      for (var i=0; i<playlist.length; i++) {
+        if (url == playlist[i].url) {
+          song = playlist[i];
         }
       }
 
@@ -62,7 +63,7 @@ Coachella.CurrentlyPlayingView = function(playlist, user) {
   };
 
   self.loadIframe = function() {
-    if (self.playlist) {
+    if (Coachella.getCachedObject("playlist")) {
       self.video = new YT.Player('music-player', {
         events: {
           'onReady': self.startPlaylist,
@@ -74,9 +75,10 @@ Coachella.CurrentlyPlayingView = function(playlist, user) {
 
   self.startPlaylist = function() {
     var playerList = [];
+    var playlist = Coachella.getCachedObject("playlist");
 
-    for (var i=0; i<self.playlist.length; i++) {
-      playerList.push(self.playlist[i].url);
+    for (var i=0; i<playlist.length; i++) {
+      playerList.push(playlist[i].url);
     }
 
     self.video.loadPlaylist({playlist: playerList});
@@ -84,7 +86,7 @@ Coachella.CurrentlyPlayingView = function(playlist, user) {
 
   self.generateRandomPlaylist = function() {
     $.getJSON("/songs", function(data) {
-      self.playlist = data;
+      Coachella.cacheObject("playlist", data);
 
       self.loadIframe();
     });
@@ -122,10 +124,14 @@ Coachella.CurrentlyPlayingView = function(playlist, user) {
   };
 
   self.updateSongAttributes = function(songId, likeStatus, dislikeStatus) {
-    for (var i=0; i<self.playlist.length; i++) {
-      if (self.playlist[i].id == songId) {
-        self.playlist[i].like = likeStatus;
-        self.playlist[i].dislike = dislikeStatus;
+    var playlist = Coachella.getCachedObject("playlist");
+
+    for (var i=0; i<playlist.length; i++) {
+      if (playlist[i].id == songId) {
+        playlist[i].like = likeStatus;
+        playlist[i].dislike = dislikeStatus;
+
+        Coachella.cacheObject("playlist", playlist);
       }
     }
 
@@ -149,7 +155,8 @@ Coachella.CurrentlyPlayingView = function(playlist, user) {
 
   self.initialize = (function() {
     self.renderPlayerShow();
-    if (self.playlist) {
+    if (playlist) {
+      Coachella.cacheObject("playlist", playlist);
       self.loadIframe();
     } else {
       self.userPromptOrWelcome();

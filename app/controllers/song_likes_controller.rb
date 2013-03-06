@@ -44,7 +44,7 @@ class SongLikesController < ApplicationController
     song_status = { :like => "false", :dislike => "#{song.disliked?(current_user)}" }
 
     respond_to do |format|
-      format.json { render :json => song_status }
+      format.json { render :json => song_status, :status => 200 }
     end
   end
 end

@@ -43,7 +43,7 @@ Coachella.BandView = function(el) {
       self.renderBandsShow(id);
     });
 
-    $(".load-playlist").click(function() {
+    $(".load-band-playlist").click(function() {
       var id = $(this).attr("data-band-id");
       var pathname = '/bands/' + id + '.json';
 
@@ -58,7 +58,7 @@ Coachella.BandView = function(el) {
       self.fetchAndRenderBands();
     });
 
-    $(".load-playlist").click(function() {
+    $(".load-band-playlist").click(function() {
       new Coachella.CurrentlyPlayingView(songs);
     });
   };

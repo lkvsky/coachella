@@ -27,18 +27,41 @@ Coachella.SongView = function(el, songs) {
 
       $.ajax({
         url: pathname,
-        type: "delete"
+        type: "delete",
+        success: function() {
+          if (el == ".destroy-like") {
+            self.fetchSongs("/song_likes.json", self.renderLikedSongs);
+            self.updateFeelings(id, {like: "false"});
+          } else {
+            self.fetchSongs("/song_dislikes.json", self.renderDislikedSongs);
+            self.updateFeelings(id, {dislike: "false"});
+          }
+        }
       });
 
-      if (el == ".destroy-like") {
-        self.renderLikedSongs();
-      } else {
-        self.renderDislikedSongs();
-      }
+      $(this).closest("div.song").remove();
     });
   };
 
   // utilities
+
+  self.updateFeelings = function(id, status) {
+    var playlist = Coachella.getCachedObject("playlist");
+
+    for (var i=0; i<playlist.length; i++) {
+      if (playlist[i].id === parseInt(id, 10)) {
+        if (status.like) {
+          playlist[i].like = status.like;
+        } else if (status.dislike) {
+          playlist[i].dislike = status.dislike;
+        }
+
+        Coachella.cacheObject("playlist", playlist);
+        break;
+      }
+    }
+
+  };
 
   self.fetchSongs = function(path, callback) {
     $.getJSON(path, function(data) {
@@ -48,7 +71,6 @@ Coachella.SongView = function(el, songs) {
 
   self.playSongs = function(el, playlistSongs) {
     el.find(".load-songs").click(function() {
-      console.log(playlistSongs);
       new Coachella.CurrentlyPlayingView(playlistSongs);
     });
   };
