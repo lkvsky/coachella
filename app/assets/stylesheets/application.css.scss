@@ -13,11 +13,21 @@
  */
  @import 'bootstrap-styles';
  @import 'bootstrap';
+ @import url(http://fonts.googleapis.com/css?family=Varela+Round);
 
- /* general styles */
+/* general styles */
+
+ body {
+  font-family: 'Varela Round';
+ }
 
  h1, h2 {
   text-align: center;
+ }
+
+ h3 {
+  line-height: 1;
+  font-size: 2em;
  }
 
  .discovery {
