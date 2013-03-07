@@ -2,12 +2,12 @@
 
 {{#if songs}}
   <div class="well well-small">
-    <a href="#music-player" role="button" class="btn btn-primary load-songs">Play</a>
+    <a href="#music-player" role="button" class="btn btn-primary load-songs group-actions line-actions">Play</a>
     <div class="song-container">
   {{#each songs}}
       
       <div class="song">
-        <button type="button" class="destroy-like btn btn-success" data-song-id="{{this.id}}">Unlike</button>
+        <button type="button" class="btn btn-success destroy-like group-actions line-actions" data-song-id="{{this.id}}">Unlike</button>
         <strong>{{this.name}}</strong> by {{this.band}}
       </div>
 

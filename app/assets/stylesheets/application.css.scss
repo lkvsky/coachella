@@ -57,6 +57,18 @@
   display: none;
  }
 
+.group-actions {
+  float: left;
+  position: relative;
+  margin-right: 10px;
+  bottom: 25px;
+  right: 5px;
+ }
+
+ .line-actions {
+  bottom: 5px;
+ }
+
 /* devise pages */
 
 .devise-form {
@@ -139,8 +151,8 @@
   margin: 10px;
   height: 310px;
   -webkit-box-shadow: 0 8px 6px -6px black;
-     -moz-box-shadow: 0 8px 6px -6px black;
-          box-shadow: 0 8px 6px -6px black;
+  -moz-box-shadow: 0 8px 6px -6px black;
+  box-shadow: 0 8px 6px -6px black;
  }
 
  .song-title {
@@ -174,30 +186,6 @@
   margin-right: 10px;
  }
 
- .playlist-index-actions {
-  float: left;
-  position: relative;
-  margin-right: 10px;
-  bottom: 5px;
-  right: 5px;
- }
-
-.playlist-show-actions {
-  display: inline-block;
-  float: left;
-  position: relative;
-  bottom: 25px;
-  right: 5px;
- }
-
- .playlist-song-delete {
-  float: left;
-  margin-right: 10px;
-  position: relative;
-  bottom: 5px;
-  right: 5px;
- }
-
  .playlist-songs {
   padding-top: 30px;
  }
@@ -214,55 +202,14 @@
   border: 1px solid #CCC;
 }
 
-.band-search {
-  float: left;
-  position: relative;
-  bottom: 30px;
-}
-
-.band-actions {
-  float: left;
-  position: relative;
-  margin-right: 10px;
-  bottom: 5px;
-  right: 5px;
-}
-
 div.song > div.feelings {
-  float: left;
-  margin-right: 10px;
-  position: relative;
   bottom: 10px;
-  right: 5px;
 }
 
 /* song view styles */
 
 .song-container {
   margin-top: 35px;
-}
-
-.destroy-dislike {
-  float: left;
-  margin-right: 10px;
-  position: relative;
-  bottom: 5px;
-  right: 5px;
-}
-
-.destroy-like {
-  float: left;
-  margin-right: 10px;
-  position: relative;
-  bottom: 5px;
-  right: 5px;
-}
-
-.load-songs {
-  float: left;
-  position: relative;
-  bottom: 5px;
-  right: 5px;
 }
 
 @media (max-device-width: 768px) {

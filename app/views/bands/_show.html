@@ -1,6 +1,6 @@
 <h3>{{band.info.name}}</h3>
 <div class="well well-small">
-  <span class="band-actions">
+  <span class="band-actions group-actions line-actions">
     <a href="#music-player"role="button" class="btn btn-primary load-band-playlist">Play</a>
     <a href="#bands" role="button" class="btn btn-inverse bands-index">All Bands</a>
   </span>
@@ -13,7 +13,7 @@
    {{#each band.songs}}
     <div class="song" data-band-id="{{this.band_id}} data-song-id={{this.id}}">
       
-    <div id="song-{{this.id}}" class="feelings">
+    <div id="song-{{this.id}}" class="feelings group-actions line-actions">
       <div class="like btn btn-success" data-song-id="{{this.id}}" data-like-status="{{this.like}}">
         Like
       </div>
