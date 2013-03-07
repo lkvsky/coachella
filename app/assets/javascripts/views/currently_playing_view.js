@@ -9,7 +9,7 @@ Coachella.CurrentlyPlayingView = function(playlist, user) {
   self.renderUserPrompt = function() {
     html = Coachella.handlebarsHelper("#prompt-user");
     
-    $("#on-deck").html(html);
+    $("#on-deck-content").html(html);
     $("#cue-playlist").click(function() {
       self.generateRandomPlaylist();
     });
@@ -18,7 +18,7 @@ Coachella.CurrentlyPlayingView = function(playlist, user) {
   self.renderUserWelcome = function(user) {
     html = Coachella.handlebarsHelper("#welcome-user", {user: user});
 
-    $("#on-deck").html(html);
+    $("#on-deck-content").html(html);
     $("#cue-playlist").click(function() {
       self.generateRandomPlaylist();
     });
@@ -40,7 +40,7 @@ Coachella.CurrentlyPlayingView = function(playlist, user) {
       html = Coachella.handlebarsHelper("#cued-song", {song: song});
     }
 
-    $("#on-deck").html(html);
+    $("#on-deck-content").html(html);
     if (song) {
       Coachella.renderFeelingsHtml($("#on-deck div.feelings"), song.id.toString(), song.like, song.dislike);
     }
@@ -64,6 +64,9 @@ Coachella.CurrentlyPlayingView = function(playlist, user) {
   };
 
   self.loadIframe = function() {
+    $("#cue-playlist").remove();
+    $("#music-player").css("opacity", "1");
+    
     if (Coachella.getCachedObject("playlist")) {
       self.video = new YT.Player('music-player', {
         events: {

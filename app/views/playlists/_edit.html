@@ -2,7 +2,7 @@
 
 <div class="well well-small playlist-songs" data-playlist-id="{{playlist.playlist.id}}">
   <span class="playlist-show-actions">
-    <a href="#playlist" role="button" class="btn btn-primary playlists-save" data-playlist-id="{{playlist.playlist.id}}">Save</a>
+    <a href="#playlist" role="button" class="btn btn-success playlists-save" data-playlist-id="{{playlist.playlist.id}}">Save</a>
     <a href="#playlist" role="button" class="btn btn-danger playlists-delete" data-playlist-id="{{playlist.playlist.id}}">Delete</a>
   </span>
   <form id="playlists-update">
@@ -14,7 +14,7 @@
     {{#if playlist.songs}}
       {{#each playlist.songs}}
         <div class="song">
-          <button type="button" class="btn btn-danger playlist-song-delete" data-song-id="{{this.id}}">-</button>
+          <button type="button" class="btn btn-danger playlist-song-delete" data-song-id="{{this.id}}">&times;</button>
           <strong>{{this.band}}</strong>: {{this.name}}
         </div>
       {{/each}}
