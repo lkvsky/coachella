@@ -30,6 +30,7 @@ Coachella.PlaylistCreator = function(el) {
         self.renderTemp("Hold on while we mix...", "0.5");
         Coachella.toggleSection("#playlist-section", "#playlist");
     });
+    self.toggleCreator();
   };
 
   self.renderTemp = function(message, opacity) {
@@ -44,6 +45,18 @@ Coachella.PlaylistCreator = function(el) {
   self.renderError = function() {
     var html = Coachella.handlebarsHelper("#playlists-error");
     $("#error-shell").html(html);
+  };
+
+  self.toggleCreator = function() {
+    $("#playlists-new").click(function() {
+      if ($("#playlist-creator").hasClass("showing")) {
+        $(this).html("New Playlist");
+        $("#playlist-creator").removeClass("showing");
+      } else {
+        $("#playlist-creator").addClass("showing");
+        $(this).html("Hide Creator");
+      }
+    });
   };
 
   self.initialize = (function() {

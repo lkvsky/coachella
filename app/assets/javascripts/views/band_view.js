@@ -19,6 +19,7 @@ Coachella.BandView = function(el) {
       var html = Coachella.handlebarsHelper("#bands-show", {band: data});
       self.el.html(html);
       self.installBandsShowListeners(data.songs);
+      $(".floating-images").css("background-image", "url('" + data.info.thumbnail + "')");
 
       $("div.feelings").each(function() {
         if ($(this).find(".like").attr("data-like-status") == "true") {

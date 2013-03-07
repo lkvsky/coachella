@@ -35,6 +35,9 @@ Coachella.Navigation = function() {
   };
 
   self.installNavListeners = function() {
+    $("#home-section").click(function() {
+      Coachella.toggleSection("#home-section", "#band");
+    });
     $("#band-section").click(function() {
       Coachella.toggleSection("#band-section", "#band");
     });

@@ -22,6 +22,8 @@ Coachella.CurrentlyPlayingView = function(playlist, user) {
     $("#cue-playlist").click(function() {
       self.generateRandomPlaylist();
     });
+
+    self.interval = setInterval(self.renderCountdown, 255);
   };
 
   self.renderCurrentSong = function() {
@@ -64,6 +66,10 @@ Coachella.CurrentlyPlayingView = function(playlist, user) {
   };
 
   self.loadIframe = function() {
+    if (self.interval) {
+      clearInterval(self.interval);
+    }
+
     $("#cue-playlist").remove();
     $("#music-player").css("opacity", "1");
     
@@ -94,6 +100,38 @@ Coachella.CurrentlyPlayingView = function(playlist, user) {
 
       self.loadIframe();
     });
+  };
+
+  self.generateCountdown = function(weekend) {
+    var weekends = {
+      1: new Date(2013, 3, 12),
+      2: new Date(2013, 3, 19)
+    };
+    var oneDay = 1000*60*60*24;
+    var elapsed;
+
+    if (weekend == 1) {
+      elapsed = weekends[1] - (new Date());
+    } else {
+      elapsed = weekends[2] - (new Date());
+    }
+
+    var difference = new Date(elapsed);
+
+    return {
+      days: Math.floor(elapsed/oneDay),
+      hours: difference.getHours(),
+      minutes: difference.getMinutes(),
+      seconds: difference.getSeconds()
+    };
+  };
+
+  self.renderCountdown = function() {
+    var wk1 = self.generateCountdown(1);
+    var wk2 = self.generateCountdown(2);
+
+    $("#weekend-one").html(wk1.days + " days, " + wk1.hours + ":" + wk1.minutes + ":" + wk1.seconds);
+    $("#weekend-two").html(wk2.days + " days, " + wk2.hours + ":" + wk2.minutes + ":" + wk2.seconds);
   };
 
   // listeners

@@ -13,12 +13,11 @@
  */
  @import 'bootstrap-styles';
  @import 'bootstrap';
- @import url(http://fonts.googleapis.com/css?family=Varela+Round);
 
 /* general styles */
 
  body {
-  font-family: 'Varela Round';
+  font-family: "soleil", "Ariel", sans-serif;
  }
 
  h1, h2 {
@@ -26,6 +25,7 @@
  }
 
  h3 {
+  display: inline-block;
   line-height: 1;
   font-size: 2em;
  }
@@ -46,7 +46,7 @@
   padding: 15px;
  }
 
- .body {
+ .body-content {
   position: absolute;
   top: 400px;
   width: 95%;
@@ -67,6 +67,18 @@
 
  .line-actions {
   bottom: 5px;
+ }
+
+ .floating-images {
+  float: left;
+  opacity: 0.5;
+  background-repeat: repeat-x;
+  background-size: 100px;
+  height: 100px;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 0;
  }
 
 /* devise pages */
@@ -94,6 +106,7 @@
  /* music player styles */
 
  #music-container {
+  display: none;
   position: fixed;
   top: 0;
   right: 0;
@@ -101,7 +114,8 @@
   width: 100%;
   height: 350px;
   background-image: url("coachella.jpg");
-  background-size: 80px;
+  background-position: 20% 50%;
+  background-size: 1200px;
  }
 
  #music-player {
@@ -111,7 +125,7 @@
   height: 330px;
   width: 65%;
   background: white;
-  opacity: 0.5;
+  opacity: 0.6;
   padding: 0;
  }
 
@@ -150,9 +164,18 @@
   background-color: $wellBackground;
   margin: 10px;
   height: 310px;
-  -webkit-box-shadow: 0 8px 6px -6px black;
-  -moz-box-shadow: 0 8px 6px -6px black;
-  box-shadow: 0 8px 6px -6px black;
+ }
+
+ .countdown {
+  font-size: 2em;
+  margin: 5px;
+  line-height: 1;
+  font-style: bold;
+  color: $myBlue
+ }
+
+ .ticker {
+  margin-top: 30px;
  }
 
  .song-title {
@@ -182,9 +205,15 @@
 
 /* playlist specific style */
 
+
  #playlist-creator {
+  display: inline-block;
   margin-right: 10px;
  }
+
+  #playlists-new {
+    display: none;
+  }
 
  .playlist-songs {
   padding-top: 30px;
@@ -267,7 +296,6 @@ div.song > div.feelings {
     position: absolute;
     height: 200px;
     width: 100%;
-    background-size: 70px;
   }
 
   #music-container div.span4 {
@@ -312,11 +340,11 @@ div.song > div.feelings {
     top: 200px;
   }
 
-  .body div.span8 {
+  .body-content div.span8 {
     width: 98%;
   }
 
-  .body {
+  .body-content {
     position: absolute;
     top: 300px;
   }
@@ -328,7 +356,19 @@ div.song > div.feelings {
   #playlist-container {
     display: block;
     width: 98%;
+  }
+
+  #playlist-creator {
     text-align: center;
+    display: none;
+  }
+
+  #playlists-new {
+    display: inline-block;
+  }
+
+  #playlist-creator.showing {
+    display: block;
   }
 
   .playlist-error {

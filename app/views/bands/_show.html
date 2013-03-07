@@ -4,12 +4,11 @@
     <a href="#music-player"role="button" class="btn btn-primary load-band-playlist">Play</a>
     <a href="#bands" role="button" class="btn btn-inverse bands-index">All Bands</a>
   </span>
-  <img class="img-rounded" src="{{band.info.thumbnail}}">
+  <div class="floating-images">
+  </div>
   <br>
   <strong>Playing on:</strong> {{band.info.set_time}}
   <br>
-
-  <strong>YouTube Tracks</strong>
    {{#each band.songs}}
     <div class="song" data-band-id="{{this.band_id}} data-song-id={{this.id}}">
       
