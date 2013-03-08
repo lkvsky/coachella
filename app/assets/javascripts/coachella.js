@@ -20,6 +20,10 @@ Coachella.toggleSection = function(tab, blockContent) {
   $("#content-nav li").removeClass("active");
   $(tab).closest("li").addClass("active");
 
+  if (tab == "#home-page") {
+    $("#content-nav li").removeClass("active");
+  }
+
   $(".discovery > div").hide();
   $(blockContent).show();
 };

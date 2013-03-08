@@ -33,9 +33,11 @@ $purple:                #7a43b6;
 // -------------------------
 $myRed: #ae374a;
 $myHighlightedRed: #9b3142;
-$myBlue: #3786ae;
+$myBlue: #948998;
 $myGreen: #37ae9b;
 $myHighlightedGreen: #319b8a;
+$bodyColor: #e6c4b2;
+$myPurple: #948998;
 
 
 // Scaffolding
@@ -46,7 +48,7 @@ $textColor:             $grayDark;
 
 // Links
 // -------------------------
-$linkColor:             $myBlue;
+$linkColor:             $myPurple;
 $linkColorHover:        darken($linkColor, 15%);
 
 
@@ -96,14 +98,14 @@ $btnBackground:                     $white;
 $btnBackgroundHighlight:            darken($white, 10%);
 $btnBorder:                         #bbb;
 
-$btnPrimaryBackground:              $linkColor;
-$btnPrimaryBackgroundHighlight:     adjust-hue($btnPrimaryBackground, 20%);
+$btnPrimaryBackground:              $myGreen;
+$btnPrimaryBackgroundHighlight:     $myHighlightedGreen;
 
 $btnInfoBackground:                 #5bc0de;
 $btnInfoBackgroundHighlight:        #2f96b4;
 
-$btnSuccessBackground:              $myGreen;
-$btnSuccessBackgroundHighlight:     $myHighlightedGreen;
+$btnSuccessBackground:              $myPurple;
+$btnSuccessBackgroundHighlight:     $myPurple;
 
 $btnWarningBackground:              lighten($orange, 15%);
 $btnWarningBackgroundHighlight:     $orange;
@@ -117,8 +119,8 @@ $btnInverseBackgroundHighlight:     $grayDarker;
 
 // Forms
 // -------------------------
-$inputBackground:               $white;
-$inputBorder:                   #ccc;
+$inputBackground:               white;
+$inputBorder:                   #e1b39f;
 $inputBorderRadius:             $baseBorderRadius;
 $inputDisabledBackground:       $grayLighter;
 $formActionsBackground:         #f5f5f5;
@@ -170,7 +172,7 @@ $placeholderText:         $grayLight;
 
 // Hr border color
 // -------------------------
-$hrBorder:                $grayLighter;
+$hrBorder:                #e1b39f;
 
 
 // Horizontal forms & lists
@@ -180,7 +182,7 @@ $horizontalComponentOffset:       180px;
 
 // Wells
 // -------------------------
-$wellBackground:                  #f5f5f5;
+$wellBackground:                  #f9f0ec;
 
 
 // Navbar
@@ -189,14 +191,14 @@ $navbarCollapseWidth:             979px;
 $navbarCollapseDesktopWidth:      $navbarCollapseWidth + 1;
 
 $navbarHeight:                    40px;
-$navbarBackgroundHighlight:       #ffffff;
+$navbarBackgroundHighlight:       $myPurple;
 $navbarBackground:                darken($navbarBackgroundHighlight, 5%);
 $navbarBorder:                    darken($navbarBackground, 12%);
 
 $navbarText:                      #777;
-$navbarLinkColor:                 #777;
-$navbarLinkColorHover:            $grayDark;
-$navbarLinkColorActive:           $gray;
+$navbarLinkColor:                 white;
+$navbarLinkColorHover:            black;
+$navbarLinkColorActive:           black;
 $navbarLinkBackgroundHover:       transparent;
 $navbarLinkBackgroundActive:      darken($navbarBackground, 5%);
 

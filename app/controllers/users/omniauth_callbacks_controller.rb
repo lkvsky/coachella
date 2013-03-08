@@ -7,8 +7,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
 
     if @user.persisted?
-      sign_in_and_redirect @user, :event => :authentication #this will throw if @user is not activated
-      set_flash_message(:notice, :success, :kind => "Facebook") if is_navigational_format?
+      sign_in_and_redirect @user, :event => :authentication
     else
       redirect_to root_path
       flash[:log_in_error] = "Oops! Someone already has an account with that e-mail."

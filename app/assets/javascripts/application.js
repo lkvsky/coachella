@@ -18,6 +18,7 @@
 //required callback for YouTube script
 function onYouTubeIframeAPIReady() {
   Coachella.getCurrentUser(function() {
+    $("#loading").remove();
     $("#music-container").css("display", "block");
     var user;
 
