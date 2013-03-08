@@ -298,7 +298,86 @@ div.song > div.feelings {
   margin-top: 35px;
 }
 
-@media (max-width: 767px), (max-device-width: 768px) {
+@media (max-device-width: 768px) {
+
+  .container {
+    width: 100%;
+  }
+
+  #cue-playlist {
+    left: 35%;
+  }
+
+  #music-container {
+    position: absolute;
+    height: 320px;
+    margin: 0;
+    width: 100%;
+    padding: 0;
+  }
+
+  #music-player {
+    height: 320px;
+    top: 0;
+    right: 0;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+  }
+
+  #music-container div.span4 {
+    display: none;
+    width: 0;
+  }
+
+  #playlists-new {
+    clear: both;
+    display: inline-block;
+    position: relative;
+    top: 40px;
+  }
+
+  #playlist-creator.showing {
+    display: block;
+  }
+
+  #content-nav {
+    position: absolute;
+    top: 320px;
+  }
+
+  .body-content div.span8 {
+    padding-right: 15px;
+    width: 100%;
+  }
+
+  .body-content {
+    position: absolute;
+    top: 340px;
+  }
+
+  #playlist-container {
+    display: block;
+    margin: auto;
+  }
+
+  #playlist-creator {
+    position: static;
+    text-align: right;
+    display: none;
+  }
+
+  #playlists-new {
+    clear: both;
+    display: inline-block;
+    position: relative;
+    top: 40px;
+  }
+
+
+}
+
+@media (max-width: 768px) {
 
   /* modal */
 
