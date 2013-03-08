@@ -62,6 +62,7 @@ Coachella.BandView = function(el) {
     self.bandsPlay(songs);
     self.bandsSongLike();
     self.bandsSongDislike();
+    self.bandsSongPlay(songs);
   };
 
   // listener helpers
@@ -91,6 +92,20 @@ Coachella.BandView = function(el) {
           new Coachella.CurrentlyPlayingView(data.songs);
         });
       }
+    });
+  };
+
+  self.bandsSongPlay = function(songs) {
+    $(".load-band-song").click(function() {
+      var song = [];
+
+      for (var i=0; i<songs.length; i++) {
+        if (parseInt(songs[i].id, 10) == parseInt($(this).attr("data-song-id"), 10)) {
+          song.push(songs[i]);
+        }
+      }
+
+      new Coachella.CurrentlyPlayingView(song);
     });
   };
 

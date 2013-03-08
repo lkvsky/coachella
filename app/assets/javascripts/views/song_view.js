@@ -10,6 +10,7 @@ Coachella.SongView = function(el, songs) {
     $("#likes").html(html);
     self.removeLikeOrDislike(".destroy-like", "song_likes/");
     self.playSongs($("#likes"), favoriteSongs);
+    self.playSingleSong($(".load-like-song"), favoriteSongs);
   };
 
   self.renderDislikedSongs = function(dislikedSongs) {
@@ -18,6 +19,7 @@ Coachella.SongView = function(el, songs) {
     $("#dislikes").html(html);
     self.removeLikeOrDislike(".destroy-dislike", "song_dislikes/");
     self.playSongs($("#dislikes"), dislikedSongs);
+    self.playSingleSong($(".load-hate-song"), dislikedSongs);
   };
 
   self.removeLikeOrDislike = function(el, path) {
@@ -74,6 +76,20 @@ Coachella.SongView = function(el, songs) {
   self.playSongs = function(el, playlistSongs) {
     el.find(".load-songs").click(function() {
       new Coachella.CurrentlyPlayingView(playlistSongs);
+    });
+  };
+
+  self.playSingleSong = function(el, songs) {
+    el.click(function() {
+      var song = [];
+
+      for (var i=0; i<songs.length; i++) {
+        if (parseInt(songs[i].id, 10) == parseInt($(this).attr("data-song-id"), 10)) {
+          song.push(songs[i]);
+        }
+      }
+
+      new Coachella.CurrentlyPlayingView(song);
     });
   };
 
