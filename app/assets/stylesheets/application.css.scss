@@ -79,7 +79,7 @@
  }
 
  .floating-images {
-  float: left;
+/*  float: left;*/
   background-repeat: repeat-x;
   background-size: 100px;
   height: 100px;
@@ -113,13 +113,6 @@
   position: absolute;
   top: 50%;
   left: 50%;
- }
-
- #facebook {
-  float: right;
-  position: relative;
-  right: 255px;
-  bottom: 50px;
  }
 
  .welcome-link {
@@ -156,7 +149,7 @@
  }
 
  #on-deck #registration a {
-  color: $myBlue;
+  color: $myGreen;
  }
 
  #on-deck p {
@@ -306,38 +299,7 @@ div.song > div.feelings {
   margin-top: 35px;
 }
 
-@media (max-device-width: 771px) {
-
-  #music-container {
-    height: 350px;
-    margin: 0;
-    width: 100%;
-  }
-
-  #music-player {
-    height: 350px;
-    top: 0;
-    right: 0;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-  }
-
-  #music-container div.span4 {
-    display: none;
-    width: 0;
-    padding: 0;
-    margin: 0;
-  }
-
-  .body-content div.span8 {
-    width: 100%;
-  }
-
-
-}
-
-@media (max-width: 771px) {
+@media (max-width: 768px) {
 
   /* modal */
 
