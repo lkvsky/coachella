@@ -47,7 +47,16 @@ Coachella.PlaylistCreator = function(el) {
     $("#error-shell").html(html);
   };
 
+  self.renderNewPlaylistBtn = function() {
+    var button = $("<button>");
+    button.attr("id", "playlists-new").addClass("btn btn-success").html("New Playlist");
+
+    $("#playlist-container").prepend(button);
+  };
+
   self.toggleCreator = function() {
+    self.renderNewPlaylistBtn();
+    
     $("#playlists-new").click(function() {
       if ($("#playlist-creator").hasClass("showing")) {
         $(this).html("New Playlist");

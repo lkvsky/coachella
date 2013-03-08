@@ -310,24 +310,20 @@ div.song > div.feelings {
 
   #music-container {
     height: 350px;
-    margin: auto;
-    width: 100%;
+    margin: 0;
   }
 
   #music-player {
-    width: 100%;
     height: 350px;
     top: 0;
     right: 0;
+    padding: 0;
+    margin: 0;
   }
 
   #music-container div.span4 {
     display: none;
     width: 0;
-  }
-
-  #music-container div.span8 {
-    width: 98%;
   }
 }
 
