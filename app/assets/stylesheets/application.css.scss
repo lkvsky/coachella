@@ -326,7 +326,15 @@ div.song > div.feelings {
   #music-container div.span4 {
     display: none;
     width: 0;
+    padding: 0;
+    margin: 0;
   }
+
+  .body-content div.span8 {
+    width: 100%;
+  }
+
+
 }
 
 @media (max-width: 771px) {
