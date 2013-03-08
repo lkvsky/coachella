@@ -13,6 +13,7 @@
  */
  @import 'bootstrap-styles';
  @import 'bootstrap';
+ @import 'bootstrap-responsive';
 
 /* general styles */
 
@@ -142,9 +143,9 @@
  }
 
  .log-out {
-  float: right;
+/*  float: right;
   position: relative;
-  top: 10px;
+  top: 10px;*/
   color: white;
 
   &:hover {
@@ -325,7 +326,7 @@ div.song > div.feelings {
   }
 }
 
-@media (max-width: 680px) {
+@media (max-width: 771px) {
 
   /* modal */
 
@@ -381,14 +382,14 @@ div.song > div.feelings {
     border-top: 25px solid transparent;
     border-bottom: 25px solid transparent;
     border-left: 50px solid white;
-    margin-top: 25%;
-    margin-left: 32%;
+    margin-top: 27%;
+    margin-left: 34%;
   }
 
   #cue-playlist {
     height: 100px;
     width: 100px;
-    left: 38%;
+    left: 35%;
     top: 24%;
   }
 
@@ -399,13 +400,17 @@ div.song > div.feelings {
     top: 200px;
   }
 
+  .container {
+    width: 100%;
+  }
+
   .body-content div.span8 {
-    width: 98%;
+    padding-right: 15px;
   }
 
   .body-content {
     position: absolute;
-    top: 250px;
+    top: 225px;
   }
 
   .log-out {
@@ -413,10 +418,8 @@ div.song > div.feelings {
   }
 
   #playlist-container {
-    position: relative;
-    left: 10px;
     display: block;
-    width: 100%;
+    margin: auto;
   }
 
   #playlist-creator {
@@ -426,6 +429,7 @@ div.song > div.feelings {
   }
 
   #playlists-new {
+    clear: both;
     display: inline-block;
     position: relative;
     top: 40px;
