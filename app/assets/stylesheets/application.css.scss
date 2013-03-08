@@ -317,6 +317,7 @@ div.song > div.feelings {
   }
 
   #music-player {
+    position: absolute;
     height: 320px;
     top: 0;
     right: 0;
@@ -359,6 +360,8 @@ div.song > div.feelings {
   #playlist-container {
     display: block;
     margin: auto;
+    width: 100%;
+    padding-right: 15px;
   }
 
   #playlist-creator {
