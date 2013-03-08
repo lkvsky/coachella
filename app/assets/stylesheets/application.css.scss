@@ -306,11 +306,12 @@ div.song > div.feelings {
   margin-top: 35px;
 }
 
-@media (max-device-width: 768px) {
+@media (max-device-width: 771px) {
 
   #music-container {
     height: 350px;
     margin: 0;
+    width: 100%;
   }
 
   #music-player {
@@ -319,6 +320,7 @@ div.song > div.feelings {
     right: 0;
     padding: 0;
     margin: 0;
+    width: 100%;
   }
 
   #music-container div.span4 {
