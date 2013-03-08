@@ -122,6 +122,10 @@
   bottom: 50px;
  }
 
+ .welcome-link {
+  margin-top: 15px;
+ }
+
 /* devise pages */
 
 .devise-form {
@@ -143,9 +147,6 @@
  }
 
  .log-out {
-/*  float: right;
-  position: relative;
-  top: 10px;*/
   color: white;
 
   &:hover {
@@ -156,6 +157,10 @@
 
  #on-deck #registration a {
   color: $myBlue;
+ }
+
+ #on-deck p {
+  margin-top: 10px;
  }
 
  /* music player styles */
