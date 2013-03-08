@@ -361,7 +361,7 @@ div.song > div.feelings {
     display: block;
     margin: auto;
     width: 100%;
-    margin-right: 15px;
+    /*margin-right: 15px;*/
   }
 
   #playlist-creator {
@@ -377,6 +377,9 @@ div.song > div.feelings {
     top: 40px;
   }
 
+ #playlist-creator form {
+  text-align: center;
+ }
 
 }
 
