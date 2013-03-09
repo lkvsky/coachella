@@ -28,7 +28,7 @@ Coachella.CurrentlyPlayingView = function(playlist, user) {
 
   self.renderCurrentSong = function() {
     var html;
-    var song = self.currentlyPlaying();
+    var song = Coachella.currentlyPlaying();
 
     if (Coachella.video && !YT.PlayerState.ENDED && song) {
       html = Coachella.handlebarsHelper("#cued-song", {song: song});
@@ -48,43 +48,6 @@ Coachella.CurrentlyPlayingView = function(playlist, user) {
   };
 
   // utilitiy
-
-  self.currentlyPlaying = function() {
-    var playlist = Coachella.getCachedObject("playlist");
-    var song;
-
-    if (Coachella.video) {
-      var url = Coachella.video.getVideoUrl().split("v=")[1];
-
-      for (var i=0; i<playlist.length; i++) {
-        if (url == playlist[i].url) {
-          song = playlist[i];
-        }
-      }
-    }
-
-    return song;
-  };
-
-  self.addSelectedSongState = function() {
-    var song = self.currentlyPlaying();
-
-    $("body").find("div.song").each(function() {
-      if (song.id.toString() == $(this).attr("data-song-id")) {
-        $(this).addClass("selected");
-      }
-    });
-  };
-
-  self.addSelectedBandState = function() {
-    var song = self.currentlyPlaying();
-
-    $("body").find("div.band").each(function() {
-      if (song.band_id.toString() == $(this).attr("data-band-id")) {
-        $(this).addClass("selected");
-      }
-    });
-  };
 
   self.userPromptOrWelcome = function() {
     if (user) {
@@ -113,8 +76,8 @@ Coachella.CurrentlyPlayingView = function(playlist, user) {
 
     Coachella.video.addEventListener("onStateChange", function() {
       $("body").find("div.selected").removeClass("selected");
-      self.addSelectedSongState();
-      self.addSelectedBandState();
+      Coachella.addSelectedSongState();
+      Coachella.addSelectedBandState();
     });
   };
 

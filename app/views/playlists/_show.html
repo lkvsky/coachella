@@ -9,7 +9,7 @@
 
   {{#if playlist.songs}}
     {{#each playlist.songs}}
-      <div class="song line-item">
+      <div class="song line-item" data-song-id="{{this.id}}">
         <strong>{{this.band}}</strong>: {{this.name}}
       </div>
     {{/each}}

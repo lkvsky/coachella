@@ -19,6 +19,10 @@ Coachella.PlaylistView = function(el, playlists) {
       var html = Coachella.handlebarsHelper("#playlists-show", {playlist: data});
       self.el.html(html);
       self.installPlaylistsShowListeners();
+      
+      if (Coachella.video) {
+        Coachella.addSelectedSongState();
+      }
     });
   };
 

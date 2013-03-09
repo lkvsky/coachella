@@ -28,6 +28,43 @@ Coachella.toggleSection = function(tab, blockContent) {
   $(blockContent).show();
 };
 
+Coachella.currentlyPlaying = function() {
+  var playlist = Coachella.getCachedObject("playlist");
+  var song;
+
+  if (Coachella.video) {
+    var url = Coachella.video.getVideoUrl().split("v=")[1];
+
+    for (var i=0; i<playlist.length; i++) {
+      if (url == playlist[i].url) {
+        song = playlist[i];
+      }
+    }
+  }
+
+  return song;
+};
+
+Coachella.addSelectedSongState = function() {
+  var song = Coachella.currentlyPlaying();
+
+  $("body").find("div.song").each(function() {
+    if (song.id.toString() == $(this).attr("data-song-id")) {
+      $(this).addClass("selected");
+    }
+  });
+};
+
+Coachella.addSelectedBandState = function() {
+  var song = Coachella.currentlyPlaying();
+
+  $("body").find("div.band").each(function() {
+    if (song.band_id.toString() == $(this).attr("data-band-id")) {
+      $(this).addClass("selected");
+    }
+  });
+};
+
 Coachella.getCurrentUser = function(callback) {
   $.getJSON("/users/current.json", function(data) {
     if (data.current_user) {

@@ -6,7 +6,7 @@
     <div class="song-container">
   {{#each songs}}
       
-      <div class="song line-item">
+      <div class="song line-item" data-song-id="{{this.id}}">
         <div class="song-actions group-actions line-actions">
           <a href="#music-player" role="button" class="btn btn-primary load-like-song" data-song-id="{{this.id}}">Play</a>
           <button type="button" class="btn btn-success destroy-like" data-song-id="{{this.id}}">Unlike</button>

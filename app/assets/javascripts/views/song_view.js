@@ -11,6 +11,10 @@ Coachella.SongView = function(el, songs) {
     self.removeLikeOrDislike(".destroy-like", "song_likes/");
     self.playSongs($("#likes"), favoriteSongs);
     self.playSingleSong($(".load-like-song"), favoriteSongs);
+
+    if (Coachella.video) {
+      Coachella.addSelectedSongState();
+    }
   };
 
   self.renderDislikedSongs = function(dislikedSongs) {
@@ -20,6 +24,10 @@ Coachella.SongView = function(el, songs) {
     self.removeLikeOrDislike(".destroy-dislike", "song_dislikes/");
     self.playSongs($("#dislikes"), dislikedSongs);
     self.playSingleSong($(".load-hate-song"), dislikedSongs);
+
+    if (Coachella.video) {
+      Coachella.addSelectedSongState();
+    }
   };
 
   self.removeLikeOrDislike = function(el, path) {

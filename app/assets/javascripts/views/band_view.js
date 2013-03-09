@@ -12,7 +12,7 @@ Coachella.BandView = function(el) {
       self.installBandsIndexListeners();
 
       if (Coachella.video) {
-        self.addSelectedBandState();
+        Coachella.addSelectedBandState();
       }
   };
 
@@ -27,7 +27,7 @@ Coachella.BandView = function(el) {
       self.displayFeelings();
 
       if (Coachella.video) {
-        self.addSelectedSongState();
+        Coachella.addSelectedSongState();
       }
     });
   };
@@ -76,26 +76,6 @@ Coachella.BandView = function(el) {
     }
 
     return song;
-  };
-
-  self.addSelectedSongState = function() {
-    var song = self.findCurrentSong();
-
-    $("body").find("div.song").each(function() {
-      if (song.id.toString() == $(this).attr("data-song-id")) {
-        $(this).addClass("selected");
-      }
-    });
-  };
-
-  self.addSelectedBandState = function() {
-    var song = self.findCurrentSong();
-
-    $("body").find("div.band").each(function() {
-      if (song.band_id.toString() == $(this).attr("data-band-id")) {
-        $(this).addClass("selected");
-      }
-    });
   };
 
   // listeners
