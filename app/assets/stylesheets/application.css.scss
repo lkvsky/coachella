@@ -52,11 +52,15 @@
   margin: auto;
  }
 
- .song {
+ .line-item {
   margin: 15px;
   border-top: 1px solid #e1b39f;
   border-bottom: 1px solid #e1b39f;
   padding: 15px;
+ }
+
+ .selected {
+  background-color: #edd2c6;
  }
 
  .body-content {

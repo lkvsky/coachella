@@ -13,7 +13,7 @@
 
     {{#if playlist.songs}}
       {{#each playlist.songs}}
-        <div class="song">
+        <div class="song line-item">
           <button type="button" class="btn btn-danger playlist-song-delete group-actions line-actions" data-song-id="{{this.id}}">&times;</button>
           <strong>{{this.band}}</strong>: {{this.name}}
         </div>

@@ -3,7 +3,7 @@
 {{#if playlists}}
   {{#each playlists}}
 
-    <div class="song">
+    <div class="playlist line-item">
       <span class="playlist-index-actions group-actions line-actions">
         <a href="#music-player" role="button" class="btn btn-primary load-playlist" data-playlist-id="{{this.playlist.id}}">Play</a>
         <a href="#playlists/{{this.playlist.id}}" role="button" class="btn btn-inverse playlists-show" data-playlist-id="{{this.playlist.id}}">Details</a>

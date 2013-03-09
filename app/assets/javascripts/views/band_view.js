@@ -10,6 +10,10 @@ Coachella.BandView = function(el) {
       var html = Coachella.handlebarsHelper("#bands-index", {bands: bands});
       self.el.html(html);
       self.installBandsIndexListeners();
+
+      if (Coachella.video) {
+        self.addSelectedBandState();
+      }
   };
 
   self.renderBandsShow = function(id) {
@@ -20,24 +24,31 @@ Coachella.BandView = function(el) {
       self.el.html(html);
       self.installBandsShowListeners(data.songs);
       $(".floating-images").css("background-image", "url('" + data.info.thumbnail + "')");
+      self.displayFeelings();
 
-      $("div.feelings").each(function() {
-        if ($(this).find(".like").attr("data-like-status") == "true") {
-          $(this).find(".like").html("Unlike");
-        } else {
-          $(this).find(".like").html("Like");
-        }
-
-        if ($(this).find(".dislike").attr("data-dislike-status") == "true") {
-          $(this).find(".dislike").html("Unhate");
-        } else {
-          $(this).find(".dislike").html("Hate");
-        }
-      });
+      if (Coachella.video) {
+        self.addSelectedSongState();
+      }
     });
   };
 
   // utilitiy
+
+  self.displayFeelings = function() {
+    $("div.feelings").each(function() {
+      if ($(this).find(".like").attr("data-like-status") == "true") {
+        $(this).find(".like").html("Unlike");
+      } else {
+        $(this).find(".like").html("Like");
+      }
+
+      if ($(this).find(".dislike").attr("data-dislike-status") == "true") {
+        $(this).find(".dislike").html("Unhate");
+      } else {
+        $(this).find(".dislike").html("Hate");
+      }
+    });
+  };
 
   self.fetchAndRenderBands = function() {
     if (Coachella.getCachedObject("bands")) {
@@ -48,6 +59,43 @@ Coachella.BandView = function(el) {
         self.renderBandsIndex(data);
       });
     }
+  };
+
+  self.findCurrentSong = function() {
+    var playlist = Coachella.getCachedObject("playlist");
+    var song;
+
+    if (Coachella.video) {
+      var url = Coachella.video.getVideoUrl().split("v=")[1];
+
+      for (var i=0; i<playlist.length; i++) {
+        if (url == playlist[i].url) {
+          song = playlist[i];
+        }
+      }
+    }
+
+    return song;
+  };
+
+  self.addSelectedSongState = function() {
+    var song = self.findCurrentSong();
+
+    $("body").find("div.song").each(function() {
+      if (song.id.toString() == $(this).attr("data-song-id")) {
+        $(this).addClass("selected");
+      }
+    });
+  };
+
+  self.addSelectedBandState = function() {
+    var song = self.findCurrentSong();
+
+    $("body").find("div.band").each(function() {
+      if (song.band_id.toString() == $(this).attr("data-band-id")) {
+        $(this).addClass("selected");
+      }
+    });
   };
 
   // listeners

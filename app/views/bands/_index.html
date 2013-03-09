@@ -1,7 +1,7 @@
 <h3>All Bands</h3>
 <div class="well well-small">
   {{#each bands}}
-  <div class="song" data-band-id="{{this.id}}">
+  <div class="band line-item" data-band-id="{{this.id}}">
     <span class="band-actions group-actions line-actions">
       <a href="#music-player" role="button" class="btn btn-primary load-band-playlist" data-band-id="{{this.id}}">Play</a>
       <a href="#bands/{{this.id}}" role="button" class="btn btn-inverse bands-show" data-band-id="{{this.id}}">Details</a>
