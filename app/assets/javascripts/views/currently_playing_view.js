@@ -106,21 +106,27 @@ Coachella.CurrentlyPlayingView = function(playlist, user) {
       2: new Date(2013, 3, 19)
     };
     var oneDay = 1000*60*60*24;
-    var elapsed;
-
-    if (weekend == 1) {
-      elapsed = weekends[1] - (new Date());
-    } else {
-      elapsed = weekends[2] - (new Date());
-    }
-
+    var now = new Date();
+    var elapsed = weekends[weekend] - now;
     var difference = new Date(elapsed);
+    var days = Math.floor(elapsed/oneDay);
+    var hours, minutes, seconds;
+
+    if (days === 0) {
+      hours = 0;
+      minutes = 0;
+      seconds = 0;
+    } else {
+      hours = (weekends[weekend].getHours() - now.getHours()) + 23;
+      minutes = (weekends[weekend].getMinutes() - now.getMinutes()) + 59;
+      seconds = (weekends[weekend].getSeconds() - now.getSeconds()) + 59;
+    }
 
     return {
       days: Math.floor(elapsed/oneDay),
-      hours: difference.getHours(),
-      minutes: difference.getMinutes(),
-      seconds: difference.getSeconds()
+      hours: hours,
+      minutes: minutes,
+      seconds: seconds
     };
   };
 
