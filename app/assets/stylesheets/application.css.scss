@@ -425,16 +425,20 @@ div.song > div.feelings {
   #music-container {
     position: absolute;
     height: 200px;
-    width: 100%;
+    padding: 0;
+    margin: 0;
   }
 
   #music-container div.span4 {
     display: none;
     width: 0;
+    padding: 0;
+    margin: 0;
   }
 
   #music-container div.span8 {
-    width: 98%;
+    padding: 0;
+    margin: 0;
   }
 
   #music-player {
@@ -490,10 +494,10 @@ div.song > div.feelings {
   #playlist-container {
     display: block;
     margin: auto;
+    padding-right: 15px;
   }
 
   #playlist-creator {
-    position: static;
     text-align: right;
     display: none;
   }
